@@ -1,4 +1,17 @@
 import { useState } from 'react'
+import {
+  Alert,
+  Box,
+  Button,
+  Chip,
+  Divider,
+  Stack,
+  Typography
+} from '@mui/material'
+import VolumeUpRoundedIcon from '@mui/icons-material/VolumeUpRounded'
+import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded'
+import CancelRoundedIcon from '@mui/icons-material/CancelRounded'
+import TipsAndUpdatesRoundedIcon from '@mui/icons-material/TipsAndUpdatesRounded'
 import { Exercise } from '../../types/LearningTypes'
 import { AudioService } from '../../services/AudioService'
 
@@ -7,11 +20,11 @@ interface TranslationExerciseProps {
   onComplete: (isCorrect: boolean, timeSpent: number) => void
 }
 
-const TranslationExercise: React.FC<TranslationExerciseProps> = ({
-  exercise,
-  onComplete
-}) => {
-  const [selectedAnswer, setSelectedAnswer] = useState<string>('')
+type ButtonVariant = 'text' | 'outlined' | 'contained'
+type ButtonColor = 'inherit' | 'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning'
+
+const TranslationExercise = ({ exercise, onComplete }: TranslationExerciseProps) => {
+  const [selectedAnswer, setSelectedAnswer] = useState('')
   const [hasAnswered, setHasAnswered] = useState(false)
   const [startTime] = useState(Date.now())
 
@@ -35,156 +48,157 @@ const TranslationExercise: React.FC<TranslationExerciseProps> = ({
 
     setTimeout(() => {
       onComplete(isCorrect, timeSpent)
-    }, 1500)
+    }, 1600)
   }
 
-  const getButtonClass = (option: string) => {
-    if (!hasAnswered) return 'option-button'
+  const getOptionStyles = (option: string): { variant: ButtonVariant; color: ButtonColor } => {
+    if (!hasAnswered) {
+      return {
+        variant: selectedAnswer === option ? 'contained' : 'outlined',
+        color: selectedAnswer === option ? 'primary' : 'inherit'
+      }
+    }
 
     if (option === exercise.correctAnswer) {
-      return 'option-button correct'
-    } else if (option === selectedAnswer) {
-      return 'option-button incorrect'
+      return { variant: 'contained', color: 'success' }
     }
-    return 'option-button disabled'
-  }
 
-  const getFeedbackMessage = () => {
-    if (!hasAnswered) return null
-
-    if (selectedAnswer === exercise.correctAnswer) {
-      return (
-        <div className="feedback-message success">
-          <span className="feedback-icon">✅</span>
-          <span>Très bien !</span>
-        </div>
-      )
-    } else {
-      return (
-        <div className="feedback-message error">
-          <span className="feedback-icon">❌</span>
-          <span>La bonne réponse était : {exercise.correctAnswer}</span>
-        </div>
-      )
+    if (option === selectedAnswer) {
+      return { variant: 'contained', color: 'error' }
     }
+
+    return { variant: 'outlined', color: 'inherit' }
   }
 
   return (
-    <div className="translation-exercise">
-      <div className="exercise-question">
-        <h3>🔄 Traduction</h3>
+    <Stack spacing={3}>
+      <Stack spacing={1.5}>
+        <Typography variant="h5">Traduction</Typography>
+        <Typography variant="body2" color="text.secondary">
+          {exercise.question}
+        </Typography>
+        <Box
+          sx={{
+            borderRadius: 3,
+            p: { xs: 2, md: 3 },
+            display: 'flex',
+            alignItems: 'center',
+            gap: 2,
+            background: 'linear-gradient(135deg, rgba(25,118,210,0.08) 0%, rgba(20,184,166,0.08) 100%)'
+          }}
+        >
+          <Stack spacing={0.5}>
+            <Typography variant="subtitle2" color="text.secondary">
+              Français
+            </Typography>
+            <Typography variant="h5">{exercise.vocabularyItem.french}</Typography>
+          </Stack>
+          <Divider flexItem orientation="vertical" sx={{ opacity: 0.2 }} />
+          <Stack spacing={0.5}>
+            <Typography variant="subtitle2" color="text.secondary">
+              Luxembourgeois
+            </Typography>
+            <Typography variant="h5" color="text.secondary">
+              ?
+            </Typography>
+          </Stack>
+        </Box>
+      </Stack>
 
-        {/* Mot à traduire mis en évidence */}
-        <div className="word-to-translate">
-          <div className="french-word">
-            <span className="word-label">Français</span>
-            <span className="word-text">{exercise.vocabularyItem.french}</span>
-          </div>
-          <div className="translation-arrow">→</div>
-          <div className="target-language">
-            <span className="word-label">Luxembourgeois</span>
-            <span className="word-placeholder">?</span>
-          </div>
-        </div>
+      <Stack spacing={1.5}>
+        {exercise.options?.map(option => {
+          const optionStyles = getOptionStyles(option)
+          const isCorrectOption = option === exercise.correctAnswer
+          const isSelectedOption = option === selectedAnswer
 
-        <p className="translation-instruction">{exercise.question}</p>
-      </div>
-
-      {/* Options de réponse */}
-      <div className="exercise-options">
-        {exercise.options?.map((option, index) => (
-          <button
-            key={index}
-            className={getButtonClass(option)}
-            onClick={() => handleAnswerSelect(option)}
-            disabled={hasAnswered}
-          >
-            <span className="option-text">{option}</span>
-            {hasAnswered && option === exercise.correctAnswer && (
-              <span className="pronunciation-hint">
-                /{exercise.vocabularyItem.pronunciation}/
-              </span>
-            )}
-          </button>
-        ))}
-      </div>
-
-      {/* Message de feedback */}
-      {getFeedbackMessage()}
-
-      {/* Affichage de la traduction complète après réponse */}
-      {hasAnswered && (
-        <div className="translation-result">
-          <div className="complete-translation">
-            <span className="french-part">{exercise.vocabularyItem.french}</span>
-            <span className="equals">=</span>
-            <span className="luxembourgish-part">
-              {exercise.vocabularyItem.luxembourgish}
-            </span>
-            <button
-              className="pronunciation-button"
-              onClick={playCorrectAnswer}
-              title="Écouter la prononciation"
+          return (
+            <Button
+              key={option}
+              onClick={() => handleAnswerSelect(option)}
+              disabled={hasAnswered}
+              fullWidth
+              variant={optionStyles.variant}
+              color={optionStyles.color}
+              sx={{
+                justifyContent: 'space-between',
+                borderRadius: 3,
+                px: 3,
+                py: 2,
+                textTransform: 'none',
+                fontWeight: 600
+              }}
             >
-              🔊
-            </button>
-          </div>
+              <span>{option}</span>
+              {hasAnswered && isCorrectOption && (
+                <Chip
+                  icon={<CheckCircleRoundedIcon />}
+                  label={`/${exercise.vocabularyItem.pronunciation}/`}
+                  color="success"
+                  variant="outlined"
+                />
+              )}
+              {hasAnswered && !isCorrectOption && isSelectedOption && (
+                <Chip icon={<CancelRoundedIcon />} label="Réponse choisie" color="error" variant="outlined" />
+              )}
+            </Button>
+          )
+        })}
+      </Stack>
 
-          {/* Aide mémoire pour les mots similaires */}
+      {hasAnswered && (
+        <Alert severity={selectedAnswer === exercise.correctAnswer ? 'success' : 'error'} icon={<TipsAndUpdatesRoundedIcon />}>
+          {selectedAnswer === exercise.correctAnswer ? 'Très bien !' : `La bonne réponse était : ${exercise.correctAnswer}`}
+        </Alert>
+      )}
+
+      {hasAnswered && (
+        <Box
+          sx={{
+            borderRadius: 3,
+            p: { xs: 2, md: 3 },
+            backgroundColor: 'rgba(25,118,210,0.06)',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 2
+          }}
+        >
+          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} alignItems={{ xs: 'flex-start', sm: 'center' }} justifyContent="space-between">
+            <Stack>
+              <Typography variant="subtitle1">Traduction complète</Typography>
+              <Typography variant="body1">
+                {exercise.vocabularyItem.french}{' '}
+                <strong>= {exercise.vocabularyItem.luxembourgish}</strong>
+              </Typography>
+            </Stack>
+            <Button startIcon={<VolumeUpRoundedIcon />} onClick={playCorrectAnswer} variant="contained" color="secondary">
+              Écouter
+            </Button>
+          </Stack>
+
+          <Typography variant="body2" color="text.secondary">
+            {exercise.vocabularyItem.usage}
+          </Typography>
+
           {(exercise.vocabularyItem.id === 'merci' || exercise.vocabularyItem.id === 'pardon') && (
-            <div className="memory-aid">
-              <div className="aid-header">
-                <span className="aid-icon">🧠</span>
-                <span>Aide-mémoire</span>
-              </div>
-              <p>Ce mot est identique en français ! Facile à retenir.</p>
-            </div>
+            <Alert severity="info" icon={<TipsAndUpdatesRoundedIcon />}>
+              Ce mot est identique en français ! Facile à retenir.
+            </Alert>
           )}
 
           {exercise.vocabularyItem.id === 'jo' && (
-            <div className="memory-aid">
-              <div className="aid-header">
-                <span className="aid-icon">🧠</span>
-                <span>Aide-mémoire</span>
-              </div>
-              <p>Pensez au "Yo!" anglais familier pour retenir "Jo" = Oui</p>
-            </div>
+            <Alert severity="info" icon={<TipsAndUpdatesRoundedIcon />}>
+              Pensez au "Yo!" anglais familier pour retenir « Jo » = Oui.
+            </Alert>
           )}
 
           {exercise.vocabularyItem.id === 'nee' && (
-            <div className="memory-aid">
-              <div className="aid-header">
-                <span className="aid-icon">🧠</span>
-                <span>Aide-mémoire</span>
-              </div>
-              <p>Prononcez "NAY" comme en anglais pour dire non</p>
-            </div>
+            <Alert severity="info" icon={<TipsAndUpdatesRoundedIcon />}>
+              Prononcez "NAY" comme en anglais pour dire non.
+            </Alert>
           )}
-
-          {/* Bouton pour entendre la prononciation */}
-          <div className="pronunciation-section">
-            <button
-              className="listen-button"
-              onClick={() => {
-                if ('speechSynthesis' in window) {
-                  const utterance = new SpeechSynthesisUtterance(exercise.vocabularyItem.luxembourgish)
-                  utterance.lang = 'de-DE'
-                  utterance.rate = 0.7
-                  speechSynthesis.speak(utterance)
-                }
-              }}
-            >
-              🔊 Écouter "{exercise.vocabularyItem.luxembourgish}"
-            </button>
-          </div>
-
-          {/* Usage et contexte */}
-          <div className="usage-context">
-            <p><strong>Usage :</strong> {exercise.vocabularyItem.usage}</p>
-          </div>
-        </div>
+        </Box>
       )}
-    </div>
+    </Stack>
   )
 }
 
