@@ -3,13 +3,16 @@ import './NewDesignApp.css'
 import VocabularyQuiz from './components/VocabularyQuiz'
 import PhraseList from './components/PhraseList'
 import LearningUnit from './components/LearningUnit'
+import SectionManager from './components/SectionManager'
+import SectionView from './components/SectionView'
 import { learningUnit1 } from './data/Unit1Data'
 import { learningUnit2 } from './data/Unit2Data'
 import { learningUnit3 } from './data/Unit3Data'
-import { UnitProgress, UserStats } from './types/LearningTypes'
+import { UnitProgress, UserStats, LearningSection } from './types/LearningTypes'
 
 function App() {
-  const [currentView, setCurrentView] = useState<'menu' | 'unit1' | 'unit2' | 'unit3' | 'quiz' | 'phrases'>('menu')
+  const [currentView, setCurrentView] = useState<'menu' | 'sections' | 'section-view' | 'unit1' | 'unit2' | 'unit3' | 'quiz' | 'phrases'>('menu')
+  const [currentSection, setCurrentSection] = useState<LearningSection | null>(null)
   const [userStats, setUserStats] = useState<UserStats>({
     totalXp: 0,
     streak: 0,
@@ -36,6 +39,21 @@ function App() {
 
   const updateAccuracy = (currentAccuracy: number, newScore: number): number => {
     return Math.round((currentAccuracy + newScore) / 2)
+  }
+
+  const handleSectionSelect = (section: LearningSection) => {
+    setCurrentSection(section)
+    setCurrentView('section-view')
+  }
+
+  const handleBackToSections = () => {
+    setCurrentSection(null)
+    setCurrentView('sections')
+  }
+
+  const handleBackToMenu = () => {
+    setCurrentSection(null)
+    setCurrentView('menu')
   }
 
   const renderMainMenu = () => (
@@ -207,6 +225,37 @@ function App() {
             </button>
           </div>
         </div>
+
+        <div className="learning-card featured">
+          <div className="card-icon-wrapper">
+            <span className="card-icon">🏗️</span>
+          </div>
+          <div className="card-content">
+            <h3 className="card-title">Gestion des Sections</h3>
+            <p className="card-description">Système modulaire d'apprentissage organisé par équipes</p>
+            <div className="card-metadata">
+              <div className="metadata-item">
+                <span className="metadata-icon">👥</span>
+                <span className="metadata-text">Travail d'équipe</span>
+              </div>
+              <div className="metadata-item">
+                <span className="metadata-icon">📋</span>
+                <span className="metadata-text">Organisation</span>
+              </div>
+              <div className="metadata-item">
+                <span className="metadata-icon">🎯</span>
+                <span className="metadata-text">Progression</span>
+              </div>
+            </div>
+            <button
+              className="btn btn-primary btn-fullwidth"
+              onClick={() => setCurrentView('sections')}
+            >
+              <span>Gérer les sections</span>
+              <span className="btn-icon">⚙️</span>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   )
@@ -236,6 +285,19 @@ function App() {
 
       <main className="app-main">
         {currentView === 'menu' && renderMainMenu()}
+        {currentView === 'sections' && (
+          <SectionManager
+            onSectionSelect={handleSectionSelect}
+            onBackToMenu={handleBackToMenu}
+          />
+        )}
+        {currentView === 'section-view' && currentSection && (
+          <SectionView
+            section={currentSection}
+            onUnitComplete={handleUnitComplete}
+            onBackToSections={handleBackToSections}
+          />
+        )}
         {currentView === 'unit1' && (
           <LearningUnit
             unit={learningUnit1}
