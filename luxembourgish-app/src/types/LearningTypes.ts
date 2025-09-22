@@ -19,6 +19,9 @@ export interface Exercise {
   correctAnswer: string
   distractors?: string[]
   context?: string
+  wordBank?: string[]
+  expectedSentence?: string
+  hint?: string
 }
 
 export interface LearningUnit {
@@ -56,6 +59,8 @@ export type ExerciseType =
   | 'translation'          // Traduction français → luxembourgeois
   | 'dialogue_completion'  // Complétion de dialogue
   | 'pronunciation'        // Répétition guidée
+  | 'sentence_construction' // Construction de phrase
+  | 'speech_recognition'    // Répétition + reconnaissance de phrase
 
 export interface UserStats {
   totalXp: number

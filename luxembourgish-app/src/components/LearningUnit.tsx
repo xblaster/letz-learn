@@ -26,6 +26,8 @@ import ImageAssociationExercise from './exercises/ImageAssociationExercise'
 import TranslationExercise from './exercises/TranslationExercise'
 import DialogueCompletionExercise from './exercises/DialogueCompletionExercise'
 import PronunciationExercise from './exercises/PronunciationExercise'
+import SentenceConstructionExercise from './exercises/SentenceConstructionExercise'
+import SpeechRecognitionExercise from './exercises/SpeechRecognitionExercise'
 import { keyframes } from '@mui/system'
 import { AudioService } from '../services/AudioService'
 
@@ -148,6 +150,10 @@ const LearningUnit = ({ unit, onUnitComplete, onExit }: LearningUnitProps) => {
         return <DialogueCompletionExercise key={currentExercise.id} {...exerciseProps} />
       case 'pronunciation':
         return <PronunciationExercise key={currentExercise.id} {...exerciseProps} />
+      case 'sentence_construction':
+        return <SentenceConstructionExercise key={currentExercise.id} {...exerciseProps} />
+      case 'speech_recognition':
+        return <SpeechRecognitionExercise key={currentExercise.id} {...exerciseProps} />
       default:
         return <Typography variant="body1">Type d'exercice non supporté</Typography>
     }
@@ -276,7 +282,9 @@ const getExerciseTypeName = (type?: Exercise['type']): string => {
     image_association: 'Association situation',
     translation: 'Traduction',
     dialogue_completion: 'Dialogue',
-    pronunciation: 'Prononciation'
+    pronunciation: 'Prononciation',
+    sentence_construction: 'Construction de phrase',
+    speech_recognition: 'Reconnaissance vocale'
   }
 
   if (!type) {
