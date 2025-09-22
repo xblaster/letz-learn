@@ -105,6 +105,29 @@ export const generateUnit3Exercises = (): Exercise[] => {
     context: 'Situation: Rencontre formelle avec un adulte inconnu'
   })
 
+  exercises.push({
+    id: 'sentence_question_formal',
+    type: 'sentence_construction',
+    vocabularyItem: unit3Vocabulary[0],
+    question: 'Assemblez la question formelle pour demander le nom de quelqu\'un.',
+    wordBank: ['Wéi', 'heescht', 'Dir'].sort(() => Math.random() - 0.5),
+    correctAnswer: 'Wéi heescht Dir',
+    expectedSentence: 'Wéi heescht Dir',
+    hint: 'Le verbe « heescht » suit immédiatement « Wéi » dans la question.',
+    context: 'Formule de politesse pour s\'adresser à un inconnu'
+  })
+
+  exercises.push({
+    id: 'speech_recognition_question',
+    type: 'speech_recognition',
+    vocabularyItem: unit3Vocabulary[3],
+    question: 'Prononcez la question familière « Wéi heescht du? » pour demander le nom d\'un ami.',
+    correctAnswer: 'Wéi heescht du',
+    expectedSentence: 'Wéi heescht du',
+    hint: 'Adoucissez le « Wéi » (prononcé "vay") et terminez sur un ton montant.',
+    context: 'Question entre amis ou personnes du même âge'
+  })
+
   return exercises.sort(() => Math.random() - 0.5) // Mélange aléatoire final
 }
 

@@ -91,6 +91,29 @@ export const generateUnit1Exercises = (): Exercise[] => {
     context: 'Congé en partant'
   })
 
+  exercises.push({
+    id: 'sentence_building_greeting',
+    type: 'sentence_construction',
+    vocabularyItem: unit1Vocabulary[0],
+    question: 'Assemblez la phrase complète pour dire bonjour et vous présenter.',
+    wordBank: ['Moien', 'ech', 'sinn', 'Léa'].sort(() => Math.random() - 0.5),
+    correctAnswer: 'Moien ech sinn Léa',
+    expectedSentence: 'Moien ech sinn Léa',
+    hint: 'Commencez par la salutation et terminez par votre prénom.',
+    context: 'Présentation simple lors d\'une première rencontre'
+  })
+
+  exercises.push({
+    id: 'speech_recognition_greeting',
+    type: 'speech_recognition',
+    vocabularyItem: unit1Vocabulary[0],
+    question: 'Prononcez la salutation complète « Moien, wéi geet et? »',
+    correctAnswer: 'Moien wéi geet et',
+    expectedSentence: 'Moien wéi geet et',
+    hint: 'Accentuez légèrement « Moien » et liez « geet » et « et ».',
+    context: 'Salutation amicale le matin'
+  })
+
   // Mélanger les exercices pour variété
   return exercises.sort(() => Math.random() - 0.5)
 }

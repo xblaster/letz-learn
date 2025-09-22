@@ -91,6 +91,29 @@ export const generateUnit2Exercises = (): Exercise[] => {
     context: 'Structure: Ech sinn vun [lieu] = Je suis de [lieu]'
   })
 
+  exercises.push({
+    id: 'sentence_origin',
+    type: 'sentence_construction',
+    vocabularyItem: unit2Vocabulary[2],
+    question: 'Construisez la phrase pour dire que vous venez du Luxembourg.',
+    wordBank: ['Ech', 'sinn', 'vun', 'Lëtzebuerg'].sort(() => Math.random() - 0.5),
+    correctAnswer: 'Ech sinn vun Lëtzebuerg',
+    expectedSentence: 'Ech sinn vun Lëtzebuerg',
+    hint: 'Placez le verbe « sinn » en deuxième position comme en allemand.',
+    context: 'Présentation de son origine'
+  })
+
+  exercises.push({
+    id: 'speech_recognition_home',
+    type: 'speech_recognition',
+    vocabularyItem: unit2Vocabulary[3],
+    question: 'Prononcez la phrase « Ech wunnen zu Lëtzebuerg » pour dire où vous habitez.',
+    correctAnswer: 'Ech wunnen zu Lëtzebuerg',
+    expectedSentence: 'Ech wunnen zu Lëtzebuerg',
+    hint: 'Prononcez « wunnen » comme « voun-nèn » et adoucissez « Lëtzebuerg ».',
+    context: 'Indiquer son lieu de résidence'
+  })
+
   return exercises.sort(() => Math.random() - 0.5)
 }
 

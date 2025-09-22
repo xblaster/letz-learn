@@ -12,17 +12,11 @@ import MicRoundedIcon from '@mui/icons-material/MicRounded'
 import VolumeUpRoundedIcon from '@mui/icons-material/VolumeUpRounded'
 import TipsAndUpdatesRoundedIcon from '@mui/icons-material/TipsAndUpdatesRounded'
 import { Exercise } from '../../types/LearningTypes'
+import { SpeechRecognitionService } from '../../services/SpeechRecognitionService'
 
 interface PronunciationExerciseProps {
   exercise: Exercise
   onComplete: (isCorrect: boolean, timeSpent: number) => void
-}
-
-declare global {
-  interface Window {
-    SpeechRecognition: any
-    webkitSpeechRecognition: any
-  }
 }
 
 const PronunciationExercise = ({ exercise, onComplete }: PronunciationExerciseProps) => {
@@ -49,8 +43,14 @@ const PronunciationExercise = ({ exercise, onComplete }: PronunciationExercisePr
     }
 
     try {
-      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
-      const recognition = new SpeechRecognition()
+      const SpeechRecognitionConstructor = window.SpeechRecognition || window.webkitSpeechRecognition
+
+      if (!SpeechRecognitionConstructor) {
+        handleSimulatedRecording()
+        return
+      }
+
+      const recognition = new SpeechRecognitionConstructor()
 
       recognition.lang = 'de-DE'
       recognition.continuous = false
@@ -105,8 +105,7 @@ const PronunciationExercise = ({ exercise, onComplete }: PronunciationExercisePr
   }
 
   const evaluatePronunciation = (spoken: string, target: string) => {
-    const similarity = calculateSimilarity(spoken, target)
-    const isCorrect = similarity > 0.6
+    const { isCorrect } = SpeechRecognitionService.scoreTranscript(target, spoken)
 
     if (isCorrect) {
       setFeedback('Excellent ! Votre prononciation est très bonne.')
@@ -121,44 +120,6 @@ const PronunciationExercise = ({ exercise, onComplete }: PronunciationExercisePr
       const timeSpent = Date.now() - startTime
       onComplete(isCorrect, timeSpent)
     }, 2000)
-  }
-
-  const calculateSimilarity = (str1: string, str2: string) => {
-    const longer = str1.length > str2.length ? str1 : str2
-    const shorter = str1.length > str2.length ? str2 : str1
-
-    if (longer.length === 0) return 1
-
-    const editDistance = levenshteinDistance(longer.toLowerCase(), shorter.toLowerCase())
-    return (longer.length - editDistance) / longer.length
-  }
-
-  const levenshteinDistance = (str1: string, str2: string) => {
-    const matrix: number[][] = []
-
-    for (let i = 0; i <= str2.length; i++) {
-      matrix[i] = [i]
-    }
-
-    for (let j = 0; j <= str1.length; j++) {
-      matrix[0][j] = j
-    }
-
-    for (let i = 1; i <= str2.length; i++) {
-      for (let j = 1; j <= str1.length; j++) {
-        if (str2.charAt(i - 1) === str1.charAt(j - 1)) {
-          matrix[i][j] = matrix[i - 1][j - 1]
-        } else {
-          matrix[i][j] = Math.min(
-            matrix[i - 1][j - 1] + 1,
-            matrix[i][j - 1] + 1,
-            matrix[i - 1][j] + 1
-          )
-        }
-      }
-    }
-
-    return matrix[str2.length][str1.length]
   }
 
   const getPronunciationTips = () => {
