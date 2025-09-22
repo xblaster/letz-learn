@@ -64,37 +64,33 @@ export interface UserStats {
   accuracy: number
 }
 
-// Membre d'équipe responsable d'une section/unité
-export interface TeamMember {
+// Nœud du parcours d'apprentissage (comme dans Duolingo)
+export interface PathNode {
   id: string
-  name: string
-  role: 'lead' | 'developer' | 'content' | 'qa'
-  specialization?: string
-  avatar?: string
+  unit: LearningUnit
+  position: { x: number; y: number } // Position sur le parcours
+  isUnlocked: boolean
+  isCompleted: boolean
+  sectionId: string
 }
 
-// Section regroupant plusieurs unités
-export interface LearningSection {
+// Section du parcours avec style visuel
+export interface PathSection {
   id: string
   title: string
   description: string
-  icon: string
   color: string
-  level: 'A1' | 'A2' | 'B1' | 'B2'
-  units: LearningUnit[]
-  teamLead: TeamMember
-  contributors: TeamMember[]
-  estimatedTotalTime: number // en minutes
-  isActive: boolean
+  nodes: PathNode[]
   order: number
 }
 
 // État de l'application d'apprentissage
 export interface LearningState {
-  currentSection: LearningSection | null
+  currentNode: PathNode | null
   currentUnit: LearningUnit | null
   unitProgress: UnitProgress | null
   userStats: UserStats
   isExerciseActive: boolean
   currentExercise: Exercise | null
+  completedNodes: string[]
 }

@@ -1,18 +1,13 @@
 import { useState } from 'react'
 import './NewDesignApp.css'
+import './styles/SimpleUnitsList.css'
 import VocabularyQuiz from './components/VocabularyQuiz'
 import PhraseList from './components/PhraseList'
-import LearningUnit from './components/LearningUnit'
-import SectionManager from './components/SectionManager'
-import SectionView from './components/SectionView'
-import { learningUnit1 } from './data/Unit1Data'
-import { learningUnit2 } from './data/Unit2Data'
-import { learningUnit3 } from './data/Unit3Data'
-import { UnitProgress, UserStats, LearningSection } from './types/LearningTypes'
+import SimpleUnitsList from './components/SimpleUnitsList'
+import { UnitProgress, UserStats } from './types/LearningTypes'
 
 function App() {
-  const [currentView, setCurrentView] = useState<'menu' | 'sections' | 'section-view' | 'unit1' | 'unit2' | 'unit3' | 'quiz' | 'phrases'>('menu')
-  const [currentSection, setCurrentSection] = useState<LearningSection | null>(null)
+  const [currentView, setCurrentView] = useState<'menu' | 'sections' | 'quiz' | 'phrases'>('menu')
   const [userStats, setUserStats] = useState<UserStats>({
     totalXp: 0,
     streak: 0,
@@ -41,21 +36,6 @@ function App() {
     return Math.round((currentAccuracy + newScore) / 2)
   }
 
-  const handleSectionSelect = (section: LearningSection) => {
-    setCurrentSection(section)
-    setCurrentView('section-view')
-  }
-
-  const handleBackToSections = () => {
-    setCurrentSection(null)
-    setCurrentView('sections')
-  }
-
-  const handleBackToMenu = () => {
-    setCurrentSection(null)
-    setCurrentView('menu')
-  }
-
   const renderMainMenu = () => (
     <div className="main-menu">
       <div className="menu-hero">
@@ -81,92 +61,30 @@ function App() {
       <div className="learning-grid">
         <div className="learning-card featured">
           <div className="card-icon-wrapper">
-            <span className="card-icon">🎓</span>
+            <span className="card-icon">📚</span>
           </div>
           <div className="card-content">
-            <h3 className="card-title">Unité 1 : Premières rencontres</h3>
-            <p className="card-description">Apprenez les salutations et expressions de politesse essentielles</p>
+            <h3 className="card-title">Sections d'apprentissage</h3>
+            <p className="card-description">Progressez par sections thématiques avec 6 unités structurées</p>
             <div className="card-metadata">
               <div className="metadata-item">
-                <span className="metadata-icon">📚</span>
-                <span className="metadata-text">4 mots nouveaux</span>
+                <span className="metadata-icon">🎯</span>
+                <span className="metadata-text">3 sections</span>
+              </div>
+              <div className="metadata-item">
+                <span className="metadata-icon">📖</span>
+                <span className="metadata-text">6 unités</span>
               </div>
               <div className="metadata-item">
                 <span className="metadata-icon">⏱️</span>
-                <span className="metadata-text">~3 minutes</span>
-              </div>
-              <div className="metadata-item">
-                <span className="metadata-icon">⭐</span>
-                <span className="metadata-text">Niveau A1</span>
+                <span className="metadata-text">~20 minutes</span>
               </div>
             </div>
             <button
               className="btn btn-primary btn-fullwidth"
-              onClick={() => setCurrentView('unit1')}
+              onClick={() => setCurrentView('sections')}
             >
-              <span>Commencer l'unité 1</span>
-              <span className="btn-icon">→</span>
-            </button>
-          </div>
-        </div>
-
-        <div className="learning-card">
-          <div className="card-icon-wrapper">
-            <span className="card-icon">👤</span>
-          </div>
-          <div className="card-content">
-            <h3 className="card-title">Unité 2 : Ech sinn...</h3>
-            <p className="card-description">Apprenez à vous présenter en luxembourgeois</p>
-            <div className="card-metadata">
-              <div className="metadata-item">
-                <span className="metadata-icon">📚</span>
-                <span className="metadata-text">4 mots nouveaux</span>
-              </div>
-              <div className="metadata-item">
-                <span className="metadata-icon">⏱️</span>
-                <span className="metadata-text">~3 minutes</span>
-              </div>
-              <div className="metadata-item">
-                <span className="metadata-icon">⭐</span>
-                <span className="metadata-text">Niveau A1</span>
-              </div>
-            </div>
-            <button
-              className="btn btn-secondary btn-fullwidth"
-              onClick={() => setCurrentView('unit2')}
-            >
-              <span>Commencer l'unité 2</span>
-              <span className="btn-icon">→</span>
-            </button>
-          </div>
-        </div>
-
-        <div className="learning-card">
-          <div className="card-icon-wrapper">
-            <span className="card-icon">❓</span>
-          </div>
-          <div className="card-content">
-            <h3 className="card-title">Unité 3 : Wéi heescht Dir?</h3>
-            <p className="card-description">Apprenez à poser des questions poliment</p>
-            <div className="card-metadata">
-              <div className="metadata-item">
-                <span className="metadata-icon">📚</span>
-                <span className="metadata-text">4 mots nouveaux</span>
-              </div>
-              <div className="metadata-item">
-                <span className="metadata-icon">⏱️</span>
-                <span className="metadata-text">~3 minutes</span>
-              </div>
-              <div className="metadata-item">
-                <span className="metadata-icon">⭐</span>
-                <span className="metadata-text">Niveau A1</span>
-              </div>
-            </div>
-            <button
-              className="btn btn-secondary btn-fullwidth"
-              onClick={() => setCurrentView('unit3')}
-            >
-              <span>Commencer l'unité 3</span>
+              <span>Voir les sections</span>
               <span className="btn-icon">→</span>
             </button>
           </div>
@@ -201,7 +119,7 @@ function App() {
 
         <div className="learning-card">
           <div className="card-icon-wrapper">
-            <span className="card-icon">📚</span>
+            <span className="card-icon">📖</span>
           </div>
           <div className="card-content">
             <h3 className="card-title">Phrases Utiles</h3>
@@ -226,36 +144,6 @@ function App() {
           </div>
         </div>
 
-        <div className="learning-card featured">
-          <div className="card-icon-wrapper">
-            <span className="card-icon">🏗️</span>
-          </div>
-          <div className="card-content">
-            <h3 className="card-title">Gestion des Sections</h3>
-            <p className="card-description">Système modulaire d'apprentissage organisé par équipes</p>
-            <div className="card-metadata">
-              <div className="metadata-item">
-                <span className="metadata-icon">👥</span>
-                <span className="metadata-text">Travail d'équipe</span>
-              </div>
-              <div className="metadata-item">
-                <span className="metadata-icon">📋</span>
-                <span className="metadata-text">Organisation</span>
-              </div>
-              <div className="metadata-item">
-                <span className="metadata-icon">🎯</span>
-                <span className="metadata-text">Progression</span>
-              </div>
-            </div>
-            <button
-              className="btn btn-primary btn-fullwidth"
-              onClick={() => setCurrentView('sections')}
-            >
-              <span>Gérer les sections</span>
-              <span className="btn-icon">⚙️</span>
-            </button>
-          </div>
-        </div>
       </div>
     </div>
   )
@@ -286,37 +174,9 @@ function App() {
       <main className="app-main">
         {currentView === 'menu' && renderMainMenu()}
         {currentView === 'sections' && (
-          <SectionManager
-            onSectionSelect={handleSectionSelect}
-            onBackToMenu={handleBackToMenu}
-          />
-        )}
-        {currentView === 'section-view' && currentSection && (
-          <SectionView
-            section={currentSection}
+          <SimpleUnitsList
+            onBack={() => setCurrentView('menu')}
             onUnitComplete={handleUnitComplete}
-            onBackToSections={handleBackToSections}
-          />
-        )}
-        {currentView === 'unit1' && (
-          <LearningUnit
-            unit={learningUnit1}
-            onUnitComplete={handleUnitComplete}
-            onExit={() => setCurrentView('menu')}
-          />
-        )}
-        {currentView === 'unit2' && (
-          <LearningUnit
-            unit={learningUnit2}
-            onUnitComplete={handleUnitComplete}
-            onExit={() => setCurrentView('menu')}
-          />
-        )}
-        {currentView === 'unit3' && (
-          <LearningUnit
-            unit={learningUnit3}
-            onUnitComplete={handleUnitComplete}
-            onExit={() => setCurrentView('menu')}
           />
         )}
         {currentView === 'quiz' && <VocabularyQuiz />}

@@ -1,0 +1,374 @@
+/* Modern Duolingo-style Learning Path */
+
+.learning-path-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 2rem 1rem;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Header */
+.path-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3rem;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.path-title {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.path-title h1 {
+  color: white;
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin: 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.overall-progress {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.progress-circle {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, #4ade80 var(--progress, 0%), #ffffff20 var(--progress, 0%));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.progress-circle::before {
+  content: '';
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  background: white;
+  border-radius: 50%;
+}
+
+.progress-text {
+  position: relative;
+  z-index: 1;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #1f2937;
+}
+
+.progress-label {
+  color: white;
+  font-weight: 600;
+  opacity: 0.9;
+}
+
+/* Canvas principal */
+.path-canvas {
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  min-height: 800px;
+}
+
+.path-connections {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  opacity: 0.6;
+}
+
+.connection-path {
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+  stroke-dasharray: 5, 5;
+  animation: pathFlow 3s linear infinite;
+}
+
+@keyframes pathFlow {
+  0% { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: 20; }
+}
+
+/* Sections */
+.path-section {
+  position: relative;
+  z-index: 2;
+  margin-bottom: 4rem;
+}
+
+.section-header {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 1rem;
+  padding: 1.5rem 2rem;
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.section-info h2 {
+  color: white;
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem 0;
+}
+
+.section-description {
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+  font-size: 1rem;
+}
+
+.section-progress {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-width: 150px;
+}
+
+.progress-bar {
+  flex: 1;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.progress-percentage {
+  color: white;
+  font-weight: 600;
+  font-size: 0.9rem;
+  min-width: 40px;
+}
+
+/* Nœuds */
+.section-nodes {
+  position: relative;
+  height: 400px;
+}
+
+.path-node {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 3;
+}
+
+.path-node:hover {
+  transform: translate(-50%, -50%) scale(1.05);
+}
+
+.path-node.locked {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.path-node.locked:hover {
+  transform: translate(-50%, -50%);
+}
+
+.node-circle {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: var(--node-color, #4ade80);
+  border: 4px solid white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem auto;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  position: relative;
+  overflow: hidden;
+}
+
+.path-node.completed .node-circle {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  animation: completionPulse 2s ease-in-out infinite;
+}
+
+.path-node.locked .node-circle {
+  background: #9ca3af;
+}
+
+@keyframes completionPulse {
+  0%, 100% { box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15); }
+  50% { box-shadow: 0 8px 25px rgba(34, 197, 94, 0.4), 0 0 0 8px rgba(34, 197, 94, 0.1); }
+}
+
+.node-icon {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.icon-completed {
+  font-size: 2rem;
+  animation: checkmarkBounce 0.6s ease-out;
+}
+
+@keyframes checkmarkBounce {
+  0% { transform: scale(0); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+.icon-locked {
+  font-size: 1.2rem;
+}
+
+.node-info {
+  background: white;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  min-width: 250px;
+  text-align: center;
+  border: 2px solid var(--node-color, #4ade80);
+}
+
+.path-node.locked .node-info {
+  border-color: #9ca3af;
+  opacity: 0.7;
+}
+
+.node-title {
+  color: #1f2937;
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem 0;
+}
+
+.node-meta {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.node-level {
+  background: var(--node-color, #4ade80);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.path-node.locked .node-level {
+  background: #9ca3af;
+}
+
+.node-time {
+  color: #6b7280;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.node-description {
+  color: #4b5563;
+  font-size: 0.9rem;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .learning-path-container {
+    padding: 1rem 0.5rem;
+  }
+
+  .path-header {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .path-title {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .path-title h1 {
+    font-size: 2rem;
+  }
+
+  .section-header {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .section-nodes {
+    height: 600px;
+  }
+
+  .node-info {
+    min-width: 200px;
+    padding: 1rem;
+  }
+
+  .node-circle {
+    width: 60px;
+    height: 60px;
+  }
+
+  .node-icon {
+    font-size: 1.2rem;
+  }
+}
+
+/* Animations d'entrée */
+.path-section {
+  animation: slideInUp 0.6s ease-out;
+}
+
+.path-node {
+  animation: fadeInScale 0.8s ease-out;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
