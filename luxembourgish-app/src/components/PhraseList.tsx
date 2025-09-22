@@ -211,7 +211,11 @@ const PhraseList = () => {
             >
               <Stack direction="row" justifyContent="space-between" alignItems="center">
                 <Chip label={phrase.category} size="small" color="primary" sx={{ borderRadius: 999 }} />
-                <IconButton onClick={() => playPronunciation(phrase.luxembourgish)} color="secondary">
+                <IconButton
+                  onClick={() => playPronunciation(phrase.luxembourgish)}
+                  color="secondary"
+                  aria-label={`Écouter ${phrase.luxembourgish}`}
+                >
                   <VolumeUpRoundedIcon />
                 </IconButton>
               </Stack>
