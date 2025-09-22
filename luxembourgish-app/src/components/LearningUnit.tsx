@@ -1,18 +1,33 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import {
-  LearningUnit as LearningUnitType,
+  Box,
+  Button,
+  Card,
+  Divider,
+  IconButton,
+  Stack,
+  Tooltip,
+  Typography
+} from '@mui/material'
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded'
+import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded'
+import AccessTimeRoundedIcon from '@mui/icons-material/AccessTimeRounded'
+import CategoryRoundedIcon from '@mui/icons-material/CategoryRounded'
+import ProgressBar from './ProgressBar'
+import UnitCompletion from './UnitCompletion'
+import {
   Exercise,
   ExerciseResult,
+  LearningUnit as LearningUnitType,
   UnitProgress
 } from '../types/LearningTypes'
-import { AudioService } from '../services/AudioService'
 import AudioRecognitionExercise from './exercises/AudioRecognitionExercise'
 import ImageAssociationExercise from './exercises/ImageAssociationExercise'
 import TranslationExercise from './exercises/TranslationExercise'
 import DialogueCompletionExercise from './exercises/DialogueCompletionExercise'
 import PronunciationExercise from './exercises/PronunciationExercise'
-import ProgressBar from './ProgressBar'
-import UnitCompletion from './UnitCompletion'
+import { keyframes } from '@mui/system'
+import { AudioService } from '../services/AudioService'
 
 interface LearningUnitProps {
   unit: LearningUnitType
@@ -20,10 +35,22 @@ interface LearningUnitProps {
   onExit: () => void
 }
 
-const LearningUnit: React.FC<LearningUnitProps> = ({ unit, onUnitComplete, onExit }) => {
+const containerAnimation = keyframes`
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+`
+
+const heartBeat = keyframes`
+  0% { transform: scale(1); }
+  40% { transform: scale(1.15); }
+  60% { transform: scale(0.95); }
+  100% { transform: scale(1); }
+`
+
+const LearningUnit = ({ unit, onUnitComplete, onExit }: LearningUnitProps) => {
   const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0)
   const [exerciseResults, setExerciseResults] = useState<ExerciseResult[]>([])
-  const [hearts, setHearts] = useState(5) // Système de cœurs comme Duolingo
+  const [hearts, setHearts] = useState(5)
   const [showResult, setShowResult] = useState(false)
   const [isCompleted, setIsCompleted] = useState(false)
   const [startTime] = useState(new Date())
@@ -32,10 +59,10 @@ const LearningUnit: React.FC<LearningUnitProps> = ({ unit, onUnitComplete, onExi
   const progress = Math.round(((currentExerciseIndex + 1) / unit.exercises.length) * 100)
 
   useEffect(() => {
-    // Vérifier si l'unité est terminée
     if (currentExerciseIndex >= unit.exercises.length) {
-      completeUnit()
+      void completeUnit()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentExerciseIndex])
 
   const handleExerciseComplete = async (isCorrect: boolean, timeSpent: number, attempts: number = 1) => {
@@ -47,37 +74,35 @@ const LearningUnit: React.FC<LearningUnitProps> = ({ unit, onUnitComplete, onExi
       timestamp: new Date()
     }
 
-    setExerciseResults(prev => [...prev, result])
+    const updatedResults = [...exerciseResults, result]
+    setExerciseResults(updatedResults)
 
-    // Activer l'audio si nécessaire
     await AudioService.enableAudio()
-
-    // Jouer le son de feedback
-    const correctAnswers = exerciseResults.filter(r => r.isCorrect).length + (isCorrect ? 1 : 0)
-    const accuracy = Math.round((correctAnswers / (exerciseResults.length + 1)) * 100)
+    const correctAnswers = updatedResults.filter(r => r.isCorrect).length
+    const accuracy = Math.round((correctAnswers / updatedResults.length) * 100)
     AudioService.playFeedbackSound(isCorrect, accuracy)
 
     if (!isCorrect) {
       setHearts(prev => Math.max(0, prev - 1))
 
-      // Game Over si plus de cœurs
       if (hearts <= 1) {
         setShowResult(true)
         return
       }
     }
 
-    // Passer à l'exercice suivant après un court délai avec son de transition
     setTimeout(() => {
       AudioService.playTransitionSound()
       setCurrentExerciseIndex(prev => prev + 1)
-    }, 1500)
+    }, 1200)
   }
 
   const completeUnit = async () => {
     const endTime = new Date()
     const correctAnswers = exerciseResults.filter(r => r.isCorrect).length
-    const accuracy = Math.round((correctAnswers / exerciseResults.length) * 100)
+    const accuracy = exerciseResults.length > 0
+      ? Math.round((correctAnswers / exerciseResults.length) * 100)
+      : 0
 
     const progress: UnitProgress = {
       unitId: unit.id,
@@ -89,7 +114,6 @@ const LearningUnit: React.FC<LearningUnitProps> = ({ unit, onUnitComplete, onExi
       completedAt: endTime
     }
 
-    // Jouer le son de completion d'unité
     await AudioService.enableAudio()
     AudioService.playCompletionSound()
 
@@ -110,37 +134,35 @@ const LearningUnit: React.FC<LearningUnitProps> = ({ unit, onUnitComplete, onExi
 
     const exerciseProps = {
       exercise: currentExercise,
-      onComplete: handleExerciseComplete,
-      key: currentExercise.id // Force re-render pour chaque exercice
+      onComplete: handleExerciseComplete
     }
 
     switch (currentExercise.type) {
       case 'audio_recognition':
-        return <AudioRecognitionExercise {...exerciseProps} />
+        return <AudioRecognitionExercise key={currentExercise.id} {...exerciseProps} />
       case 'image_association':
-        return <ImageAssociationExercise {...exerciseProps} />
+        return <ImageAssociationExercise key={currentExercise.id} {...exerciseProps} />
       case 'translation':
-        return <TranslationExercise {...exerciseProps} />
+        return <TranslationExercise key={currentExercise.id} {...exerciseProps} />
       case 'dialogue_completion':
-        return <DialogueCompletionExercise {...exerciseProps} />
+        return <DialogueCompletionExercise key={currentExercise.id} {...exerciseProps} />
       case 'pronunciation':
-        return <PronunciationExercise {...exerciseProps} />
+        return <PronunciationExercise key={currentExercise.id} {...exerciseProps} />
       default:
-        return <div>Type d'exercice non supporté</div>
+        return <Typography variant="body1">Type d'exercice non supporté</Typography>
     }
   }
 
-  // Écran de fin d'unité ou game over
   if (showResult || isCompleted) {
     const correctAnswers = exerciseResults.filter(r => r.isCorrect).length
-    const accuracy = Math.round((correctAnswers / exerciseResults.length) * 100)
+    const accuracy = Math.round((correctAnswers / (exerciseResults.length || 1)) * 100)
 
     return (
       <UnitCompletion
         unit={unit}
         accuracy={accuracy}
         isSuccess={isCompleted && accuracy >= unit.targetScore}
-        totalTime={Math.round((new Date().getTime() - startTime.getTime()) / 1000 / 60)}
+        totalTime={Math.max(1, Math.round((new Date().getTime() - startTime.getTime()) / 1000 / 60))}
         onRestart={restartUnit}
         onExit={onExit}
       />
@@ -148,53 +170,120 @@ const LearningUnit: React.FC<LearningUnitProps> = ({ unit, onUnitComplete, onExi
   }
 
   return (
-    <div className="learning-unit">
-      {/* Header avec progression */}
-      <div className="unit-header">
-        <div className="unit-info">
-          <button onClick={onExit} className="exit-btn">✕</button>
-          <h2>{unit.title}</h2>
-          <div className="hearts">
-            {Array.from({ length: 5 }).map((_, i) => (
-              <span key={i} className={`heart ${i < hearts ? 'active' : 'inactive'}`}>
-                ❤️
-              </span>
-            ))}
-          </div>
-        </div>
+    <Card
+      elevation={0}
+      sx={{
+        p: { xs: 3, md: 4 },
+        background: 'linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(245,249,255,0.9) 100%)',
+        backdropFilter: 'blur(14px)',
+        animation: `${containerAnimation} 0.4s ease`
+      }}
+    >
+      <Stack spacing={3}>
+        <Stack direction={{ xs: 'column', md: 'row' }} justifyContent="space-between" alignItems={{ xs: 'flex-start', md: 'center' }} spacing={2}>
+          <Stack spacing={1}>
+            <Stack direction="row" alignItems="center" spacing={1.5}>
+              <Tooltip title="Quitter l'unité">
+                <IconButton onClick={onExit} color="primary" size="small">
+                  <CloseRoundedIcon />
+                </IconButton>
+              </Tooltip>
+              <Typography variant="h4">{unit.title}</Typography>
+            </Stack>
+            <Typography variant="body1" color="text.secondary">
+              {unit.description}
+            </Typography>
 
-        <ProgressBar
-          progress={progress}
-          currentStep={currentExerciseIndex + 1}
-          totalSteps={unit.exercises.length}
-        />
-      </div>
+            <Stack direction="row" spacing={1.5} alignItems="center">
+              <Stack direction="row" spacing={0.5} alignItems="center">
+                {Array.from({ length: 5 }).map((_, index) => (
+                  <FavoriteRoundedIcon
+                    key={index}
+                    color={index < hearts ? 'error' : 'disabled'}
+                    sx={{
+                      fontSize: 22,
+                      animation: index < hearts ? `${heartBeat} 2.8s ease ${index * 0.12}s infinite` : 'none'
+                    }}
+                  />
+                ))}
+              </Stack>
+              <Divider orientation="vertical" flexItem sx={{ mx: 1 }} />
+              <Stack direction="row" spacing={1.5} alignItems="center">
+                <Stack direction="row" spacing={0.5} alignItems="center">
+                  <AccessTimeRoundedIcon color="primary" fontSize="small" />
+                  <Typography variant="body2" color="text.secondary">
+                    ~{unit.estimatedTime} min
+                  </Typography>
+                </Stack>
+                <Stack direction="row" spacing={0.5} alignItems="center">
+                  <CategoryRoundedIcon color="secondary" fontSize="small" />
+                  <Typography variant="body2" color="text.secondary">
+                    Niveau {unit.level}
+                  </Typography>
+                </Stack>
+              </Stack>
+            </Stack>
+          </Stack>
+        </Stack>
 
-      {/* Exercice actuel */}
-      <div className="exercise-container">
-        {renderExercise()}
-      </div>
+        <Divider sx={{ opacity: 0.3 }} />
 
-      {/* Footer avec informations */}
-      <div className="unit-footer">
-        <div className="exercise-info">
-          <span>Exercice {currentExerciseIndex + 1} sur {unit.exercises.length}</span>
-          <span className="exercise-type">{getExerciseTypeName(currentExercise?.type)}</span>
-        </div>
-      </div>
-    </div>
+        <ProgressBar progress={progress} currentStep={currentExerciseIndex + 1} totalSteps={unit.exercises.length} />
+
+        <Box
+          sx={{
+            borderRadius: 4,
+            border: '1px solid rgba(25,118,210,0.08)',
+            backgroundColor: 'rgba(255,255,255,0.9)',
+            p: { xs: 2.5, md: 3 },
+            boxShadow: '0 20px 50px rgba(25, 118, 210, 0.08)'
+          }}
+        >
+          {renderExercise()}
+        </Box>
+
+        <Box
+          sx={{
+            borderRadius: 3,
+            background: 'rgba(25,118,210,0.08)',
+            px: { xs: 2, md: 3 },
+            py: { xs: 1.5, md: 2 },
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            flexWrap: 'wrap',
+            gap: 1.5
+          }}
+        >
+          <Typography variant="body2">
+            Exercice {currentExerciseIndex + 1} sur {unit.exercises.length}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            {getExerciseTypeName(currentExercise?.type)}
+          </Typography>
+          <Button variant="outlined" size="small" onClick={onExit}>
+            Mettre en pause
+          </Button>
+        </Box>
+      </Stack>
+    </Card>
   )
 }
 
-function getExerciseTypeName(type?: string): string {
-  const names = {
-    'audio_recognition': 'Reconnaissance audio',
-    'image_association': 'Association situation',
-    'translation': 'Traduction',
-    'dialogue_completion': 'Dialogue',
-    'pronunciation': 'Prononciation'
+const getExerciseTypeName = (type?: Exercise['type']): string => {
+  const mapping: Record<Exercise['type'], string> = {
+    audio_recognition: 'Reconnaissance audio',
+    image_association: 'Association situation',
+    translation: 'Traduction',
+    dialogue_completion: 'Dialogue',
+    pronunciation: 'Prononciation'
   }
-  return names[type as keyof typeof names] || 'Exercice'
+
+  if (!type) {
+    return 'Exercice'
+  }
+
+  return mapping[type]
 }
 
 export default LearningUnit

@@ -1,15 +1,78 @@
-import { useState } from 'react'
-import './NewDesignApp.css'
+import { useState, type ReactNode } from 'react'
+import {
+  AppBar,
+  Avatar,
+  Box,
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  Chip,
+  Container,
+  Divider,
+  Stack,
+  Typography
+} from '@mui/material'
+import Grid from '@mui/material/GridLegacy'
+import { keyframes } from '@mui/system'
+import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded'
+import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded'
+import AutoAwesomeRoundedIcon from '@mui/icons-material/AutoAwesomeRounded'
+import EmojiEventsRoundedIcon from '@mui/icons-material/EmojiEventsRounded'
+import LibraryBooksRoundedIcon from '@mui/icons-material/LibraryBooksRounded'
+import MenuBookRoundedIcon from '@mui/icons-material/MenuBookRounded'
+import MilitaryTechRoundedIcon from '@mui/icons-material/MilitaryTechRounded'
+import QueryStatsRoundedIcon from '@mui/icons-material/QueryStatsRounded'
+import QuizRoundedIcon from '@mui/icons-material/QuizRounded'
+import SchoolRoundedIcon from '@mui/icons-material/SchoolRounded'
+import StarRoundedIcon from '@mui/icons-material/StarRounded'
+import RocketLaunchRoundedIcon from '@mui/icons-material/RocketLaunchRounded'
+import LearningUnit from './components/LearningUnit'
 import VocabularyQuiz from './components/VocabularyQuiz'
 import PhraseList from './components/PhraseList'
-import LearningUnit from './components/LearningUnit'
 import { learningUnit1 } from './data/Unit1Data'
 import { learningUnit2 } from './data/Unit2Data'
 import { learningUnit3 } from './data/Unit3Data'
 import { UnitProgress, UserStats } from './types/LearningTypes'
 
+type View = 'menu' | 'unit1' | 'unit2' | 'unit3' | 'quiz' | 'phrases'
+
+const pageTransition = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+`
+
+const cardEntrance = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(32px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+`
+
+const statPulse = keyframes`
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+  100% { transform: translateY(0); }
+`
+
+const iconFloat = keyframes`
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+  100% { transform: translateY(0); }
+`
+
 function App() {
-  const [currentView, setCurrentView] = useState<'menu' | 'unit1' | 'unit2' | 'unit3' | 'quiz' | 'phrases'>('menu')
+  const [currentView, setCurrentView] = useState<View>('menu')
   const [userStats, setUserStats] = useState<UserStats>({
     totalXp: 0,
     streak: 0,
@@ -35,233 +98,376 @@ function App() {
   }
 
   const updateAccuracy = (currentAccuracy: number, newScore: number): number => {
+    if (currentAccuracy === 0) {
+      return newScore
+    }
     return Math.round((currentAccuracy + newScore) / 2)
   }
 
-  const renderMainMenu = () => (
-    <div className="main-menu">
-      <div className="menu-hero">
-        <h2 className="section-title">Choisissez votre mode d'apprentissage</h2>
-        <div className="user-stats">
-          <div className="stat-card">
-            <div className="stat-icon">⭐</div>
-            <div className="stat-info">
-              <div className="stat-value">{userStats.totalXp}</div>
-              <div className="stat-label">XP</div>
-            </div>
-          </div>
-          <div className="stat-card">
-            <div className="stat-icon">🏆</div>
-            <div className="stat-info">
-              <div className="stat-value">{userStats.unitsCompleted}</div>
-              <div className="stat-label">Unités</div>
-            </div>
-          </div>
-        </div>
-      </div>
+  const renderMainMenu = () => {
+    const statCards = [
+      {
+        label: 'XP',
+        value: userStats.totalXp,
+        icon: <StarRoundedIcon />,
+        gradient: 'linear-gradient(135deg, rgba(255, 214, 102, 0.24) 0%, rgba(255, 171, 64, 0.16) 100%)'
+      },
+      {
+        label: 'Unités',
+        value: userStats.unitsCompleted,
+        icon: <MilitaryTechRoundedIcon />,
+        gradient: 'linear-gradient(135deg, rgba(33, 150, 243, 0.24) 0%, rgba(25, 118, 210, 0.16) 100%)'
+      },
+      {
+        label: 'Précision',
+        value: `${userStats.accuracy}%`,
+        icon: <QueryStatsRoundedIcon />,
+        gradient: 'linear-gradient(135deg, rgba(20, 184, 166, 0.24) 0%, rgba(14, 116, 144, 0.16) 100%)'
+      }
+    ]
 
-      <div className="learning-grid">
-        <div className="learning-card featured">
-          <div className="card-icon-wrapper">
-            <span className="card-icon">🎓</span>
-          </div>
-          <div className="card-content">
-            <h3 className="card-title">Unité 1 : Premières rencontres</h3>
-            <p className="card-description">Apprenez les salutations et expressions de politesse essentielles</p>
-            <div className="card-metadata">
-              <div className="metadata-item">
-                <span className="metadata-icon">📚</span>
-                <span className="metadata-text">4 mots nouveaux</span>
-              </div>
-              <div className="metadata-item">
-                <span className="metadata-icon">⏱️</span>
-                <span className="metadata-text">~3 minutes</span>
-              </div>
-              <div className="metadata-item">
-                <span className="metadata-icon">⭐</span>
-                <span className="metadata-text">Niveau A1</span>
-              </div>
-            </div>
-            <button
-              className="btn btn-primary btn-fullwidth"
-              onClick={() => setCurrentView('unit1')}
-            >
-              <span>Commencer l'unité 1</span>
-              <span className="btn-icon">→</span>
-            </button>
-          </div>
-        </div>
+    const learningCards = [
+      {
+        key: 'unit1' as const,
+        title: 'Unité 1 : Premières rencontres',
+        description: 'Apprenez les salutations et expressions de politesse essentielles.',
+        icon: <SchoolRoundedIcon fontSize="medium" />,
+        accent: 'primary',
+        metadata: [
+          { icon: <MenuBookRoundedIcon fontSize="small" />, text: '4 mots nouveaux' },
+          { icon: <QueryStatsRoundedIcon fontSize="small" />, text: '~3 minutes' },
+          { icon: <EmojiEventsRoundedIcon fontSize="small" />, text: 'Niveau A1' }
+        ],
+        actionLabel: "Commencer l'unité 1",
+        actionIcon: <ArrowForwardRoundedIcon />,
+        actionColor: 'primary',
+        view: 'unit1' as View
+      },
+      {
+        key: 'unit2' as const,
+        title: 'Unité 2 : Ech sinn...',
+        description: 'Apprenez à vous présenter et partager quelques informations personnelles.',
+        icon: <AutoAwesomeRoundedIcon fontSize="medium" />,
+        accent: 'secondary',
+        metadata: [
+          { icon: <MenuBookRoundedIcon fontSize="small" />, text: '4 mots nouveaux' },
+          { icon: <QueryStatsRoundedIcon fontSize="small" />, text: '~3 minutes' },
+          { icon: <EmojiEventsRoundedIcon fontSize="small" />, text: 'Niveau A1' }
+        ],
+        actionLabel: "Explorer l'unité 2",
+        actionIcon: <ArrowForwardRoundedIcon />,
+        actionColor: 'secondary',
+        view: 'unit2' as View
+      },
+      {
+        key: 'unit3' as const,
+        title: 'Unité 3 : Wéi heescht Dir?',
+        description: 'Apprenez à poser des questions poliment et comprendre les réponses.',
+        icon: <LibraryBooksRoundedIcon fontSize="medium" />,
+        accent: 'info',
+        metadata: [
+          { icon: <MenuBookRoundedIcon fontSize="small" />, text: '4 mots nouveaux' },
+          { icon: <QueryStatsRoundedIcon fontSize="small" />, text: '~3 minutes' },
+          { icon: <EmojiEventsRoundedIcon fontSize="small" />, text: 'Niveau A1' }
+        ],
+        actionLabel: "Découvrir l'unité 3",
+        actionIcon: <ArrowForwardRoundedIcon />,
+        actionColor: 'info',
+        view: 'unit3' as View
+      },
+      {
+        key: 'quiz' as const,
+        title: 'Quiz vocabulaire',
+        description: 'Testez vos connaissances avec des questions dynamiques et adaptées.',
+        icon: <QuizRoundedIcon fontSize="medium" />,
+        accent: 'warning',
+        metadata: [
+          { icon: <AutoAwesomeRoundedIcon fontSize="small" />, text: 'Mode libre' },
+          { icon: <QueryStatsRoundedIcon fontSize="small" />, text: 'Progression suivie' }
+        ],
+        actionLabel: 'Lancer le quiz',
+        actionIcon: <RocketLaunchRoundedIcon />,
+        actionColor: 'warning',
+        view: 'quiz' as View
+      },
+      {
+        key: 'phrases' as const,
+        title: 'Phrases utiles',
+        description: 'Explorez et écoutez les phrases indispensables au quotidien.',
+        icon: <MenuBookRoundedIcon fontSize="medium" />,
+        accent: 'success',
+        metadata: [
+          { icon: <StarRoundedIcon fontSize="small" />, text: 'Avec prononciation' },
+          { icon: <QueryStatsRoundedIcon fontSize="small" />, text: 'Recherche rapide' }
+        ],
+        actionLabel: 'Explorer les phrases',
+        actionIcon: <ArrowForwardRoundedIcon />,
+        actionColor: 'success',
+        view: 'phrases' as View
+      }
+    ]
 
-        <div className="learning-card">
-          <div className="card-icon-wrapper">
-            <span className="card-icon">👤</span>
-          </div>
-          <div className="card-content">
-            <h3 className="card-title">Unité 2 : Ech sinn...</h3>
-            <p className="card-description">Apprenez à vous présenter en luxembourgeois</p>
-            <div className="card-metadata">
-              <div className="metadata-item">
-                <span className="metadata-icon">📚</span>
-                <span className="metadata-text">4 mots nouveaux</span>
-              </div>
-              <div className="metadata-item">
-                <span className="metadata-icon">⏱️</span>
-                <span className="metadata-text">~3 minutes</span>
-              </div>
-              <div className="metadata-item">
-                <span className="metadata-icon">⭐</span>
-                <span className="metadata-text">Niveau A1</span>
-              </div>
-            </div>
-            <button
-              className="btn btn-secondary btn-fullwidth"
-              onClick={() => setCurrentView('unit2')}
-            >
-              <span>Commencer l'unité 2</span>
-              <span className="btn-icon">→</span>
-            </button>
-          </div>
-        </div>
+    return (
+      <Stack spacing={4} sx={{ mt: 4 }}>
+        <Box
+          sx={{
+            position: 'relative',
+            overflow: 'hidden',
+            borderRadius: 4,
+            px: { xs: 3, md: 6 },
+            py: { xs: 4, md: 6 },
+            color: 'common.white',
+            background: 'linear-gradient(135deg, #1976d2 0%, #14b8a6 100%)',
+            boxShadow: '0 30px 80px rgba(25, 118, 210, 0.35)',
+            animation: `${pageTransition} 0.6s ease`
+          }}
+        >
+          <Box
+            sx={{
+              position: 'absolute',
+              inset: 0,
+              background:
+                'radial-gradient(circle at 20% 20%, rgba(255,255,255,0.18) 0%, transparent 40%), radial-gradient(circle at 80% 0%, rgba(20,184,166,0.35) 0%, transparent 45%)'
+            }}
+          />
 
-        <div className="learning-card">
-          <div className="card-icon-wrapper">
-            <span className="card-icon">❓</span>
-          </div>
-          <div className="card-content">
-            <h3 className="card-title">Unité 3 : Wéi heescht Dir?</h3>
-            <p className="card-description">Apprenez à poser des questions poliment</p>
-            <div className="card-metadata">
-              <div className="metadata-item">
-                <span className="metadata-icon">📚</span>
-                <span className="metadata-text">4 mots nouveaux</span>
-              </div>
-              <div className="metadata-item">
-                <span className="metadata-icon">⏱️</span>
-                <span className="metadata-text">~3 minutes</span>
-              </div>
-              <div className="metadata-item">
-                <span className="metadata-icon">⭐</span>
-                <span className="metadata-text">Niveau A1</span>
-              </div>
-            </div>
-            <button
-              className="btn btn-secondary btn-fullwidth"
-              onClick={() => setCurrentView('unit3')}
-            >
-              <span>Commencer l'unité 3</span>
-              <span className="btn-icon">→</span>
-            </button>
-          </div>
-        </div>
+          <Stack direction={{ xs: 'column', md: 'row' }} alignItems={{ xs: 'flex-start', md: 'center' }} justifyContent="space-between" spacing={4}>
+            <Box sx={{ maxWidth: { md: '60%' }, position: 'relative' }}>
+              <Typography variant="overline" sx={{ letterSpacing: 2, opacity: 0.85 }}>
+                🇱🇺 Programme luxembourgeois
+              </Typography>
+              <Typography variant="h2" component="h2" sx={{ mt: 1, lineHeight: 1.2 }}>
+                Lëtzebuergesch Léieren
+              </Typography>
+              <Typography variant="body1" sx={{ mt: 2, maxWidth: 520, opacity: 0.9 }}>
+                Progressez à votre rythme avec des unités guidées, des quiz adaptatifs et une bibliothèque de phrases prononcées.
+              </Typography>
+            </Box>
 
-        <div className="learning-card">
-          <div className="card-icon-wrapper">
-            <span className="card-icon">🎯</span>
-          </div>
-          <div className="card-content">
-            <h3 className="card-title">Quiz Vocabulaire</h3>
-            <p className="card-description">Testez vos connaissances avec un quiz rapide</p>
-            <div className="card-metadata">
-              <div className="metadata-item">
-                <span className="metadata-icon">📝</span>
-                <span className="metadata-text">Mode libre</span>
-              </div>
-              <div className="metadata-item">
-                <span className="metadata-icon">🔄</span>
-                <span className="metadata-text">Questions variées</span>
-              </div>
-            </div>
-            <button
-              className="btn btn-accent btn-fullwidth"
-              onClick={() => setCurrentView('quiz')}
-            >
-              <span>Lancer le quiz</span>
-              <span className="btn-icon">🎯</span>
-            </button>
-          </div>
-        </div>
+            <Stack direction="row" spacing={2} sx={{ position: 'relative' }}>
+              {statCards.map((stat, index) => (
+                <PaperStat key={stat.label} stat={stat} index={index} />
+              ))}
+            </Stack>
+          </Stack>
+        </Box>
 
-        <div className="learning-card">
-          <div className="card-icon-wrapper">
-            <span className="card-icon">📚</span>
-          </div>
-          <div className="card-content">
-            <h3 className="card-title">Phrases Utiles</h3>
-            <p className="card-description">Explorez une collection de phrases essentielles</p>
-            <div className="card-metadata">
-              <div className="metadata-item">
-                <span className="metadata-icon">🔊</span>
-                <span className="metadata-text">Avec prononciation</span>
-              </div>
-              <div className="metadata-item">
-                <span className="metadata-icon">🔍</span>
-                <span className="metadata-text">Recherche</span>
-              </div>
-            </div>
-            <button
-              className="btn btn-accent btn-fullwidth"
-              onClick={() => setCurrentView('phrases')}
-            >
-              <span>Explorer les phrases</span>
-              <span className="btn-icon">📖</span>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-
-  return (
-    <div className="app">
-      <header className="app-header">
-        <div className="header-content">
-          <div className="brand">
-            <h1 className="app-title">🇱🇺 Lëtzebuergesch Léieren</h1>
-            <p className="app-subtitle">Apprendre le Luxembourgeois</p>
-          </div>
-
-          {currentView !== 'menu' && (
-            <nav className="header-nav">
-              <button
-                className="btn btn-outline btn-sm"
-                onClick={() => setCurrentView('menu')}
+        <Grid container spacing={3}>
+          {learningCards.map((card, index) => (
+            <Grid item xs={12} sm={6} md={4} key={card.key}>
+              <Card
+                sx={{
+                  height: '100%',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between',
+                  animation: `${cardEntrance} 0.6s ease`,
+                  animationDelay: `${index * 0.07}s`,
+                  animationFillMode: 'both',
+                  background:
+                    card.accent === 'primary'
+                      ? 'linear-gradient(180deg, rgba(25,118,210,0.08) 0%, rgba(25,118,210,0.02) 100%)'
+                      : card.accent === 'secondary'
+                      ? 'linear-gradient(180deg, rgba(20,184,166,0.12) 0%, rgba(20,184,166,0.02) 100%)'
+                      : card.accent === 'info'
+                      ? 'linear-gradient(180deg, rgba(3,169,244,0.12) 0%, rgba(3,169,244,0.02) 100%)'
+                      : card.accent === 'warning'
+                      ? 'linear-gradient(180deg, rgba(255,193,7,0.12) 0%, rgba(255,193,7,0.02) 100%)'
+                      : 'linear-gradient(180deg, rgba(46,125,50,0.12) 0%, rgba(46,125,50,0.02) 100%)'
+                }}
               >
-                <span className="btn-icon">←</span>
-                <span>Retour au menu</span>
-              </button>
-            </nav>
-          )}
-        </div>
-      </header>
+                <CardContent>
+                  <Stack direction="row" spacing={2} alignItems="center">
+                    <Avatar
+                      sx={{
+                        bgcolor: `${card.actionColor}.main`,
+                        color: 'common.white',
+                        animation: `${iconFloat} 4s ease-in-out infinite`,
+                        animationDelay: `${index * 0.3}s`
+                      }}
+                    >
+                      {card.icon}
+                    </Avatar>
+                    <Box>
+                      <Typography variant="h5" sx={{ mb: 1 }}>
+                        {card.title}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        {card.description}
+                      </Typography>
+                    </Box>
+                  </Stack>
 
-      <main className="app-main">
-        {currentView === 'menu' && renderMainMenu()}
-        {currentView === 'unit1' && (
+                  <Stack direction="row" spacing={1} sx={{ mt: 3, flexWrap: 'wrap', rowGap: 1 }}>
+                    {card.metadata.map((item, idx) => (
+                      <Chip
+                        key={`${card.key}-${idx}`}
+                        icon={item.icon}
+                        label={item.text}
+                        color={idx === 0 ? 'primary' : idx === 1 ? 'secondary' : 'default'}
+                        variant="outlined"
+                        sx={{
+                          borderRadius: 999,
+                          borderColor: 'divider',
+                          bgcolor: 'common.white',
+                          '& .MuiChip-icon': { color: `${card.actionColor}.main` }
+                        }}
+                      />
+                    ))}
+                  </Stack>
+                </CardContent>
+
+                <CardActions sx={{ px: 3, pb: 3 }}>
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    color={card.actionColor as any}
+                    endIcon={card.actionIcon}
+                    onClick={() => setCurrentView(card.view)}
+                  >
+                    {card.actionLabel}
+                  </Button>
+                </CardActions>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      </Stack>
+    )
+  }
+
+  const renderView = () => {
+    switch (currentView) {
+      case 'unit1':
+        return (
           <LearningUnit
             unit={learningUnit1}
             onUnitComplete={handleUnitComplete}
             onExit={() => setCurrentView('menu')}
           />
-        )}
-        {currentView === 'unit2' && (
+        )
+      case 'unit2':
+        return (
           <LearningUnit
             unit={learningUnit2}
             onUnitComplete={handleUnitComplete}
             onExit={() => setCurrentView('menu')}
           />
-        )}
-        {currentView === 'unit3' && (
+        )
+      case 'unit3':
+        return (
           <LearningUnit
             unit={learningUnit3}
             onUnitComplete={handleUnitComplete}
             onExit={() => setCurrentView('menu')}
           />
-        )}
-        {currentView === 'quiz' && <VocabularyQuiz />}
-        {currentView === 'phrases' && <PhraseList />}
-      </main>
-    </div>
+        )
+      case 'quiz':
+        return <VocabularyQuiz />
+      case 'phrases':
+        return <PhraseList />
+      case 'menu':
+      default:
+        return renderMainMenu()
+    }
+  }
+
+  return (
+    <Box sx={{ minHeight: '100vh', pb: { xs: 6, md: 8 } }}>
+      <Container maxWidth="lg" sx={{ pt: { xs: 4, md: 6 }, pb: { xs: 6, md: 10 } }}>
+        <AppBar
+          position="static"
+          color="transparent"
+          elevation={0}
+          sx={{
+            backgroundColor: 'transparent',
+            borderRadius: { xs: 0, md: 3 },
+            px: { xs: 1, md: 2 },
+            py: { xs: 1.5, md: 2 },
+            boxShadow: 'none'
+          }}
+        >
+          <Stack direction="row" alignItems="center" justifyContent="space-between">
+            <Box>
+              <Typography variant="h4" sx={{ fontWeight: 700 }}>
+                🇱🇺 Lëtzebuergesch Léieren
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                Apprendre le luxembourgeois avec une interface moderne
+              </Typography>
+            </Box>
+
+            {currentView !== 'menu' && (
+              <Button
+                variant="outlined"
+                color="primary"
+                startIcon={<ArrowBackRoundedIcon />}
+                onClick={() => setCurrentView('menu')}
+                sx={{ borderRadius: 999 }}
+              >
+                Retour au menu
+              </Button>
+            )}
+          </Stack>
+        </AppBar>
+
+        <Divider sx={{ my: { xs: 3, md: 4 }, opacity: 0.15 }} />
+
+        <Box
+          key={currentView}
+          sx={{
+            animation: `${pageTransition} 0.5s ease`,
+            transformOrigin: 'top center'
+          }}
+        >
+          {renderView()}
+        </Box>
+      </Container>
+    </Box>
   )
 }
+
+interface StatCardProps {
+  stat: {
+    label: string
+    value: number | string
+    icon: ReactNode
+    gradient: string
+  }
+  index: number
+}
+
+const PaperStat = ({ stat, index }: StatCardProps) => (
+  <Box
+    sx={{
+      position: 'relative',
+      px: 3,
+      py: 2.5,
+      borderRadius: 3,
+      background: stat.gradient,
+      backdropFilter: 'blur(8px)',
+      boxShadow: 'inset 0 0 0 1px rgba(255, 255, 255, 0.2)',
+      minWidth: 120,
+      animation: `${statPulse} 5s ease-in-out ${index * 0.4}s infinite`
+    }}
+  >
+    <Stack spacing={1}>
+      <Avatar
+        sx={{
+          bgcolor: 'rgba(255,255,255,0.2)',
+          color: 'common.white',
+          width: 40,
+          height: 40
+        }}
+      >
+        {stat.icon}
+      </Avatar>
+      <Typography variant="subtitle2" sx={{ opacity: 0.85 }}>
+        {stat.label}
+      </Typography>
+      <Typography variant="h4">{stat.value}</Typography>
+    </Stack>
+  </Box>
+)
 
 export default App

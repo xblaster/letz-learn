@@ -16,8 +16,6 @@ export class AudioService {
   // Sons de transition et feedback
   static playSuccessSound(): void {
     const ctx = this.getAudioContext()
-    const oscillator = ctx.createOscillator()
-    const gainNode = ctx.createGain()
 
     // Son de succès: accord majeur ascendant
     const frequencies = [523.25, 659.25, 783.99] // Do, Mi, Sol

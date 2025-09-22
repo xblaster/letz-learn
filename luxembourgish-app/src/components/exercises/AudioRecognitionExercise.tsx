@@ -1,4 +1,16 @@
 import { useState } from 'react'
+import {
+  Alert,
+  Button,
+  Chip,
+  Stack,
+  Typography
+} from '@mui/material'
+import HeadphonesRoundedIcon from '@mui/icons-material/HeadphonesRounded'
+import VolumeUpRoundedIcon from '@mui/icons-material/VolumeUpRounded'
+import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded'
+import CancelRoundedIcon from '@mui/icons-material/CancelRounded'
+import TipsAndUpdatesRoundedIcon from '@mui/icons-material/TipsAndUpdatesRounded'
 import { Exercise } from '../../types/LearningTypes'
 import { AudioService } from '../../services/AudioService'
 
@@ -7,19 +19,16 @@ interface AudioRecognitionExerciseProps {
   onComplete: (isCorrect: boolean, timeSpent: number) => void
 }
 
-const AudioRecognitionExercise: React.FC<AudioRecognitionExerciseProps> = ({
-  exercise,
-  onComplete
-}) => {
-  const [selectedAnswer, setSelectedAnswer] = useState<string>('')
+type ButtonVariant = 'text' | 'outlined' | 'contained'
+type ButtonColor = 'inherit' | 'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning'
+
+const AudioRecognitionExercise = ({ exercise, onComplete }: AudioRecognitionExerciseProps) => {
+  const [selectedAnswer, setSelectedAnswer] = useState('')
   const [hasAnswered, setHasAnswered] = useState(false)
   const [startTime] = useState(Date.now())
 
   const playAudio = async () => {
-    // Jouer le son de clic d'abord
     AudioService.playClickSound()
-
-    // Puis prononcer le mot
     try {
       await AudioService.speakLuxembourgish(exercise.vocabularyItem.luxembourgish)
     } catch (error) {
@@ -36,96 +45,101 @@ const AudioRecognitionExercise: React.FC<AudioRecognitionExerciseProps> = ({
     const isCorrect = answer === exercise.correctAnswer
     const timeSpent = Date.now() - startTime
 
-    // Attendre un moment pour montrer le feedback avant de continuer
     setTimeout(() => {
       onComplete(isCorrect, timeSpent)
     }, 1500)
   }
 
-  const getButtonClass = (option: string) => {
-    if (!hasAnswered) return 'option-button'
+  const getOptionStyles = (option: string): { variant: ButtonVariant; color: ButtonColor } => {
+    if (!hasAnswered) {
+      return {
+        variant: selectedAnswer === option ? 'contained' : 'outlined',
+        color: selectedAnswer === option ? 'primary' : 'inherit'
+      }
+    }
 
     if (option === exercise.correctAnswer) {
-      return 'option-button correct'
-    } else if (option === selectedAnswer) {
-      return 'option-button incorrect'
+      return { variant: 'contained', color: 'success' }
     }
-    return 'option-button disabled'
-  }
 
-  const getFeedbackMessage = () => {
-    if (!hasAnswered) return null
-
-    if (selectedAnswer === exercise.correctAnswer) {
-      return (
-        <div className="feedback-message success">
-          <span className="feedback-icon">✅</span>
-          <span>Excellent !</span>
-        </div>
-      )
-    } else {
-      return (
-        <div className="feedback-message error">
-          <span className="feedback-icon">❌</span>
-          <span>La bonne réponse était : {exercise.correctAnswer}</span>
-        </div>
-      )
+    if (option === selectedAnswer) {
+      return { variant: 'contained', color: 'error' }
     }
+
+    return { variant: 'outlined', color: 'inherit' }
   }
 
   return (
-    <div className="audio-recognition-exercise">
-      <div className="exercise-question">
-        <h3>🎧 {exercise.question}</h3>
-
-        {/* Bouton pour jouer l'audio */}
-        <div className="audio-section">
-          <button
-            className="audio-play-button"
-            onClick={playAudio}
-            disabled={hasAnswered}
-          >
-            <span className="audio-icon">🔊</span>
-            <span>Écouter</span>
-          </button>
-          <p className="audio-hint">Cliquez pour entendre le mot en luxembourgeois</p>
-        </div>
-
-        {/* Affichage de la prononciation après réponse */}
+    <Stack spacing={3}>
+      <Stack spacing={2}>
+        <Typography variant="h5">Reconnaissance audio</Typography>
+        <Typography variant="body2" color="text.secondary">
+          {exercise.question}
+        </Typography>
+        <Button
+          variant="contained"
+          startIcon={<HeadphonesRoundedIcon />}
+          onClick={playAudio}
+          disabled={hasAnswered}
+          sx={{ alignSelf: 'flex-start' }}
+        >
+          Écouter le mot
+        </Button>
         {hasAnswered && (
-          <div className="pronunciation-display">
-            <div className="word-display">
-              <span className="luxembourgish-word">{exercise.vocabularyItem.luxembourgish}</span>
-              <span className="pronunciation">/{exercise.vocabularyItem.pronunciation}/</span>
-            </div>
-          </div>
+          <Stack direction="row" spacing={1} alignItems="center">
+            <Chip label={exercise.vocabularyItem.luxembourgish} color="primary" />
+            <Typography variant="body2" color="text.secondary">
+              /{exercise.vocabularyItem.pronunciation}/
+            </Typography>
+          </Stack>
         )}
-      </div>
+      </Stack>
 
-      {/* Options de réponse */}
-      <div className="exercise-options">
-        {exercise.options?.map((option, index) => (
-          <button
-            key={index}
-            className={getButtonClass(option)}
-            onClick={() => handleAnswerSelect(option)}
-            disabled={hasAnswered}
-          >
-            {option}
-          </button>
-        ))}
-      </div>
+      <Stack spacing={1.5}>
+        {exercise.options?.map(option => {
+          const optionStyles = getOptionStyles(option)
+          const isCorrectOption = option === exercise.correctAnswer
+          const isSelectedOption = option === selectedAnswer
 
-      {/* Message de feedback */}
-      {getFeedbackMessage()}
+          return (
+            <Button
+              key={option}
+              fullWidth
+              onClick={() => handleAnswerSelect(option)}
+              disabled={hasAnswered}
+              variant={optionStyles.variant}
+              color={optionStyles.color}
+              sx={{
+                justifyContent: 'space-between',
+                borderRadius: 3,
+                px: 3,
+                py: 2,
+                textTransform: 'none',
+                fontWeight: 600
+              }}
+            >
+              <span>{option}</span>
+              {hasAnswered && isCorrectOption && <CheckCircleRoundedIcon />}
+              {hasAnswered && !isCorrectOption && isSelectedOption && <CancelRoundedIcon />}
+            </Button>
+          )
+        })}
+      </Stack>
 
-      {/* Explication de l'usage après réponse correcte */}
-      {hasAnswered && selectedAnswer === exercise.correctAnswer && (
-        <div className="usage-explanation">
-          <p><strong>Usage :</strong> {exercise.vocabularyItem.usage}</p>
-        </div>
+      {hasAnswered && (
+        <Alert severity={selectedAnswer === exercise.correctAnswer ? 'success' : 'error'} icon={<TipsAndUpdatesRoundedIcon />}>
+          {selectedAnswer === exercise.correctAnswer
+            ? 'Excellent ! Vous avez reconnu le mot.'
+            : `La bonne réponse était : ${exercise.correctAnswer}`}
+        </Alert>
       )}
-    </div>
+
+      {hasAnswered && selectedAnswer === exercise.correctAnswer && (
+        <Alert severity="info" icon={<VolumeUpRoundedIcon />}>
+          {exercise.vocabularyItem.usage}
+        </Alert>
+      )}
+    </Stack>
   )
 }
 
