@@ -1,4 +1,14 @@
 import { useState } from 'react'
+import {
+  Alert,
+  Box,
+  Button,
+  Chip,
+  Stack,
+  Typography
+} from '@mui/material'
+import TipsAndUpdatesRoundedIcon from '@mui/icons-material/TipsAndUpdatesRounded'
+import EmojiObjectsRoundedIcon from '@mui/icons-material/EmojiObjectsRounded'
 import { Exercise } from '../../types/LearningTypes'
 
 interface ImageAssociationExerciseProps {
@@ -6,11 +16,11 @@ interface ImageAssociationExerciseProps {
   onComplete: (isCorrect: boolean, timeSpent: number) => void
 }
 
-const ImageAssociationExercise: React.FC<ImageAssociationExerciseProps> = ({
-  exercise,
-  onComplete
-}) => {
-  const [selectedAnswer, setSelectedAnswer] = useState<string>('')
+type ButtonVariant = 'text' | 'outlined' | 'contained'
+type ButtonColor = 'inherit' | 'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning'
+
+const ImageAssociationExercise = ({ exercise, onComplete }: ImageAssociationExerciseProps) => {
+  const [selectedAnswer, setSelectedAnswer] = useState('')
   const [hasAnswered, setHasAnswered] = useState(false)
   const [startTime] = useState(Date.now())
 
@@ -28,134 +38,107 @@ const ImageAssociationExercise: React.FC<ImageAssociationExerciseProps> = ({
     }, 1500)
   }
 
-  const getButtonClass = (option: string) => {
-    if (!hasAnswered) return 'option-button'
+  const getOptionStyles = (option: string): { variant: ButtonVariant; color: ButtonColor } => {
+    if (!hasAnswered) {
+      return {
+        variant: selectedAnswer === option ? 'contained' : 'outlined',
+        color: selectedAnswer === option ? 'primary' : 'inherit'
+      }
+    }
 
     if (option === exercise.correctAnswer) {
-      return 'option-button correct'
-    } else if (option === selectedAnswer) {
-      return 'option-button incorrect'
+      return { variant: 'contained', color: 'success' }
     }
-    return 'option-button disabled'
-  }
 
-  const getFeedbackMessage = () => {
-    if (!hasAnswered) return null
-
-    if (selectedAnswer === exercise.correctAnswer) {
-      return (
-        <div className="feedback-message success">
-          <span className="feedback-icon">✅</span>
-          <span>Parfait !</span>
-        </div>
-      )
-    } else {
-      return (
-        <div className="feedback-message error">
-          <span className="feedback-icon">❌</span>
-          <span>La bonne réponse était : {exercise.correctAnswer}</span>
-        </div>
-      )
+    if (option === selectedAnswer) {
+      return { variant: 'contained', color: 'error' }
     }
+
+    return { variant: 'outlined', color: 'inherit' }
   }
 
   const getSituationEmoji = (vocabId: string) => {
-    const emojis = {
-      'moien': '👋',
-      'addi': '🚪',
-      'merci': '🙏',
-      'pardon': '😅',
-      'jo': '✅',
-      'nee': '❌'
+    const emojis: Record<string, string> = {
+      moien: '👋',
+      addi: '🚪',
+      merci: '🙏',
+      pardon: '😅',
+      jo: '✅',
+      nee: '❌'
     }
-    return emojis[vocabId as keyof typeof emojis] || '💬'
+    return emojis[vocabId] || '💬'
   }
 
   return (
-    <div className="image-association-exercise">
-      <div className="exercise-question">
-        <h3>🖼️ Situation</h3>
-
-        {/* Illustration de la situation */}
-        <div className="situation-display">
-          <div className="situation-emoji">
-            {getSituationEmoji(exercise.vocabularyItem.id)}
-          </div>
-          <div className="situation-description">
-            <p>{exercise.question}</p>
-          </div>
-        </div>
-
-        {/* Contexte additionnel si disponible */}
-        {exercise.context && (
-          <div className="context-info">
-            <p><em>{exercise.context}</em></p>
-          </div>
-        )}
-      </div>
-
-      {/* Options de réponse */}
-      <div className="exercise-options">
-        <p className="options-instruction">Choisissez l'expression appropriée :</p>
-        {exercise.options?.map((option, index) => (
-          <button
-            key={index}
-            className={getButtonClass(option)}
-            onClick={() => handleAnswerSelect(option)}
-            disabled={hasAnswered}
-          >
-            <span className="option-text">{option}</span>
-            {hasAnswered && option === exercise.correctAnswer && (
-              <span className="pronunciation-hint">
-                /{exercise.vocabularyItem.pronunciation}/
-              </span>
-            )}
-          </button>
-        ))}
-      </div>
-
-      {/* Message de feedback */}
-      {getFeedbackMessage()}
-
-      {/* Explication culturelle après réponse */}
-      {hasAnswered && selectedAnswer === exercise.correctAnswer && (
-        <div className="cultural-note">
-          <div className="note-header">
-            <span className="note-icon">💡</span>
-            <span>Bon à savoir</span>
-          </div>
-          <p>{exercise.vocabularyItem.usage}</p>
-
-          {/* Note spéciale pour certains mots */}
-          {exercise.vocabularyItem.id === 'moien' && (
-            <p><em>"Moien" est unique au luxembourgeois et peut être utilisé à tout moment de la journée, contrairement au français où on distingue "bonjour" et "bonsoir".</em></p>
+    <Stack spacing={3}>
+      <Box
+        sx={{
+          borderRadius: 3,
+          p: { xs: 2, md: 3 },
+          background: 'linear-gradient(135deg, rgba(25,118,210,0.08) 0%, rgba(20,184,166,0.08) 100%)',
+          display: 'flex',
+          alignItems: 'center',
+          gap: 2
+        }}
+      >
+        <Box sx={{ fontSize: '2.5rem' }}>{getSituationEmoji(exercise.vocabularyItem.id)}</Box>
+        <Box>
+          <Typography variant="subtitle1">Situation</Typography>
+          <Typography variant="body1" color="text.secondary">
+            {exercise.question}
+          </Typography>
+          {exercise.context && (
+            <Typography variant="caption" color="text.secondary">
+              {exercise.context}
+            </Typography>
           )}
+        </Box>
+      </Box>
 
-          {exercise.vocabularyItem.id === 'merci' && (
-            <p><em>Le mot "Merci" est identique en français et en luxembourgeois, ce qui facilite l'apprentissage !</em></p>
-          )}
-        </div>
-      )}
+      <Stack spacing={1.5}>
+        {exercise.options?.map(option => {
+          const optionStyles = getOptionStyles(option)
 
-      {/* Bouton pour entendre la prononciation */}
+          return (
+            <Button
+              key={option}
+              onClick={() => handleAnswerSelect(option)}
+              disabled={hasAnswered}
+              variant={optionStyles.variant}
+              color={optionStyles.color}
+              fullWidth
+              sx={{
+                borderRadius: 3,
+                px: 3,
+                py: 2,
+                textTransform: 'none',
+                justifyContent: 'space-between',
+                fontWeight: 600
+              }}
+            >
+              <span>{option}</span>
+              {hasAnswered && option === exercise.correctAnswer && (
+                <Chip label={`/${exercise.vocabularyItem.pronunciation}/`} color="success" variant="outlined" />
+              )}
+            </Button>
+          )
+        })}
+      </Stack>
+
       {hasAnswered && (
-        <div className="pronunciation-section">
-          <button
-            className="listen-button"
-            onClick={() => {
-              if ('speechSynthesis' in window) {
-                const utterance = new SpeechSynthesisUtterance(exercise.vocabularyItem.luxembourgish)
-                utterance.lang = 'de-DE'
-                utterance.rate = 0.7
-                speechSynthesis.speak(utterance)
-              }
-            }}
-          >
-            🔊 Écouter la prononciation
-          </button>
-        </div>
+        <Alert severity={selectedAnswer === exercise.correctAnswer ? 'success' : 'error'} icon={<TipsAndUpdatesRoundedIcon />}>
+          {selectedAnswer === exercise.correctAnswer
+            ? 'Parfait !'
+            : `La bonne réponse était : ${exercise.correctAnswer}`}
+        </Alert>
       )}
-    </div>
+
+      {hasAnswered && selectedAnswer === exercise.correctAnswer && (
+        <Alert severity="info" icon={<EmojiObjectsRoundedIcon />}>
+          {exercise.vocabularyItem.usage}
+        </Alert>
+      )}
+    </Stack>
   )
 }
 

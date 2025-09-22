@@ -1,4 +1,15 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
+import {
+  Alert,
+  Box,
+  Button,
+  Chip,
+  Stack,
+  Typography
+} from '@mui/material'
+import ChatBubbleRoundedIcon from '@mui/icons-material/ChatBubbleRounded'
+import TipsAndUpdatesRoundedIcon from '@mui/icons-material/TipsAndUpdatesRounded'
+import VolumeUpRoundedIcon from '@mui/icons-material/VolumeUpRounded'
 import { Exercise } from '../../types/LearningTypes'
 
 interface DialogueCompletionExerciseProps {
@@ -6,13 +17,18 @@ interface DialogueCompletionExerciseProps {
   onComplete: (isCorrect: boolean, timeSpent: number) => void
 }
 
-const DialogueCompletionExercise: React.FC<DialogueCompletionExerciseProps> = ({
-  exercise,
-  onComplete
-}) => {
-  const [selectedAnswer, setSelectedAnswer] = useState<string>('')
+type ButtonVariant = 'text' | 'outlined' | 'contained'
+type ButtonColor = 'inherit' | 'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning'
+
+const DialogueCompletionExercise = ({ exercise, onComplete }: DialogueCompletionExerciseProps) => {
+  const [selectedAnswer, setSelectedAnswer] = useState('')
   const [hasAnswered, setHasAnswered] = useState(false)
   const [startTime] = useState(Date.now())
+
+  const dialogueParts = useMemo(() => {
+    if (!exercise.context) return []
+    return exercise.context.split('\n').filter(Boolean)
+  }, [exercise.context])
 
   const handleAnswerSelect = (answer: string) => {
     if (hasAnswered) return
@@ -25,191 +41,137 @@ const DialogueCompletionExercise: React.FC<DialogueCompletionExerciseProps> = ({
 
     setTimeout(() => {
       onComplete(isCorrect, timeSpent)
-    }, 2000) // Plus de temps pour lire le dialogue complet
+    }, 2000)
   }
 
-  const getButtonClass = (option: string) => {
-    if (!hasAnswered) return 'option-button'
+  const getOptionStyles = (option: string): { variant: ButtonVariant; color: ButtonColor } => {
+    if (!hasAnswered) {
+      return {
+        variant: selectedAnswer === option ? 'contained' : 'outlined',
+        color: selectedAnswer === option ? 'primary' : 'inherit'
+      }
+    }
 
     if (option === exercise.correctAnswer) {
-      return 'option-button correct'
-    } else if (option === selectedAnswer) {
-      return 'option-button incorrect'
+      return { variant: 'contained', color: 'success' }
     }
-    return 'option-button disabled'
-  }
 
-  const getFeedbackMessage = () => {
-    if (!hasAnswered) return null
-
-    if (selectedAnswer === exercise.correctAnswer) {
-      return (
-        <div className="feedback-message success">
-          <span className="feedback-icon">✅</span>
-          <span>Excellent ! Le dialogue est naturel.</span>
-        </div>
-      )
-    } else {
-      return (
-        <div className="feedback-message error">
-          <span className="feedback-icon">❌</span>
-          <span>La bonne réponse était : {exercise.correctAnswer}</span>
-        </div>
-      )
+    if (option === selectedAnswer) {
+      return { variant: 'contained', color: 'error' }
     }
-  }
 
-  const renderDialogue = () => {
-    if (!exercise.context) return null
-
-    const dialogueParts = exercise.context.split('\n')
-
-    return (
-      <div className="dialogue-display">
-        {dialogueParts.map((line, index) => {
-          if (line.trim() === '') return null
-
-          const isBlank = line.includes('___')
-
-          if (isBlank) {
-            const parts = line.split('___')
-            return (
-              <div key={index} className="dialogue-line highlight">
-                <span className="dialogue-text">{parts[0]}</span>
-                <span className="dialogue-blank">
-                  {hasAnswered ? selectedAnswer : '___'}
-                </span>
-                <span className="dialogue-text">{parts[1]}</span>
-              </div>
-            )
-          } else {
-            const [speaker, text] = line.split(': ')
-            return (
-              <div key={index} className="dialogue-line">
-                <span className="speaker">{speaker}:</span>
-                <span className="dialogue-text">{text}</span>
-              </div>
-            )
-          }
-        })}
-      </div>
-    )
+    return { variant: 'outlined', color: 'inherit' }
   }
 
   const getDialogueContext = () => {
-    const contexts = {
-      'moien': 'Deux amis se rencontrent dans la rue le matin',
-      'addi': 'Un client quitte un magasin après ses achats',
-      'merci': 'Quelqu\'un offre un café à son collègue'
+    const contexts: Record<string, string> = {
+      moien: 'Deux amis se rencontrent dans la rue le matin.',
+      addi: 'Un client quitte un magasin après ses achats.',
+      merci: "Quelqu'un offre un café à son collègue."
     }
-    return contexts[exercise.vocabularyItem.id as keyof typeof contexts] || 'Conversation quotidienne'
+    return contexts[exercise.vocabularyItem.id] || 'Conversation quotidienne'
   }
 
   const playCompleteDialogue = () => {
     if (!exercise.context || !('speechSynthesis' in window)) return
 
-    const completeDialogue = exercise.context.replace('___', exercise.correctAnswer)
-    const utterance = new SpeechSynthesisUtterance(completeDialogue)
+    const utterance = new SpeechSynthesisUtterance(
+      exercise.context.replace('___', exercise.correctAnswer)
+    )
     utterance.lang = 'de-DE'
-    utterance.rate = 0.6
+    utterance.rate = 0.65
     speechSynthesis.speak(utterance)
   }
 
   return (
-    <div className="dialogue-completion-exercise">
-      <div className="exercise-question">
-        <h3>💬 Dialogue</h3>
+    <Stack spacing={3}>
+      <Stack spacing={1.5}>
+        <Typography variant="h5">Complétez le dialogue</Typography>
+        <Alert icon={<ChatBubbleRoundedIcon />} severity="info" sx={{ alignItems: 'center' }}>
+          {getDialogueContext()}
+        </Alert>
 
-        {/* Contexte de la situation */}
-        <div className="dialogue-context">
-          <div className="context-header">
-            <span className="context-icon">🎭</span>
-            <span>Situation</span>
-          </div>
-          <p>{getDialogueContext()}</p>
-        </div>
-
-        {/* Dialogue avec espace à compléter */}
-        {renderDialogue()}
-
-        <p className="completion-instruction">Complétez le dialogue :</p>
-      </div>
-
-      {/* Options de réponse */}
-      <div className="exercise-options">
-        {exercise.options?.map((option, index) => (
-          <button
-            key={index}
-            className={getButtonClass(option)}
-            onClick={() => handleAnswerSelect(option)}
-            disabled={hasAnswered}
-          >
-            <span className="option-text">{option}</span>
-            {hasAnswered && option === exercise.correctAnswer && (
-              <span className="pronunciation-hint">
-                /{exercise.vocabularyItem.pronunciation}/
-              </span>
-            )}
-          </button>
-        ))}
-      </div>
-
-      {/* Message de feedback */}
-      {getFeedbackMessage()}
-
-      {/* Dialogue complet après réponse */}
-      {hasAnswered && (
-        <div className="complete-dialogue-section">
-          <div className="section-header">
-            <span className="section-icon">📝</span>
-            <span>Dialogue complet</span>
-          </div>
-
-          <div className="complete-dialogue">
-            {exercise.context?.split('\n').map((line, index) => {
-              if (line.trim() === '') return null
-
-              const completeLine = line.replace('___', exercise.correctAnswer)
-              const [speaker, text] = completeLine.split(': ')
-
+        <Box
+          sx={{
+            borderRadius: 3,
+            p: { xs: 2, md: 3 },
+            backgroundColor: 'rgba(25,118,210,0.06)',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 1.5
+          }}
+        >
+          {dialogueParts.map((line, index) => {
+            if (line.includes('___')) {
+              const [before, after] = line.split('___')
               return (
-                <div key={index} className="final-dialogue-line">
-                  <span className="final-speaker">{speaker}:</span>
-                  <span className="final-text">{text}</span>
-                </div>
+                <Typography key={index} variant="body1">
+                  <strong>{before}</strong>
+                  <Chip label={hasAnswered ? selectedAnswer : '___'} color={hasAnswered ? 'primary' : 'default'} sx={{ mx: 1 }} />
+                  <strong>{after}</strong>
+                </Typography>
               )
-            })}
-          </div>
+            }
 
-          {/* Bouton pour entendre le dialogue complet */}
-          <div className="audio-section">
-            <button
-              className="play-dialogue-button"
-              onClick={playCompleteDialogue}
+            const [speaker, text] = line.split(': ')
+            return (
+              <Typography key={index} variant="body1">
+                <strong>{speaker}:</strong> {text}
+              </Typography>
+            )
+          })}
+        </Box>
+      </Stack>
+
+      <Stack spacing={1.5}>
+        {exercise.options?.map(option => {
+          const optionStyles = getOptionStyles(option)
+
+          return (
+            <Button
+              key={option}
+              onClick={() => handleAnswerSelect(option)}
+              disabled={hasAnswered}
+              variant={optionStyles.variant}
+              color={optionStyles.color}
+              fullWidth
+              sx={{
+                borderRadius: 3,
+                px: 3,
+                py: 2,
+                textTransform: 'none',
+                justifyContent: 'space-between',
+                fontWeight: 600
+              }}
             >
-              🔊 Écouter le dialogue complet
-            </button>
-          </div>
+              <span>{option}</span>
+              {hasAnswered && option === exercise.correctAnswer && (
+                <Chip label={`/${exercise.vocabularyItem.pronunciation}/`} color="success" variant="outlined" />
+              )}
+            </Button>
+          )
+        })}
+      </Stack>
 
-          {/* Explication culturelle */}
-          <div className="cultural-explanation">
-            <div className="explanation-header">
-              <span className="explanation-icon">🌍</span>
-              <span>À retenir</span>
-            </div>
-            <p>{exercise.vocabularyItem.usage}</p>
-
-            {exercise.vocabularyItem.id === 'moien' && (
-              <p><em>Au Luxembourg, "Moien" est utilisé dans toutes les situations formelles et informelles.</em></p>
-            )}
-
-            {exercise.vocabularyItem.id === 'merci' && (
-              <p><em>La politesse est très importante dans la culture luxembourgeoise.</em></p>
-            )}
-          </div>
-        </div>
+      {hasAnswered && (
+        <Alert severity={selectedAnswer === exercise.correctAnswer ? 'success' : 'error'} icon={<TipsAndUpdatesRoundedIcon />}>
+          {selectedAnswer === exercise.correctAnswer
+            ? 'Excellent ! Le dialogue est naturel.'
+            : `La bonne réponse était : ${exercise.correctAnswer}`}
+        </Alert>
       )}
-    </div>
+
+      {hasAnswered && (
+        <Stack spacing={2}>
+          <Button startIcon={<VolumeUpRoundedIcon />} variant="contained" onClick={playCompleteDialogue}>
+            Écouter le dialogue complet
+          </Button>
+          <Alert severity="info" icon={<TipsAndUpdatesRoundedIcon />}>
+            {exercise.vocabularyItem.usage}
+          </Alert>
+        </Stack>
+      )}
+    </Stack>
   )
 }
 

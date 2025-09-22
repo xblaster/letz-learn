@@ -1,51 +1,79 @@
-import React from 'react'
+import { Box, Chip, LinearProgress, Stack, Typography } from '@mui/material'
+import CheckRoundedIcon from '@mui/icons-material/CheckRounded'
+import { keyframes } from '@mui/system'
 
 interface ProgressBarProps {
-  progress: number // 0-100
+  progress: number
   currentStep: number
   totalSteps: number
 }
 
-const ProgressBar: React.FC<ProgressBarProps> = ({
-  progress,
-  currentStep,
-  totalSteps
-}) => {
+const glow = keyframes`
+  0% { box-shadow: 0 0 0 rgba(25, 118, 210, 0.45); }
+  50% { box-shadow: 0 0 16px rgba(25, 118, 210, 0.28); }
+  100% { box-shadow: 0 0 0 rgba(25, 118, 210, 0.45); }
+`
+
+const ProgressBar = ({ progress, currentStep, totalSteps }: ProgressBarProps) => {
   return (
-    <div className="progress-bar-container">
-      <div className="progress-info">
-        <span className="progress-text">
-          {currentStep} / {totalSteps}
-        </span>
-        <span className="progress-percentage">
-          {Math.round(progress)}%
-        </span>
-      </div>
+    <Stack spacing={2.5} sx={{ width: '100%' }}>
+      <Stack direction="row" alignItems="center" justifyContent="space-between">
+        <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
+          Progression
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          {currentStep} / {totalSteps} · {Math.round(progress)}%
+        </Typography>
+      </Stack>
 
-      <div className="progress-bar-track">
-        <div
-          className="progress-bar-fill"
-          style={{ width: `${progress}%` }}
-        >
-          <div className="progress-bar-glow"></div>
-        </div>
-      </div>
+      <LinearProgress
+        variant="determinate"
+        value={progress}
+        sx={{
+          height: 12,
+          borderRadius: 999,
+          backgroundColor: 'rgba(25, 118, 210, 0.12)',
+          '& .MuiLinearProgress-bar': {
+            borderRadius: 999,
+            background: 'linear-gradient(90deg, #1976d2 0%, #14b8a6 100%)',
+            animation: `${glow} 2.4s ease infinite`
+          }
+        }}
+      />
 
-      {/* Indicateurs de steps */}
-      <div className="progress-steps">
-        {Array.from({ length: totalSteps }).map((_, index) => (
-          <div
-            key={index}
-            className={`progress-step ${
-              index < currentStep - 1 ? 'completed' :
-              index === currentStep - 1 ? 'current' : 'pending'
-            }`}
-          >
-            {index < currentStep - 1 ? '✓' : index + 1}
-          </div>
-        ))}
-      </div>
-    </div>
+      <Stack direction="row" spacing={1} justifyContent="center" flexWrap="wrap" rowGap={1}>
+        {Array.from({ length: totalSteps }).map((_, index) => {
+          const isCompleted = index < currentStep - 1
+          const isCurrent = index === currentStep - 1
+
+          return (
+            <Chip
+              key={index}
+              label={isCompleted ? <CheckRoundedIcon fontSize="small" /> : index + 1}
+              color={isCompleted ? 'success' : isCurrent ? 'primary' : 'default'}
+              variant={isCurrent || isCompleted ? 'filled' : 'outlined'}
+              sx={{
+                borderRadius: 999,
+                minWidth: 40,
+                fontWeight: 600,
+                '& .MuiChip-label': {
+                  px: 0,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }
+              }}
+            />
+          )
+        })}
+      </Stack>
+
+      <Box sx={{ textAlign: 'center' }}>
+        <Typography variant="caption" color="text.secondary">
+          Atteignez {totalSteps} étapes pour compléter l'unité.
+        </Typography>
+      </Box>
+    </Stack>
   )
 }
 
