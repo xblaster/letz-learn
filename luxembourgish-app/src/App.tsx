@@ -19,6 +19,7 @@ import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded'
 import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded'
 import AutoAwesomeRoundedIcon from '@mui/icons-material/AutoAwesomeRounded'
 import EmojiEventsRoundedIcon from '@mui/icons-material/EmojiEventsRounded'
+import FormatQuoteRoundedIcon from '@mui/icons-material/FormatQuoteRounded'
 import MenuBookRoundedIcon from '@mui/icons-material/MenuBookRounded'
 import MilitaryTechRoundedIcon from '@mui/icons-material/MilitaryTechRounded'
 import QueryStatsRoundedIcon from '@mui/icons-material/QueryStatsRounded'
@@ -27,12 +28,13 @@ import SchoolRoundedIcon from '@mui/icons-material/SchoolRounded'
 import StarRoundedIcon from '@mui/icons-material/StarRounded'
 import RocketLaunchRoundedIcon from '@mui/icons-material/RocketLaunchRounded'
 import SimpleUnitsList from './components/SimpleUnitsList'
-import VocabularyQuiz from './components/VocabularyQuiz'
 import PhraseList from './components/PhraseList'
+import SentenceBuilderWorkshop from './components/SentenceBuilderWorkshop'
+import VocabularyQuiz from './components/VocabularyQuiz'
 import { UnitProgress, UserStats } from './types/LearningTypes'
 import './NewDesignApp.css'
 
-type View = 'menu' | 'sections' | 'quiz' | 'phrases'
+type View = 'menu' | 'sections' | 'quiz' | 'sentenceBuilder' | 'phrases'
 
 const pageTransition = keyframes`
   from {
@@ -155,6 +157,21 @@ function App() {
         actionIcon: <RocketLaunchRoundedIcon />,
         actionColor: 'warning',
         view: 'quiz' as View
+      },
+      {
+        key: 'sentenceBuilder' as const,
+        title: 'Atelier de phrases',
+        description: 'Entraînez-vous à construire des phrases à partir de bancs de mots guidés.',
+        icon: <FormatQuoteRoundedIcon fontSize="medium" />,
+        accent: 'info',
+        metadata: [
+          { icon: <AutoAwesomeRoundedIcon fontSize="small" />, text: 'Scénarios progressifs' },
+          { icon: <StarRoundedIcon fontSize="small" />, text: 'Feedback immédiat' }
+        ],
+        actionLabel: "Lancer l'atelier",
+        actionIcon: <ArrowForwardRoundedIcon />,
+        actionColor: 'info',
+        view: 'sentenceBuilder' as View
       },
       {
         key: 'phrases' as const,
@@ -315,6 +332,8 @@ function App() {
         )
       case 'quiz':
         return <VocabularyQuiz />
+      case 'sentenceBuilder':
+        return <SentenceBuilderWorkshop />
       case 'phrases':
         return <PhraseList />
       case 'menu':
