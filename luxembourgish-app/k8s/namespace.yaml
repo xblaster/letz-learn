@@ -1,7 +1,0 @@
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: luxembourgish-app
-  labels:
-    name: luxembourgish-app
-    app.kubernetes.io/name: luxembourgish-app

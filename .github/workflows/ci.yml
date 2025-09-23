@@ -20,13 +20,9 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: |
-          cd luxembourgish-app
-          npm ci
+        run: npm ci
 
       - name: Run tests
-        run: |
-          cd luxembourgish-app
-          npm test -- --watchAll=false
+        run: npm test -- --watchAll=false
         env:
           CI: true
