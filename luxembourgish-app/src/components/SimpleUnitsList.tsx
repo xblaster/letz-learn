@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { UnitProgress } from '../types/LearningTypes'
+import '../styles/SimpleUnitsList.css'
 import { learningUnit1 } from '../data/Unit1Data'
 import { learningUnit2 } from '../data/Unit2Data'
 import { learningUnit3 } from '../data/Unit3Data'

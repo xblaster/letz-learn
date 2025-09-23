@@ -19,7 +19,6 @@ import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded'
 import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded'
 import AutoAwesomeRoundedIcon from '@mui/icons-material/AutoAwesomeRounded'
 import EmojiEventsRoundedIcon from '@mui/icons-material/EmojiEventsRounded'
-import LibraryBooksRoundedIcon from '@mui/icons-material/LibraryBooksRounded'
 import MenuBookRoundedIcon from '@mui/icons-material/MenuBookRounded'
 import MilitaryTechRoundedIcon from '@mui/icons-material/MilitaryTechRounded'
 import QueryStatsRoundedIcon from '@mui/icons-material/QueryStatsRounded'
@@ -27,15 +26,13 @@ import QuizRoundedIcon from '@mui/icons-material/QuizRounded'
 import SchoolRoundedIcon from '@mui/icons-material/SchoolRounded'
 import StarRoundedIcon from '@mui/icons-material/StarRounded'
 import RocketLaunchRoundedIcon from '@mui/icons-material/RocketLaunchRounded'
-import LearningUnit from './components/LearningUnit'
+import SimpleUnitsList from './components/SimpleUnitsList'
 import VocabularyQuiz from './components/VocabularyQuiz'
 import PhraseList from './components/PhraseList'
-import { learningUnit1 } from './data/Unit1Data'
-import { learningUnit2 } from './data/Unit2Data'
-import { learningUnit3 } from './data/Unit3Data'
 import { UnitProgress, UserStats } from './types/LearningTypes'
+import './NewDesignApp.css'
 
-type View = 'menu' | 'unit1' | 'unit2' | 'unit3' | 'quiz' | 'phrases'
+type View = 'menu' | 'sections' | 'quiz' | 'phrases'
 
 const pageTransition = keyframes`
   from {
@@ -72,7 +69,7 @@ const iconFloat = keyframes`
 `
 
 function App() {
-  const [currentView, setCurrentView] = useState<'menu' | 'sections' | 'quiz' | 'phrases'>('menu')
+  const [currentView, setCurrentView] = useState<View>('menu')
   const [userStats, setUserStats] = useState<UserStats>({
     totalXp: 0,
     streak: 0,
@@ -129,52 +126,20 @@ function App() {
 
     const learningCards = [
       {
-        key: 'unit1' as const,
-        title: 'Unité 1 : Premières rencontres',
-        description: 'Apprenez les salutations et expressions de politesse essentielles.',
+        key: 'sections' as const,
+        title: 'Sections d\'apprentissage',
+        description: 'Progressez à travers des unités guidées avec feedback et suivi.',
         icon: <SchoolRoundedIcon fontSize="medium" />,
         accent: 'primary',
         metadata: [
-          { icon: <MenuBookRoundedIcon fontSize="small" />, text: '4 mots nouveaux' },
-          { icon: <QueryStatsRoundedIcon fontSize="small" />, text: '~3 minutes' },
-          { icon: <EmojiEventsRoundedIcon fontSize="small" />, text: 'Niveau A1' }
+          { icon: <MenuBookRoundedIcon fontSize="small" />, text: '3 sections thématiques' },
+          { icon: <QueryStatsRoundedIcon fontSize="small" />, text: 'Suivi détaillé' },
+          { icon: <EmojiEventsRoundedIcon fontSize="small" />, text: 'Unités 1 à 6' }
         ],
-        actionLabel: "Commencer l'unité 1",
+        actionLabel: 'Explorer les sections',
         actionIcon: <ArrowForwardRoundedIcon />,
         actionColor: 'primary',
-        view: 'unit1' as View
-      },
-      {
-        key: 'unit2' as const,
-        title: 'Unité 2 : Ech sinn...',
-        description: 'Apprenez à vous présenter et partager quelques informations personnelles.',
-        icon: <AutoAwesomeRoundedIcon fontSize="medium" />,
-        accent: 'secondary',
-        metadata: [
-          { icon: <MenuBookRoundedIcon fontSize="small" />, text: '4 mots nouveaux' },
-          { icon: <QueryStatsRoundedIcon fontSize="small" />, text: '~3 minutes' },
-          { icon: <EmojiEventsRoundedIcon fontSize="small" />, text: 'Niveau A1' }
-        ],
-        actionLabel: "Explorer l'unité 2",
-        actionIcon: <ArrowForwardRoundedIcon />,
-        actionColor: 'secondary',
-        view: 'unit2' as View
-      },
-      {
-        key: 'unit3' as const,
-        title: 'Unité 3 : Wéi heescht Dir?',
-        description: 'Apprenez à poser des questions poliment et comprendre les réponses.',
-        icon: <LibraryBooksRoundedIcon fontSize="medium" />,
-        accent: 'info',
-        metadata: [
-          { icon: <MenuBookRoundedIcon fontSize="small" />, text: '4 mots nouveaux' },
-          { icon: <QueryStatsRoundedIcon fontSize="small" />, text: '~3 minutes' },
-          { icon: <EmojiEventsRoundedIcon fontSize="small" />, text: 'Niveau A1' }
-        ],
-        actionLabel: "Découvrir l'unité 3",
-        actionIcon: <ArrowForwardRoundedIcon />,
-        actionColor: 'info',
-        view: 'unit3' as View
+        view: 'sections' as View
       },
       {
         key: 'quiz' as const,
@@ -341,26 +306,10 @@ function App() {
 
   const renderView = () => {
     switch (currentView) {
-      case 'unit1':
+      case 'sections':
         return (
-          <LearningUnit
-            unit={learningUnit1}
-            onUnitComplete={handleUnitComplete}
-            onExit={() => setCurrentView('menu')}
-          />
-        )
-      case 'unit2':
-        return (
-          <LearningUnit
-            unit={learningUnit2}
-            onUnitComplete={handleUnitComplete}
-            onExit={() => setCurrentView('menu')}
-          />
-        )
-      case 'unit3':
-        return (
-          <LearningUnit
-            unit={learningUnit3}
+          <SimpleUnitsList
+            onBack={() => setCurrentView('menu')}
             onUnitComplete={handleUnitComplete}
           />
         )
