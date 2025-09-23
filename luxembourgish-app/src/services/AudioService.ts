@@ -4,6 +4,39 @@
 export class AudioService {
   private static audioContext: AudioContext | null = null
   private static speechSynth: SpeechSynthesis | null = null
+  private static preferredVoice: SpeechSynthesisVoice | null = null
+  private static voiceResolution: Promise<SpeechSynthesisVoice | null> | null = null
+
+  private static readonly correctionRules: Array<
+    [RegExp, string | ((substring: string, ...args: any[]) => string)]
+  > = [
+    [/['’‘`]/g, "'"],
+    [
+      /\b([dtns])'(?=\w)/gi,
+      (_match: string, letter: string) => {
+        const replacements: Record<string, string> = {
+          d: 'de ',
+          t: 'te ',
+          n: 'en ',
+          s: 'se '
+        }
+        const replacement = replacements[letter.toLowerCase()] ?? ''
+        if (!replacement) {
+          return replacement
+        }
+        return letter === letter.toUpperCase()
+          ? replacement.charAt(0).toUpperCase() + replacement.slice(1)
+          : replacement
+      }
+    ],
+    [/[äâáà]/gi, 'a'],
+    [/[ëêéè]/gi, 'e'],
+    [/[ïîíì]/gi, 'i'],
+    [/[öôóò]/gi, 'o'],
+    [/[üûúù]/gi, 'u'],
+    [/ß/g, 'ss'],
+    [/ç/g, 'c']
+  ]
 
   // Initialisation du contexte audio
   private static getAudioContext(): AudioContext {
@@ -11,6 +44,134 @@ export class AudioService {
       this.audioContext = new (window.AudioContext || (window as any).webkitAudioContext)()
     }
     return this.audioContext
+  }
+
+  private static getSpeechSynth(): SpeechSynthesis {
+    if (!this.speechSynth) {
+      this.speechSynth = window.speechSynthesis
+    }
+    return this.speechSynth
+  }
+
+  private static async getPreferredVoice(): Promise<SpeechSynthesisVoice | null> {
+    if (this.preferredVoice) {
+      return this.preferredVoice
+    }
+
+    if (this.voiceResolution) {
+      return this.voiceResolution
+    }
+
+    this.voiceResolution = (async () => {
+      const synth = this.getSpeechSynth()
+      if (!synth || typeof synth.getVoices !== 'function') {
+        return null
+      }
+
+      const voices = await this.waitForVoices(synth)
+      const selected = this.selectPreferredVoice(voices)
+      if (selected) {
+        this.preferredVoice = selected
+      }
+      return selected
+    })()
+
+    try {
+      return await this.voiceResolution
+    } finally {
+      this.voiceResolution = null
+    }
+  }
+
+  private static async waitForVoices(
+    synth: SpeechSynthesis
+  ): Promise<SpeechSynthesisVoice[]> {
+    const existingVoices = synth.getVoices()
+    if (existingVoices.length > 0) {
+      return existingVoices
+    }
+
+    return new Promise(resolve => {
+      const synthAny = synth as unknown as {
+        onvoiceschanged?: (() => void) | null
+      }
+
+      let resolved = false
+      let timeoutId: ReturnType<typeof setTimeout> | undefined
+
+      const cleanup = () => {
+        if (typeof synth.removeEventListener === 'function') {
+          synth.removeEventListener('voiceschanged', handleVoicesChanged)
+        }
+        if (synthAny && 'onvoiceschanged' in synthAny) {
+          synthAny.onvoiceschanged = null
+        }
+        if (timeoutId) {
+          clearTimeout(timeoutId)
+        }
+      }
+
+      const handleVoicesChanged = () => {
+        if (resolved) {
+          return
+        }
+        const availableVoices = synth.getVoices()
+        if (availableVoices.length > 0) {
+          resolved = true
+          cleanup()
+          resolve(availableVoices)
+        }
+      }
+
+      if (typeof synth.addEventListener === 'function') {
+        synth.addEventListener('voiceschanged', handleVoicesChanged)
+      } else if (synthAny) {
+        synthAny.onvoiceschanged = handleVoicesChanged
+      }
+
+      timeoutId = setTimeout(() => {
+        if (!resolved) {
+          resolved = true
+          cleanup()
+          resolve([])
+        }
+      }, 1000)
+    })
+  }
+
+  private static selectPreferredVoice(
+    voices: SpeechSynthesisVoice[]
+  ): SpeechSynthesisVoice | null {
+    if (!voices.length) {
+      return null
+    }
+
+    const normalizeLang = (lang?: string) => lang?.toLowerCase() ?? ''
+    const findByLang = (lang: string) =>
+      voices.find(voice => normalizeLang(voice.lang) === lang) ?? null
+
+    return (
+      findByLang('lb-lu') ||
+      findByLang('lb') ||
+      findByLang('de-lu') ||
+      findByLang('de-de') ||
+      voices[0] ||
+      null
+    )
+  }
+
+  private static applyTextCorrections(text: string): string {
+    let normalized = text
+
+    for (const [pattern, replacement] of this.correctionRules) {
+      if (typeof replacement === 'string') {
+        normalized = normalized.replace(pattern, replacement)
+      } else {
+        normalized = normalized.replace(pattern, replacement as any)
+      }
+    }
+
+    return normalized.replace(/\s{2,}/g, ' ').trim()
   }
 
   // Sons de transition et feedback
@@ -129,26 +290,45 @@ export class AudioService {
   }
 
   // Prononciation des mots luxembourgeois
-  static speakLuxembourgish(text: string, rate: number = 0.7): Promise<void> {
-    return new Promise((resolve, reject) => {
-      if (!('speechSynthesis' in window)) {
-        reject(new Error('Speech synthesis not supported'))
-        return
-      }
+  static async speakLuxembourgish(
+    content: string | Array<{ text: string; rate?: number; pitch?: number }>,
+    defaultRate: number = 0.7,
+    defaultPitch: number = 1.0
+  ): Promise<void> {
+    if (!('speechSynthesis' in window) || !window.speechSynthesis) {
+      throw new Error('Speech synthesis not supported')
+    }
 
-      const utterance = new SpeechSynthesisUtterance(text)
+    const phrases = Array.isArray(content)
+      ? content
+      : [{ text: content, rate: defaultRate, pitch: defaultPitch }]
 
-      // Configuration pour le luxembourgeois (utilise l'allemand comme approximation)
-      utterance.lang = 'de-DE'
-      utterance.rate = rate
-      utterance.pitch = 1.0
+    const synth = this.getSpeechSynth()
+    const voice = await this.getPreferredVoice()
+
+    for (const phrase of phrases) {
+      const utterance = new SpeechSynthesisUtterance(
+        this.applyTextCorrections(phrase.text)
+      )
+
+      utterance.lang = voice?.lang ?? 'de-DE'
+      utterance.voice = voice ?? null
+      utterance.rate = phrase.rate ?? defaultRate
+      utterance.pitch = phrase.pitch ?? defaultPitch
       utterance.volume = 0.8
 
-      utterance.onend = () => resolve()
-      utterance.onerror = (event) => reject(event.error)
+      await new Promise<void>((resolve, reject) => {
+        utterance.onend = () => resolve()
+        utterance.onerror = (event) =>
+          reject(
+            event?.error
+              ? new Error(String(event.error))
+              : new Error('Speech synthesis failed')
+          )
 
-      speechSynthesis.speak(utterance)
-    })
+        synth.speak(utterance)
+      })
+    }
   }
 
   // Prononciation avec bouton visuel
