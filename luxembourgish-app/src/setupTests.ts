@@ -25,7 +25,11 @@ if (typeof window !== 'undefined' && !window.matchMedia) {
 if (typeof window !== 'undefined' && !('speechSynthesis' in window)) {
   ;(window as any).speechSynthesis = {
     speak: jest.fn(),
-    cancel: jest.fn()
+    cancel: jest.fn(),
+    getVoices: jest.fn(() => []),
+    addEventListener: jest.fn(),
+    removeEventListener: jest.fn(),
+    onvoiceschanged: null
   }
 }
 
@@ -36,6 +40,7 @@ if (typeof window !== 'undefined' && typeof (window as any).SpeechSynthesisUtter
     this.rate = 1
     this.pitch = 1
     this.volume = 1
+    this.voice = null
     this.onend = null
     this.onerror = null
   }
