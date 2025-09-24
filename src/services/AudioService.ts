@@ -389,11 +389,17 @@ export class AudioService {
       await new Promise(resolve => setTimeout(resolve, 100))
     }
 
-    // Arrêter toute lecture en cours
-    if (synth.speaking) {
+    // Arrêter toute lecture en cours de manière plus robuste
+    if (synth.speaking || synth.pending) {
       synth.cancel()
-      // Attendre plus longtemps sur Android
-      const delay = this.isAndroid() ? 300 : 100
+      // Attendre que la synthèse soit vraiment arrêtée
+      let attempts = 0
+      while ((synth.speaking || synth.pending) && attempts < 10) {
+        await new Promise(resolve => setTimeout(resolve, 50))
+        attempts++
+      }
+      // Délai supplémentaire pour Android
+      const delay = this.isAndroid() ? 200 : 100
       await new Promise(resolve => setTimeout(resolve, delay))
     }
 

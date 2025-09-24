@@ -1,6 +1,7 @@
 import { useState } from 'react'
-import { Box, Button, Typography, Stack, Chip } from '@mui/material'
+import { Box, Button, Typography, Stack } from '@mui/material'
 import { Exercise } from '../../types/LearningTypes'
+import LuxembourgishChip from '../LuxembourgishChip'
 
 interface PhraseCompletionExerciseProps {
   exercise: Exercise
@@ -53,9 +54,10 @@ const PhraseCompletionExercise = ({ exercise, onComplete }: PhraseCompletionExer
 
       <Stack spacing={2} sx={{ mb: 3 }}>
         {options.map((option, index) => (
-          <Chip
+          <LuxembourgishChip
             key={index}
             label={option}
+            luxembourgishText={option}
             onClick={() => setSelectedAnswer(option)}
             color={selectedAnswer === option ? 'primary' : 'default'}
             variant={selectedAnswer === option ? 'filled' : 'outlined'}

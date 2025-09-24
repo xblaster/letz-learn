@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Box, Button, Typography, Stack, Chip } from '@mui/material'
+import { Box, Button, Typography, Stack } from '@mui/material'
 import { Exercise } from '../../types/LearningTypes'
 import LuxembourgishChip from '../LuxembourgishChip'
 
