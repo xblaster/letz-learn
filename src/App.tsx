@@ -154,13 +154,13 @@ function App() {
       {
         key: 'sections' as const,
         title: 'Sections d\'apprentissage',
-        description: 'Progressez à travers des unités guidées avec feedback et suivi.',
+        description: 'Progressez de débutant à intermédiaire avec 2 sections complètes.',
         icon: <SchoolRoundedIcon fontSize="medium" />,
         accent: 'primary',
         metadata: [
-          { icon: <MenuBookRoundedIcon fontSize="small" />, text: '3 sections thématiques' },
-          { icon: <QueryStatsRoundedIcon fontSize="small" />, text: 'Suivi détaillé' },
-          { icon: <EmojiEventsRoundedIcon fontSize="small" />, text: 'Unités 1 à 6' }
+          { icon: <MenuBookRoundedIcon fontSize="small" />, text: '2 sections progressives' },
+          { icon: <QueryStatsRoundedIcon fontSize="small" />, text: 'A1 → A1+ → A2' },
+          { icon: <EmojiEventsRoundedIcon fontSize="small" />, text: 'Unités 1-16 débloquées' }
         ],
         actionLabel: 'Explorer les sections',
         actionIcon: <ArrowForwardRoundedIcon />,
