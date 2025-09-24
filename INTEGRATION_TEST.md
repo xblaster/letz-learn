@@ -3,8 +3,8 @@
 ## ✅ TESTS RÉALISÉS
 
 ### **1. INTÉGRATION DES NOUVELLES UNITÉS**
-- ✅ **LearningPathData.ts** - Imports mis à jour vers nouvelles unités
-- ✅ **SimpleUnitsList.tsx** - Références mises à jour vers Unit3NewData, Unit4NewData, Unit5NewData
+- ✅ **LearningPathData.ts** - Génération dynamique via `unitSections`
+- ✅ **SimpleUnitsList.tsx** - Sections centralisées depuis `unitSections`
 - ✅ **Descriptions sections** - Adaptées au contenu des nouvelles unités
 
 ### **2. INTÉGRATION THÈME DARK**
@@ -96,7 +96,7 @@
 ## ⚠️ POINTS D'ATTENTION
 
 ### **DÉPENDANCES**
-- Vérifier que tous les fichiers `*NewData.ts` sont accessibles
+- Vérifier que la centralisation `unitSections.ts` couvre toutes les unités nécessaires
 - Confirmer que `useConfirmAction` hook fonctionne correctement
 - Valider que `theme-dark.ts` et `mobile-optimized.css` sont chargés
 

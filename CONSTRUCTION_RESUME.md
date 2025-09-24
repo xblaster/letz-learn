@@ -198,6 +198,14 @@ export type ExerciseType =
 1. **Finaliser Unit4NewData.ts** (Temps et jours)
 2. **Créer Units 5-8** pour compléter Section 1
 3. **Implémenter composants React** pour navigation multi-sections
+
+### 🧹 PLAN DE NETTOYAGE DES DONNÉES D'UNITÉS
+
+- ✅ **Centraliser les imports** des unités via `src/data/unitSections.ts` pour éviter les références directes aux fichiers `*NewData.ts`.
+- 🔄 **Renommer progressivement** les fichiers `UnitXNewData.ts` en `UnitXData.ts` une fois les anciennes versions archivées.
+- 🔄 **Mettre à jour les imports** restants vers la nouvelle convention afin d'éliminer toute occurrence de `New` dans le code applicatif.
+- 🔄 **Ajouter un script de validation** (ex: `npm run validate:units`) pour vérifier la conformité des structures `LearningUnit` et du niveau CECR (`CEFRLevel`).
+- 🔄 **Documenter la structure** des unités (schéma de données, conventions de nommage) dans un guide dédié pour faciliter les contributions futures.
 4. **Tests et validation** progression pédagogique
 5. **Déploiement thème dark** et UX mobile
 

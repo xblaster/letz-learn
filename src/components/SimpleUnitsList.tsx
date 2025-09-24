@@ -1,12 +1,7 @@
 import React, { useState } from 'react'
-import { UnitProgress } from '../types/LearningTypes'
+import type { LearningUnit, UnitProgress } from '../types/LearningTypes'
 import '../styles/SimpleUnitsList.css'
-import { learningUnit1 } from '../data/Unit1Data'
-import { learningUnit2 } from '../data/Unit2Data'
-import { learningUnit3 } from '../data/Unit3NewData'
-import { learningUnit4 } from '../data/Unit4NewData'
-import { learningUnit5 } from '../data/Unit5NewData'
-import { learningUnit6 } from '../data/Unit6Data'
+import { beginnerUnitSections } from '../data/unitSections'
 import LearningUnit from './LearningUnit'
 
 interface SimpleUnitsListProps {
@@ -15,40 +10,20 @@ interface SimpleUnitsListProps {
 }
 
 const SimpleUnitsList: React.FC<SimpleUnitsListProps> = ({ onBack, onUnitComplete }) => {
-  const [currentUnit, setCurrentUnit] = useState<any>(null)
+  const [currentUnit, setCurrentUnit] = useState<LearningUnit | null>(null)
   const [completedUnits, setCompletedUnits] = useState<string[]>([])
 
-  const sections = [
-    {
-      id: 'section1',
-      title: 'Premiers pas',
-      description: 'Découvrez les bases du luxembourgeois',
-      color: '#4ade80',
-      units: [learningUnit1, learningUnit2]
-    },
-    {
-      id: 'section2',
-      title: 'Nombres et temps',
-      description: 'Maîtrisez les nombres, le temps et les jours',
-      color: '#3b82f6',
-      units: [learningUnit3, learningUnit4]
-    },
-    {
-      id: 'section3',
-      title: 'Famille et relations',
-      description: 'Parlez de votre famille avec les possessifs',
-      color: '#8b5cf6',
-      units: [learningUnit5, learningUnit6]
-    }
-  ]
+  const sections = beginnerUnitSections
 
-  const handleUnitClick = (unit: any) => {
+  const handleUnitClick = (unit: LearningUnit) => {
     setCurrentUnit(unit)
   }
 
   const handleUnitComplete = (progress: UnitProgress) => {
     if (progress.isCompleted && currentUnit) {
-      setCompletedUnits(prev => [...prev, currentUnit.id])
+      setCompletedUnits(prev =>
+        prev.includes(currentUnit.id) ? prev : [...prev, currentUnit.id]
+      )
       onUnitComplete(progress)
     }
     setCurrentUnit(null)
