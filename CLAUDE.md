@@ -114,10 +114,18 @@ Tests are located in `src/__tests__/` using React Testing Library and Jest:
 2. Create the exercise component in `components/exercises/`
 3. Update `GenericExercise.tsx` to handle the new type
 
+### Text-to-Speech for Luxembourgish Content
+- **ALWAYS** use `LuxembourgishButton` instead of regular `Button` for any button containing Luxembourgish text
+- **ALWAYS** use `LuxembourgishChip` instead of regular `Chip` for any chip containing Luxembourgish text
+- **ALWAYS** use `LuxembourgishText` component for text displays that need audio pronunciation
+- Use `useLuxembourgishSpeech` hook for custom text-to-speech implementations
+- All Luxembourgish text should have accompanying audio functionality using `AudioService.speakLuxembourgish()`
+- Components automatically include speaker icons for audio playback
+
 ### Internationalization
 - Currently supports French and Luxembourgish
 - Text content is embedded in components (no i18n library)
-- Audio pronunciation uses Web Speech API with language detection
+- Audio pronunciation uses AudioService with advanced voice selection and Android compatibility
 
 ## Deployment
 

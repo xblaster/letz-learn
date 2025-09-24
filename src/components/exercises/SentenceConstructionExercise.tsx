@@ -14,6 +14,9 @@ import VolumeUpRoundedIcon from '@mui/icons-material/VolumeUpRounded'
 import TipsAndUpdatesRoundedIcon from '@mui/icons-material/TipsAndUpdatesRounded'
 import { Exercise } from '../../types/LearningTypes'
 import { SpeechRecognitionService } from '../../services/SpeechRecognitionService'
+import LuxembourgishButton from '../LuxembourgishButton'
+import LuxembourgishChip from '../LuxembourgishChip'
+import { useLuxembourgishSpeech } from '../../hooks/useLuxembourgishSpeech'
 
 interface SentenceConstructionExerciseProps {
   exercise: Exercise
@@ -31,6 +34,7 @@ const SentenceConstructionExercise = ({ exercise, onComplete }: SentenceConstruc
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null)
   const [attempts, setAttempts] = useState(0)
   const [startTime] = useState(() => Date.now())
+  const { speakText } = useLuxembourgishSpeech()
 
   const wordTokens = useMemo<WordToken[]>(() => {
     const bank = exercise.wordBank?.length
@@ -71,13 +75,8 @@ const SentenceConstructionExercise = ({ exercise, onComplete }: SentenceConstruc
     setSelectedTokenIds([])
   }
 
-  const speakSentence = () => {
-    if ('speechSynthesis' in window) {
-      const utterance = new SpeechSynthesisUtterance(expectedSentence)
-      utterance.lang = 'de-DE'
-      utterance.rate = 0.8
-      speechSynthesis.speak(utterance)
-    }
+  const speakSentence = async () => {
+    await speakText(expectedSentence)
   }
 
   const handleValidate = () => {
@@ -133,9 +132,10 @@ const SentenceConstructionExercise = ({ exercise, onComplete }: SentenceConstruc
             </Typography>
           ) : (
             selectedTokens.map(token => (
-              <Chip
+              <LuxembourgishChip
                 key={token.id}
                 label={token.label}
+                luxembourgishText={token.label}
                 color="primary"
                 variant="filled"
                 onClick={() => handleRemoveToken(token.id)}
@@ -154,10 +154,11 @@ const SentenceConstructionExercise = ({ exercise, onComplete }: SentenceConstruc
 
         <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
           {availableTokens.map(token => (
-            <Button
+            <LuxembourgishButton
               key={token.id}
               variant="outlined"
               color="primary"
+              luxembourgishText={token.label}
               onClick={() => handleWordSelect(token.id)}
               disabled={hasAnswered}
               sx={{
@@ -167,7 +168,7 @@ const SentenceConstructionExercise = ({ exercise, onComplete }: SentenceConstruc
               }}
             >
               {token.label}
-            </Button>
+            </LuxembourgishButton>
           ))}
         </Stack>
       </Stack>

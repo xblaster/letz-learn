@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Box, Button, Typography, Stack, Chip } from '@mui/material'
 import { Exercise } from '../../types/LearningTypes'
+import LuxembourgishChip from '../LuxembourgishChip'
 
 interface WordOrderingExerciseProps {
   exercise: Exercise
@@ -72,9 +73,10 @@ const WordOrderingExercise = ({ exercise, onComplete }: WordOrderingExerciseProp
               </Typography>
             ) : (
               selectedWords.map((word, index) => (
-                <Chip
+                <LuxembourgishChip
                   key={`${word}-${index}`}
                   label={word}
+                  luxembourgishText={word}
                   onClick={() => handleWordClick(word, true)}
                   sx={{ cursor: 'pointer' }}
                 />
@@ -89,9 +91,10 @@ const WordOrderingExercise = ({ exercise, onComplete }: WordOrderingExerciseProp
           </Typography>
           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
             {availableWords.map((word, index) => (
-              <Chip
+              <LuxembourgishChip
                 key={`${word}-${index}`}
                 label={word}
+                luxembourgishText={word}
                 variant="outlined"
                 onClick={() => handleWordClick(word, false)}
                 sx={{ cursor: 'pointer' }}

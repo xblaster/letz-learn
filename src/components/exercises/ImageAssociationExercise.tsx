@@ -10,6 +10,7 @@ import {
 import TipsAndUpdatesRoundedIcon from '@mui/icons-material/TipsAndUpdatesRounded'
 import EmojiObjectsRoundedIcon from '@mui/icons-material/EmojiObjectsRounded'
 import { Exercise } from '../../types/LearningTypes'
+import LuxembourgishButton from '../LuxembourgishButton'
 
 interface ImageAssociationExerciseProps {
   exercise: Exercise
@@ -100,8 +101,9 @@ const ImageAssociationExercise = ({ exercise, onComplete }: ImageAssociationExer
           const optionStyles = getOptionStyles(option)
 
           return (
-            <Button
+            <LuxembourgishButton
               key={option}
+              luxembourgishText={option}
               onClick={() => handleAnswerSelect(option)}
               disabled={hasAnswered}
               variant={optionStyles.variant}
@@ -120,7 +122,7 @@ const ImageAssociationExercise = ({ exercise, onComplete }: ImageAssociationExer
               {hasAnswered && option === exercise.correctAnswer && (
                 <Chip label={`/${exercise.vocabularyItem.pronunciation}/`} color="success" variant="outlined" />
               )}
-            </Button>
+            </LuxembourgishButton>
           )
         })}
       </Stack>
