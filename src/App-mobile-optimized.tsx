@@ -355,7 +355,7 @@ function AppMobileOptimized() {
                   border: theme.palette.mode === 'dark'
                     ? '1px solid rgba(255, 255, 255, 0.1)'
                     : '1px solid rgba(0, 0, 0, 0.05)',
-                  borderRadius: 4,
+                  borderRadius: 1,
                   transition: 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
                   cursor: 'pointer',
                   '&:hover': {
@@ -606,11 +606,12 @@ function AppMobileOptimized() {
             {!isMobile && currentView !== 'menu' && (
               <Button
                 variant="outlined"
+                size="small"
                 startIcon={<ArrowBackRoundedIcon />}
                 onClick={() => handleNavigation('menu')}
                 sx={{ borderRadius: 3 }}
               >
-                Retour au menu
+               
               </Button>
             )}
           </Stack>

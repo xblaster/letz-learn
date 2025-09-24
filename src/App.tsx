@@ -34,8 +34,6 @@ import PhraseList from './components/PhraseList'
 import SentenceBuilderWorkshop from './components/SentenceBuilderWorkshop'
 import VocabularyQuiz from './components/VocabularyQuiz'
 import { UnitProgress, UserStats } from './types/LearningTypes'
-import './NewDesignApp.css'
-import './mobile-optimized.css'
 
 // type View = 'menu' | 'sections' | 'quiz' | 'sentenceBuilder' | 'phrases' - Moved to useRouting hook
 
@@ -200,7 +198,7 @@ function App() {
           sx={{
             position: 'relative',
             overflow: 'hidden',
-            borderRadius: 4,
+            borderRadius: 1,
             px: { xs: 3, md: 6 },
             py: { xs: 4, md: 6 },
             color: 'common.white',
@@ -297,7 +295,8 @@ function App() {
                         sx={{
                           borderRadius: 999,
                           borderColor: 'divider',
-                          bgcolor: 'common.white',
+                          padding: 1,
+                          margin: 1,
                           '& .MuiChip-icon': { color: `${card.actionColor}.main` }
                         }}
                       />
@@ -368,24 +367,24 @@ function App() {
               <Typography variant="h4" sx={{ fontWeight: 700 }}>
                 🇱🇺 Lëtzebuergesch Léieren
               </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Apprendre le luxembourgeois avec une interface moderne
-              </Typography>
             </Box>
 
             {currentView !== 'menu' && (
               <Button
                 variant="outlined"
                 color="primary"
+                size="small"
                 startIcon={<ArrowBackRoundedIcon />}
                 onClick={() => setCurrentView('menu')}
                 sx={{ borderRadius: 999 }}
               >
-                Retour au menu
+               
               </Button>
             )}
           </Stack>
         </AppBar>
+
+
 
         <Divider sx={{ my: { xs: 3, md: 4 }, opacity: 0.15 }} />
 
@@ -428,6 +427,7 @@ const PaperStat = ({ stat, index }: StatCardProps) => (
       animation: `${statPulse} 5s ease-in-out ${index * 0.4}s infinite`
     }}
   >
+    
     <Stack spacing={1}>
       <Avatar
         sx={{

@@ -180,8 +180,7 @@ const LearningUnit = ({ unit, onUnitComplete, onExit }: LearningUnitProps) => {
       elevation={0}
       sx={{
         p: { xs: 3, md: 4 },
-        background: 'linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(245,249,255,0.9) 100%)',
-        backdropFilter: 'blur(14px)',
+        background: 'linear-gradient(180deg, rgba(10,10,20,0.95) 0%, rgba(15,25,35,0.95) 100%)',
         animation: `${containerAnimation} 0.4s ease`
       }}
     >
@@ -238,9 +237,9 @@ const LearningUnit = ({ unit, onUnitComplete, onExit }: LearningUnitProps) => {
 
         <Box
           sx={{
-            borderRadius: 4,
+            borderRadius: 1,
             border: '1px solid rgba(25,118,210,0.08)',
-            backgroundColor: 'rgba(255,255,255,0.9)',
+            backgroundColor: 'rgba(255,255,255,0.1)',
             p: { xs: 2.5, md: 3 },
             boxShadow: '0 20px 50px rgba(25, 118, 210, 0.08)'
           }}

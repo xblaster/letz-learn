@@ -194,7 +194,7 @@ src/
   background: 'linear-gradient(135deg, #00d4ff 0%, #c877ff 100%)',
   color: '#0a0a0f',
   fontWeight: 700,
-  borderRadius: 4,
+  borderRadius: 1,
   minHeight: 48, // Touch-friendly
   '&:hover': {
     background: 'linear-gradient(135deg, #5dffff 0%, #ffaaff 100%)',
@@ -376,7 +376,7 @@ export const GradientButton: React.FC<ButtonProps> = (props) => (
       background: 'var(--gradient-primary)',
       color: 'var(--dark-bg-primary)',
       fontWeight: 700,
-      borderRadius: 4,
+      borderRadius: 1,
       minHeight: 48,
       ...props.sx
     }}

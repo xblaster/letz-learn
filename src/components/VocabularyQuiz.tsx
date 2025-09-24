@@ -135,8 +135,8 @@ const VocabularyQuiz = () => {
       elevation={0}
       sx={{
         p: { xs: 3, md: 4 },
-        backgroundColor: 'rgba(255,255,255,0.96)',
-        borderRadius: 4,
+        backgroundColor: 'rgba(255,255,255,0.05)',
+        borderRadius: 1,
         boxShadow: '0 24px 70px rgba(25,118,210,0.08)'
       }}
     >

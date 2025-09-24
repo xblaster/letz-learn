@@ -249,9 +249,6 @@ const UnitCompletion = ({ unit, accuracy, isSuccess, totalTime, onRestart, onExi
               Recommencer l'unité
             </Button>
           )}
-          <Button variant="contained" endIcon={<RocketLaunchRoundedIcon />} onClick={onExit}>
-            Retour au menu
-          </Button>
         </Stack>
 
         <Box sx={{ textAlign: 'center', mt: 2 }}>

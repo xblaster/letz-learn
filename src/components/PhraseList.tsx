@@ -130,7 +130,7 @@ const PhraseList = () => {
         elevation={0}
         sx={{
           p: { xs: 3, md: 4 },
-          borderRadius: 4,
+          borderRadius: 1,
           background: 'linear-gradient(140deg, rgba(25,118,210,0.12) 0%, rgba(20,184,166,0.08) 100%)'
         }}
       >
@@ -201,8 +201,8 @@ const PhraseList = () => {
               sx={{
                 p: 3,
                 height: '100%',
-                borderRadius: 4,
-                backgroundColor: 'rgba(255,255,255,0.95)',
+                borderRadius: 1,
+                backgroundColor: 'rgba(255,255,255,0.05)',
                 border: '1px solid rgba(25,118,210,0.1)',
                 display: 'flex',
                 flexDirection: 'column',

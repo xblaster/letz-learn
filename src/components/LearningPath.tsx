@@ -59,10 +59,6 @@ const LearningPath: React.FC<LearningPathProps> = ({ onBack, onUnitComplete }) =
             <span className="progress-label">Progression globale</span>
           </div>
         </div>
-        <button className="btn btn-outline" onClick={onBack}>
-          <span className="btn-icon">←</span>
-          Retour au menu
-        </button>
       </div>
 
       <div className="path-canvas">

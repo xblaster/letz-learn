@@ -55,10 +55,6 @@ const SimpleUnitsList: React.FC<SimpleUnitsListProps> = ({ onBack, onUnitComplet
           <h1>Sections d'apprentissage</h1>
           <p className="subtitle">Choisissez une unité pour commencer votre apprentissage</p>
         </div>
-        <button className="btn btn-outline" onClick={onBack}>
-          <span className="btn-icon">←</span>
-          Retour au menu
-        </button>
       </div>
 
       <div className="sections-list">
