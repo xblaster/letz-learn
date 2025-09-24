@@ -1,5 +1,6 @@
 import { useState, type ReactNode } from 'react'
 import useConfirmAction from './hooks/useConfirmAction'
+import { useRouting, type View } from './hooks/useRouting'
 import {
   AppBar,
   Avatar,
@@ -36,7 +37,7 @@ import { UnitProgress, UserStats } from './types/LearningTypes'
 import './NewDesignApp.css'
 import './mobile-optimized.css'
 
-type View = 'menu' | 'sections' | 'quiz' | 'sentenceBuilder' | 'phrases'
+// type View = 'menu' | 'sections' | 'quiz' | 'sentenceBuilder' | 'phrases' - Moved to useRouting hook
 
 const pageTransition = keyframes`
   from {
@@ -73,7 +74,7 @@ const iconFloat = keyframes`
 `
 
 function App() {
-  const [currentView, setCurrentView] = useState<View>('menu')
+  const { currentView, setCurrentView } = useRouting()
   const { confirm, ConfirmationDialog } = useConfirmAction()
   const [userStats, setUserStats] = useState<UserStats>({
     totalXp: 0,
@@ -144,7 +145,7 @@ function App() {
         actionLabel: 'Explorer les sections',
         actionIcon: <ArrowForwardRoundedIcon />,
         actionColor: 'primary',
-        view: 'sections' as View
+        view: 'sections'
       },
       {
         key: 'quiz' as const,
@@ -159,7 +160,7 @@ function App() {
         actionLabel: 'Lancer le quiz',
         actionIcon: <RocketLaunchRoundedIcon />,
         actionColor: 'warning',
-        view: 'quiz' as View
+        view: 'quiz'
       },
       {
         key: 'sentenceBuilder' as const,
@@ -174,7 +175,7 @@ function App() {
         actionLabel: "Lancer l'atelier",
         actionIcon: <ArrowForwardRoundedIcon />,
         actionColor: 'info',
-        view: 'sentenceBuilder' as View
+        view: 'sentenceBuilder'
       },
       {
         key: 'phrases' as const,
@@ -189,7 +190,7 @@ function App() {
         actionLabel: 'Explorer les phrases',
         actionIcon: <ArrowForwardRoundedIcon />,
         actionColor: 'success',
-        view: 'phrases' as View
+        view: 'phrases'
       }
     ]
 
@@ -310,15 +311,8 @@ function App() {
                     variant="contained"
                     color={card.actionColor as any}
                     endIcon={card.actionIcon}
-                    onClick={async () => {
-                      const confirmed = await confirm({
-                        title: `Lancer ${card.title}`,
-                        message: `Êtes-vous prêt à commencer ${card.title.toLowerCase()} ?`,
-                        type: 'info'
-                      })
-                      if (confirmed) {
-                        setCurrentView(card.view)
-                      }
+                    onClick={() => {
+                      setCurrentView(card.view as View)
                     }}
                   >
                     {card.actionLabel}

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import type { LearningUnit, UnitProgress } from '../types/LearningTypes'
 import '../styles/SimpleUnitsList.css'
 import { beginnerUnitSections } from '../data/unitSections'
-import LearningUnit from './LearningUnit'
+import LearningUnitComponent from './LearningUnit'
 
 interface SimpleUnitsListProps {
   onBack: () => void
@@ -40,7 +40,7 @@ const SimpleUnitsList: React.FC<SimpleUnitsListProps> = ({ onBack, onUnitComplet
   // Si une unité est active, afficher le composant LearningUnit
   if (currentUnit) {
     return (
-      <LearningUnit
+      <LearningUnitComponent
         unit={currentUnit}
         onUnitComplete={handleUnitComplete}
         onExit={handleExitUnit}

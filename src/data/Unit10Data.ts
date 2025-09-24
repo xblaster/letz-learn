@@ -161,11 +161,8 @@ export const generateUnit10Exercises = (): Exercise[] => {
     type: 'sentence_construction',
     vocabularyItem: unit10Vocabulary[2],
     question: 'Assemblage poli pour demander quelque chose en magasin',
-    wordBank: ['Ech', 'wëll', 'dat', 'kaf''].sort(() => Math.random() - 0.5),
-    correctAnswer: 'Ech wëll dat kafen',
-    expectedSentence: 'Ech wëll dat kafen',
-    hint: 'Structure: Je + vouloir + objet + acheter',
-    context: 'Spaced repetition: politesse + shopping'
+    wordBank: ['Ech', 'wëll', 'dat', 'kafen'].sort(() => Math.random() - 0.5),
+    correctAnswer: 'Ech wëll dat kafen'
   })
 
   // 3.2 Pattern prix avec élément connu

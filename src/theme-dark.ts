@@ -26,8 +26,7 @@ const darkTheme = createTheme({
       paper: '#16161f', // Gris anthracite foncé
     },
     surface: {
-      main: '#1a1a24', // Surface principale
-      variant: '#212130' // Surface variante plus claire
+      main: '#1a1a24' // Surface principale
     },
     success: {
       main: '#00ff88', // Vert néon vibrant
