@@ -34,8 +34,6 @@ import SimpleUnitsList from './components/SimpleUnitsList'
 import PhraseList from './components/PhraseList'
 import SentenceBuilderWorkshop from './components/SentenceBuilderWorkshop'
 import VocabularyQuiz from './components/VocabularyQuiz'
-import ProgressDebugger from './components/ProgressDebugger'
-import AudioDebugger from './components/AudioDebugger'
 import { UnitProgress, UserStats } from './types/LearningTypes'
 
 // type View = 'menu' | 'sections' | 'quiz' | 'sentenceBuilder' | 'phrases' - Moved to useRouting hook
@@ -478,8 +476,6 @@ function App() {
         </Box>
       </Container>
       <ConfirmationDialog />
-      <ProgressDebugger />
-      <AudioDebugger />
     </Box>
   )
 }
