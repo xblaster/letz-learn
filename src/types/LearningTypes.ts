@@ -24,15 +24,34 @@ export interface Exercise {
   hint?: string
 }
 
+export type CEFRLevel =
+  | 'A1'
+  | 'A1+'
+  | 'A2'
+  | 'A2+'
+  | 'B1'
+  | 'B1+'
+  | 'B2'
+
 export interface LearningUnit {
   id: string
   title: string
   description: string
-  level: 'A1' | 'A2' | 'B1' | 'B2'
+  level: CEFRLevel
   vocabulary: VocabularyItem[]
   exercises: Exercise[]
   targetScore: number
   estimatedTime: number // en minutes
+}
+
+export interface UnitSection {
+  id: string
+  title: string
+  description: string
+  color: string
+  order: number
+  units: LearningUnit[]
+  pathLayout?: Array<{ x: number; y: number }>
 }
 
 export interface ExerciseResult {

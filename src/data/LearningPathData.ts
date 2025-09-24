@@ -1,91 +1,52 @@
 // Données du parcours d'apprentissage à la Duolingo
 
 import { PathSection, PathNode, LearningState } from '../types/LearningTypes'
-import { learningUnit1 } from './Unit1Data'
-import { learningUnit2 } from './Unit2Data'
-import { learningUnit3 } from './Unit3NewData'
-import { learningUnit4 } from './Unit4NewData'
-import { learningUnit5 } from './Unit5NewData'
-import { learningUnit6 } from './Unit6Data'
+import { beginnerUnitSections } from './unitSections'
 
 // Configuration du parcours avec positions visuelles
-export const learningPathSections: PathSection[] = [
-  {
-    id: 'section_1',
-    title: 'Premiers pas',
-    description: 'Découvrez les bases du luxembourgeois',
-    color: '#4ade80', // vert clair
-    order: 1,
-    nodes: [
-      {
-        id: 'node_1',
-        unit: learningUnit1,
-        position: { x: 50, y: 20 },
-        isUnlocked: true,  // Premier nœud toujours débloqué
-        isCompleted: false,
-        sectionId: 'section_1'
-      },
-      {
-        id: 'node_2',
-        unit: learningUnit2,
-        position: { x: 50, y: 40 },
-        isUnlocked: false,
-        isCompleted: false,
-        sectionId: 'section_1'
-      }
-    ]
-  },
-  {
-    id: 'section_2',
-    title: 'Nombres et temps',
-    description: 'Maîtrisez les nombres, le temps et les jours',
-    color: '#3b82f6', // bleu
-    order: 2,
-    nodes: [
-      {
-        id: 'node_3',
-        unit: learningUnit3,
-        position: { x: 30, y: 60 },
-        isUnlocked: false,
-        isCompleted: false,
-        sectionId: 'section_2'
-      },
-      {
-        id: 'node_4',
-        unit: learningUnit4,
-        position: { x: 70, y: 75 },
-        isUnlocked: false,
-        isCompleted: false,
-        sectionId: 'section_2'
-      }
-    ]
-  },
-  {
-    id: 'section_3',
-    title: 'Famille et relations',
-    description: 'Parlez de votre famille avec les possessifs',
-    color: '#8b5cf6', // violet
-    order: 3,
-    nodes: [
-      {
-        id: 'node_5',
-        unit: learningUnit5,
-        position: { x: 40, y: 90 },
-        isUnlocked: false,
-        isCompleted: false,
-        sectionId: 'section_3'
-      },
-      {
-        id: 'node_6',
-        unit: learningUnit6,
-        position: { x: 60, y: 105 },
-        isUnlocked: false,
-        isCompleted: false,
-        sectionId: 'section_3'
-      }
-    ]
+const getFallbackPosition = (index: number): PathNode['position'] => {
+  const column = index % 2 === 0 ? 40 : 60
+  const row = Math.floor(index / 2)
+
+  return {
+    x: column,
+    y: 20 + row * 20
   }
-]
+}
+
+const createLearningPathSections = (): PathSection[] => {
+  let nodeIndex = 0
+
+  return beginnerUnitSections.map(section => {
+    const nodes = section.units.map((unit, unitPositionIndex) => {
+      const position = section.pathLayout?.[unitPositionIndex] ?? getFallbackPosition(nodeIndex)
+      const nodeId = `node_${nodeIndex + 1}`
+
+      const node: PathNode = {
+        id: nodeId,
+        unit,
+        position,
+        isUnlocked: nodeId === 'node_1',
+        isCompleted: false,
+        sectionId: section.id
+      }
+
+      nodeIndex += 1
+      return node
+    })
+
+    return {
+      id: section.id,
+      title: section.title,
+      description: section.description,
+      color: section.color,
+      nodes,
+      order: section.order
+    }
+  })
+}
+
+export const learningPathSections: PathSection[] = createLearningPathSections()
 
 // État initial du parcours d'apprentissage
 export const initialLearningState: LearningState = {
