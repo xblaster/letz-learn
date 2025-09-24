@@ -81,7 +81,7 @@ interface BuildInfo {
 
 function App() {
   const { currentView, setCurrentView } = useRouting()
-  const { confirm, ConfirmationDialog } = useConfirmAction()
+  const { ConfirmationDialog } = useConfirmAction()
   const [userStats, setUserStats] = useState<UserStats>({
     totalXp: 0,
     streak: 0,
