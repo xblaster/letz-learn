@@ -3,9 +3,9 @@ import { UnitProgress } from '../types/LearningTypes'
 import '../styles/SimpleUnitsList.css'
 import { learningUnit1 } from '../data/Unit1Data'
 import { learningUnit2 } from '../data/Unit2Data'
-import { learningUnit3 } from '../data/Unit3Data'
-import { learningUnit4 } from '../data/Unit4Data'
-import { learningUnit5 } from '../data/Unit5Data'
+import { learningUnit3 } from '../data/Unit3NewData'
+import { learningUnit4 } from '../data/Unit4NewData'
+import { learningUnit5 } from '../data/Unit5NewData'
 import { learningUnit6 } from '../data/Unit6Data'
 import LearningUnit from './LearningUnit'
 
@@ -28,15 +28,15 @@ const SimpleUnitsList: React.FC<SimpleUnitsListProps> = ({ onBack, onUnitComplet
     },
     {
       id: 'section2',
-      title: 'Communication',
-      description: 'Apprenez à communiquer au quotidien',
+      title: 'Nombres et temps',
+      description: 'Maîtrisez les nombres, le temps et les jours',
       color: '#3b82f6',
       units: [learningUnit3, learningUnit4]
     },
     {
       id: 'section3',
-      title: 'Vie quotidienne',
-      description: 'Maîtrisez les situations du quotidien',
+      title: 'Famille et relations',
+      description: 'Parlez de votre famille avec les possessifs',
       color: '#8b5cf6',
       units: [learningUnit5, learningUnit6]
     }

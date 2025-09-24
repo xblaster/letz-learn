@@ -284,7 +284,18 @@ const getExerciseTypeName = (type?: Exercise['type']): string => {
     dialogue_completion: 'Dialogue',
     pronunciation: 'Prononciation',
     sentence_construction: 'Construction de phrase',
-    speech_recognition: 'Reconnaissance vocale'
+    speech_recognition: 'Reconnaissance vocale',
+    word_ordering: 'Remise en ordre',
+    phrase_completion: 'Complétion de phrase',
+    progressive_building: 'Construction progressive',
+    pattern_recognition: 'Reconnaissance de motifs',
+    creative_expression: 'Expression créative',
+    error_correction: "Correction d'erreurs",
+    register_adaptation: 'Adaptation de registre',
+    argumentation_building: "Construction d'arguments",
+    cultural_context: 'Contexte culturel',
+    text_comprehension: 'Compréhension de texte',
+    opinion_expression: "Expression d'opinion"
   }
 
   if (!type) {

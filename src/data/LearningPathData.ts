@@ -3,9 +3,9 @@
 import { PathSection, PathNode, LearningState } from '../types/LearningTypes'
 import { learningUnit1 } from './Unit1Data'
 import { learningUnit2 } from './Unit2Data'
-import { learningUnit3 } from './Unit3Data'
-import { learningUnit4 } from './Unit4Data'
-import { learningUnit5 } from './Unit5Data'
+import { learningUnit3 } from './Unit3NewData'
+import { learningUnit4 } from './Unit4NewData'
+import { learningUnit5 } from './Unit5NewData'
 import { learningUnit6 } from './Unit6Data'
 
 // Configuration du parcours avec positions visuelles
@@ -37,8 +37,8 @@ export const learningPathSections: PathSection[] = [
   },
   {
     id: 'section_2',
-    title: 'Communication',
-    description: 'Apprenez à communiquer au quotidien',
+    title: 'Nombres et temps',
+    description: 'Maîtrisez les nombres, le temps et les jours',
     color: '#3b82f6', // bleu
     order: 2,
     nodes: [
@@ -62,8 +62,8 @@ export const learningPathSections: PathSection[] = [
   },
   {
     id: 'section_3',
-    title: 'Vie quotidienne',
-    description: 'Maîtrisez les situations du quotidien',
+    title: 'Famille et relations',
+    description: 'Parlez de votre famille avec les possessifs',
     color: '#8b5cf6', // violet
     order: 3,
     nodes: [

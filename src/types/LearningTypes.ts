@@ -61,6 +61,17 @@ export type ExerciseType =
   | 'pronunciation'        // Répétition guidée
   | 'sentence_construction' // Construction de phrase
   | 'speech_recognition'    // Répétition + reconnaissance de phrase
+  | 'word_ordering'        // Remettre mots dans l'ordre
+  | 'phrase_completion'    // Compléter phrases à trous
+  | 'progressive_building' // Construction par étapes
+  | 'pattern_recognition'  // Reconnaître structures
+  | 'creative_expression'  // Production libre avec contraintes (B1+)
+  | 'error_correction'     // Identifier et corriger erreurs (A2+)
+  | 'register_adaptation'  // Adapter selon contexte formel/informel (B1+)
+  | 'argumentation_building' // Construire arguments structurés (B1+)
+  | 'cultural_context'     // Compréhension culturelle luxembourgeoise (A2+)
+  | 'text_comprehension'   // Compréhension de textes authentiques (A2+)
+  | 'opinion_expression'   // Expression d'opinions nuancées (B1)
 
 export interface UserStats {
   totalXp: number

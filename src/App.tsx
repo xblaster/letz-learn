@@ -1,4 +1,5 @@
 import { useState, type ReactNode } from 'react'
+import useConfirmAction from './hooks/useConfirmAction'
 import {
   AppBar,
   Avatar,
@@ -33,6 +34,7 @@ import SentenceBuilderWorkshop from './components/SentenceBuilderWorkshop'
 import VocabularyQuiz from './components/VocabularyQuiz'
 import { UnitProgress, UserStats } from './types/LearningTypes'
 import './NewDesignApp.css'
+import './mobile-optimized.css'
 
 type View = 'menu' | 'sections' | 'quiz' | 'sentenceBuilder' | 'phrases'
 
@@ -72,6 +74,7 @@ const iconFloat = keyframes`
 
 function App() {
   const [currentView, setCurrentView] = useState<View>('menu')
+  const { confirm, ConfirmationDialog } = useConfirmAction()
   const [userStats, setUserStats] = useState<UserStats>({
     totalXp: 0,
     streak: 0,
@@ -307,7 +310,16 @@ function App() {
                     variant="contained"
                     color={card.actionColor as any}
                     endIcon={card.actionIcon}
-                    onClick={() => setCurrentView(card.view)}
+                    onClick={async () => {
+                      const confirmed = await confirm({
+                        title: `Lancer ${card.title}`,
+                        message: `Êtes-vous prêt à commencer ${card.title.toLowerCase()} ?`,
+                        type: 'info'
+                      })
+                      if (confirmed) {
+                        setCurrentView(card.view)
+                      }
+                    }}
                   >
                     {card.actionLabel}
                   </Button>
@@ -393,6 +405,7 @@ function App() {
           {renderView()}
         </Box>
       </Container>
+      <ConfirmationDialog />
     </Box>
   )
 }
