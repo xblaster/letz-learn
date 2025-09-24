@@ -1,6 +1,7 @@
 import { useState, useEffect, type ReactNode } from 'react'
 import useConfirmAction from './hooks/useConfirmAction'
 import { useRouting, type View } from './hooks/useRouting'
+import { saveProgress, loadProgress } from './utils/progressStorage'
 import {
   AppBar,
   Avatar,
@@ -33,6 +34,8 @@ import SimpleUnitsList from './components/SimpleUnitsList'
 import PhraseList from './components/PhraseList'
 import SentenceBuilderWorkshop from './components/SentenceBuilderWorkshop'
 import VocabularyQuiz from './components/VocabularyQuiz'
+import ProgressDebugger from './components/ProgressDebugger'
+import AudioDebugger from './components/AudioDebugger'
 import { UnitProgress, UserStats } from './types/LearningTypes'
 
 // type View = 'menu' | 'sections' | 'quiz' | 'sentenceBuilder' | 'phrases' - Moved to useRouting hook
@@ -87,7 +90,31 @@ function App() {
     unitsCompleted: 0,
     accuracy: 0
   })
+  const [isStatsLoaded, setIsStatsLoaded] = useState(false)
   const [buildInfo, setBuildInfo] = useState<BuildInfo | null>(null)
+
+  // Charger les stats utilisateur depuis localStorage
+  useEffect(() => {
+    const savedProgress = loadProgress()
+    if (savedProgress && savedProgress.userStats) {
+      setUserStats(savedProgress.userStats)
+    }
+    setIsStatsLoaded(true)
+  }, [])
+
+  // Sauvegarder les stats à chaque modification
+  useEffect(() => {
+    if (isStatsLoaded) {
+      const savedProgress = loadProgress()
+      if (savedProgress) {
+        const updatedProgress = {
+          ...savedProgress,
+          userStats
+        }
+        saveProgress(updatedProgress)
+      }
+    }
+  }, [userStats, isStatsLoaded])
 
   useEffect(() => {
     fetch('/build-info.json')
@@ -451,6 +478,8 @@ function App() {
         </Box>
       </Container>
       <ConfirmationDialog />
+      <ProgressDebugger />
+      <AudioDebugger />
     </Box>
   )
 }

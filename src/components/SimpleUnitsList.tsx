@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import type { LearningUnit, UnitProgress } from '../types/LearningTypes'
 import '../styles/SimpleUnitsList.css'
 import { beginnerUnitSections } from '../data/unitSections'
 import LearningUnitComponent from './LearningUnit'
+import { saveProgress, loadProgress } from '../utils/progressStorage'
 
 interface SimpleUnitsListProps {
   onBack: () => void
@@ -13,8 +14,36 @@ const SimpleUnitsList: React.FC<SimpleUnitsListProps> = ({ onBack, onUnitComplet
   const [currentUnit, setCurrentUnit] = useState<LearningUnit | null>(null)
   const [completedUnits, setCompletedUnits] = useState<string[]>([])
   const [unlockedSections, setUnlockedSections] = useState<string[]>(['section_1'])
+  const [isLoaded, setIsLoaded] = useState(false)
 
   const sections = beginnerUnitSections
+
+  // Charger la progression depuis localStorage au montage
+  useEffect(() => {
+    const savedProgress = loadProgress()
+    if (savedProgress) {
+      setCompletedUnits(savedProgress.completedUnits)
+      setUnlockedSections(savedProgress.unlockedSections)
+    }
+    setIsLoaded(true)
+  }, [])
+
+  // Sauvegarder la progression à chaque changement
+  useEffect(() => {
+    if (isLoaded) {
+      const progressData = {
+        completedUnits,
+        unlockedSections,
+        userStats: {
+          totalXp: 0,
+          streak: 0,
+          unitsCompleted: completedUnits.length,
+          accuracy: 0
+        }
+      }
+      saveProgress(progressData)
+    }
+  }, [completedUnits, unlockedSections, isLoaded])
 
   const handleUnitClick = (unit: LearningUnit) => {
     setCurrentUnit(unit)
@@ -30,7 +59,10 @@ const SimpleUnitsList: React.FC<SimpleUnitsListProps> = ({ onBack, onUnitComplet
         const section1Completed = section1Units.every(unitId => updatedCompleted.includes(unitId))
 
         if (section1Completed && !unlockedSections.includes('section_2')) {
-          setUnlockedSections(prevSections => [...prevSections, 'section_2'])
+          setUnlockedSections(prevSections => {
+            const newSections = [...prevSections, 'section_2']
+            return newSections
+          })
         }
 
         return updatedCompleted

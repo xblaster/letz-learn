@@ -38,10 +38,16 @@ export class AudioService {
     [/ç/g, 'c']
   ]
 
-  // Initialisation du contexte audio
+  // Initialisation du contexte audio avec support Android
   private static getAudioContext(): AudioContext {
     if (!this.audioContext) {
-      this.audioContext = new (window.AudioContext || (window as any).webkitAudioContext)()
+      const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext
+      if (AudioContextClass) {
+        this.audioContext = new AudioContextClass()
+      } else {
+        console.warn('AudioContext not supported on this device')
+        throw new Error('AudioContext not supported')
+      }
     }
     return this.audioContext
   }
@@ -51,6 +57,35 @@ export class AudioService {
       this.speechSynth = window.speechSynthesis
     }
     return this.speechSynth
+  }
+
+  // Détection Android
+  private static isAndroid(): boolean {
+    return /Android/i.test(navigator.userAgent)
+  }
+
+  // Son silencieux pour débloquer l'audio sur Android
+  private static async playUnlockSound(): Promise<void> {
+    try {
+      const ctx = this.getAudioContext()
+      const osc = ctx.createOscillator()
+      const gain = ctx.createGain()
+
+      osc.connect(gain)
+      gain.connect(ctx.destination)
+
+      // Son très court et silencieux
+      osc.frequency.setValueAtTime(440, ctx.currentTime)
+      gain.gain.setValueAtTime(0.001, ctx.currentTime) // Quasi-silencieux
+
+      osc.start(ctx.currentTime)
+      osc.stop(ctx.currentTime + 0.1)
+
+      // Attendre la fin
+      await new Promise(resolve => setTimeout(resolve, 200))
+    } catch (error) {
+      console.warn('Unlock sound failed:', error)
+    }
   }
 
   private static async getPreferredVoice(): Promise<SpeechSynthesisVoice | null> {
@@ -174,9 +209,14 @@ export class AudioService {
     return normalized.replace(/\s{2,}/g, ' ').trim()
   }
 
-  // Sons de transition et feedback
+  // Sons de transition et feedback avec protection Android
   static playSuccessSound(): void {
-    const ctx = this.getAudioContext()
+    try {
+      const ctx = this.getAudioContext()
+      if (ctx.state === 'suspended') {
+        console.warn('AudioContext suspended, cannot play success sound')
+        return
+      }
 
     // Son de succès doux: accord majeur harmonieux
     const frequencies = [523.25, 659.25, 783.99] // Do, Mi, Sol
@@ -198,10 +238,18 @@ export class AudioService {
       osc.start(ctx.currentTime + index * 0.06)
       osc.stop(ctx.currentTime + index * 0.06 + duration)
     })
+    } catch (error) {
+      console.warn('Success sound failed:', error)
+    }
   }
 
   static playErrorSound(): void {
-    const ctx = this.getAudioContext()
+    try {
+      const ctx = this.getAudioContext()
+      if (ctx.state === 'suspended') {
+        console.warn('AudioContext suspended, cannot play error sound')
+        return
+      }
 
     // Son d'erreur: note descendante
     const osc = ctx.createOscillator()
@@ -219,10 +267,18 @@ export class AudioService {
 
     osc.start(ctx.currentTime)
     osc.stop(ctx.currentTime + 0.3)
+    } catch (error) {
+      console.warn('Error sound failed:', error)
+    }
   }
 
   static playProgressSound(): void {
-    const ctx = this.getAudioContext()
+    try {
+      const ctx = this.getAudioContext()
+      if (ctx.state === 'suspended') {
+        console.warn('AudioContext suspended, cannot play progress sound')
+        return
+      }
 
     // Son de progression: note montante douce
     const osc = ctx.createOscillator()
@@ -241,10 +297,18 @@ export class AudioService {
 
     osc.start(ctx.currentTime)
     osc.stop(ctx.currentTime + 0.2)
+    } catch (error) {
+      console.warn('Progress sound failed:', error)
+    }
   }
 
   static playCompletionSound(): void {
-    const ctx = this.getAudioContext()
+    try {
+      const ctx = this.getAudioContext()
+      if (ctx.state === 'suspended') {
+        console.warn('AudioContext suspended, cannot play completion sound')
+        return
+      }
 
     // Son de completion d'unité: fanfare joyeuse
     const notes = [523.25, 659.25, 783.99, 1046.50] // Do, Mi, Sol, Do aigu
@@ -266,10 +330,18 @@ export class AudioService {
       osc.start(ctx.currentTime + index * 0.15)
       osc.stop(ctx.currentTime + index * 0.15 + 0.25)
     })
+    } catch (error) {
+      console.warn('Completion sound failed:', error)
+    }
   }
 
   static playClickSound(): void {
-    const ctx = this.getAudioContext()
+    try {
+      const ctx = this.getAudioContext()
+      if (ctx.state === 'suspended') {
+        console.warn('AudioContext suspended, cannot play click sound')
+        return
+      }
 
     // Son de clic: petit "pop" doux
     const osc = ctx.createOscillator()
@@ -288,9 +360,12 @@ export class AudioService {
 
     osc.start(ctx.currentTime)
     osc.stop(ctx.currentTime + 0.1)
+    } catch (error) {
+      console.warn('Click sound failed:', error)
+    }
   }
 
-  // Prononciation des mots luxembourgeois
+  // Prononciation des mots luxembourgeois avec fixes Android
   static async speakLuxembourgish(
     content: string | Array<{ text: string; rate?: number; pitch?: number }>,
     defaultRate: number = 0.7,
@@ -309,11 +384,17 @@ export class AudioService {
 
     const synth = this.getSpeechSynth()
 
+    // Fix Android: Délai pour éviter les conflits
+    if (this.isAndroid()) {
+      await new Promise(resolve => setTimeout(resolve, 100))
+    }
+
     // Arrêter toute lecture en cours
     if (synth.speaking) {
       synth.cancel()
-      // Attendre un peu pour que l'annulation prenne effet
-      await new Promise(resolve => setTimeout(resolve, 100))
+      // Attendre plus longtemps sur Android
+      const delay = this.isAndroid() ? 300 : 100
+      await new Promise(resolve => setTimeout(resolve, delay))
     }
 
     const voice = await this.getPreferredVoice()
@@ -339,10 +420,13 @@ export class AudioService {
           }
         }
 
+        // Timeout plus long sur Android
+        const timeout = this.isAndroid() ? 15000 : 10000
         const timeoutId = setTimeout(() => {
           cleanup()
-          reject(new Error('Speech synthesis timeout'))
-        }, 10000) // Timeout de 10 secondes
+          console.warn('Speech synthesis timeout on Android')
+          resolve() // Résoudre plutôt que rejeter sur Android
+        }, timeout)
 
         utterance.onend = () => {
           cleanup()
@@ -352,12 +436,37 @@ export class AudioService {
         utterance.onerror = (event) => {
           cleanup()
           console.warn('Speech synthesis error:', event)
-          // Ne pas rejeter, mais résoudre pour continuer
-          resolve()
+          resolve() // Continuer même en cas d'erreur
+        }
+
+        // Fix Android: Gestion spéciale des événements
+        if (this.isAndroid()) {
+          utterance.onstart = () => {
+            console.log('Speech started on Android')
+          }
+
+          utterance.onpause = () => {
+            console.log('Speech paused on Android')
+          }
+
+          utterance.onresume = () => {
+            console.log('Speech resumed on Android')
+          }
         }
 
         try {
           synth.speak(utterance)
+
+          // Fix Android: Vérifier si la synthèse a vraiment commencé
+          if (this.isAndroid()) {
+            setTimeout(() => {
+              if (!synth.speaking && !resolved) {
+                console.warn('Speech failed to start on Android, resolving anyway')
+                cleanup()
+                resolve()
+              }
+            }, 1000)
+          }
         } catch (error) {
           cleanup()
           console.warn('Failed to speak:', error)
@@ -416,23 +525,33 @@ export class AudioService {
     this.playProgressSound()
   }
 
-  // Validation de l'activation audio (requis par les navigateurs)
+  // Validation de l'activation audio avec fixes Android
   static async enableAudio(): Promise<void> {
     try {
+      // 1. Activer le contexte audio
       const ctx = this.getAudioContext()
       if (ctx.state === 'suspended') {
         await ctx.resume()
       }
 
-      // Vérifier aussi speechSynthesis
-      const synth = this.getSpeechSynth()
-      if (synth && synth.paused) {
-        synth.resume()
+      // 2. Fix Android: Jouer un son silencieux pour débloquer l'audio
+      if (this.isAndroid()) {
+        await this.playUnlockSound()
       }
 
-      // Réinitialiser le cache des voix si nécessaire
-      if (synth && synth.getVoices().length === 0) {
-        this.preferredVoice = null
+      // 3. Vérifier aussi speechSynthesis
+      const synth = this.getSpeechSynth()
+      if (synth) {
+        if (synth.paused) {
+          synth.resume()
+        }
+
+        // Fix Android: Forcer le rechargement des voix
+        if (this.isAndroid() && synth.getVoices().length === 0) {
+          this.preferredVoice = null
+          // Attendre un peu pour que les voix se chargent
+          await new Promise(resolve => setTimeout(resolve, 500))
+        }
       }
     } catch (error) {
       console.warn('Audio enable failed:', error)
