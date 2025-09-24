@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from 'react'
+import { useState, useEffect, type ReactNode } from 'react'
 import useConfirmAction from './hooks/useConfirmAction'
 import { useRouting, type View } from './hooks/useRouting'
 import {
@@ -71,6 +71,13 @@ const iconFloat = keyframes`
   100% { transform: translateY(0); }
 `
 
+interface BuildInfo {
+  version: string
+  buildHash: string
+  buildTime: string
+  commitHash: string
+}
+
 function App() {
   const { currentView, setCurrentView } = useRouting()
   const { confirm, ConfirmationDialog } = useConfirmAction()
@@ -80,6 +87,21 @@ function App() {
     unitsCompleted: 0,
     accuracy: 0
   })
+  const [buildInfo, setBuildInfo] = useState<BuildInfo | null>(null)
+
+  useEffect(() => {
+    fetch('/build-info.json')
+      .then(response => response.json())
+      .then(data => setBuildInfo(data))
+      .catch(() => {
+        setBuildInfo({
+          version: '1.0.0',
+          buildHash: 'dev',
+          buildTime: new Date().toISOString(),
+          commitHash: 'dev'
+        })
+      })
+  }, [])
 
   const handleUnitComplete = (progress: UnitProgress) => {
     if (progress.isCompleted) {
@@ -378,7 +400,7 @@ function App() {
                 onClick={() => setCurrentView('menu')}
                 sx={{ borderRadius: 999 }}
               >
-               
+
               </Button>
             )}
           </Stack>
@@ -396,6 +418,36 @@ function App() {
           }}
         >
           {renderView()}
+        </Box>
+
+        <Box
+          sx={{
+            mt: { xs: 6, md: 8 },
+            pt: { xs: 2, md: 3 },
+            borderTop: 1,
+            borderColor: 'divider',
+            textAlign: 'center'
+          }}
+        >
+          <Typography
+            variant="caption"
+            color="text.secondary"
+            sx={{
+              opacity: 0.7,
+              fontSize: '0.75rem'
+            }}
+          >
+            {buildInfo ? (
+              <>
+                Version {buildInfo.version} • Build {buildInfo.buildHash}
+                {buildInfo.commitHash !== 'dev' && (
+                  <> • {buildInfo.commitHash.substring(0, 7)}</>
+                )}
+              </>
+            ) : (
+              'Version 1.0.0'
+            )}
+          </Typography>
         </Box>
       </Container>
       <ConfirmationDialog />
