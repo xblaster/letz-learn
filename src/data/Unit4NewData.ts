@@ -334,7 +334,7 @@ export const learningUnit4: LearningUnit = {
   description: 'Jours de la semaine et expressions temporelles pour organiser son quotidien luxembourgeois',
   level: 'A1',
   vocabulary: unit4Vocabulary,
-  exercises: generateUnit4Exercises(),
+  exercises: generateUnit4Exercises().filter(ex => ex.type !== 'progressive_building'),
   targetScore: 80,
   estimatedTime: 5
 }

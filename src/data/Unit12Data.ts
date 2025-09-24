@@ -309,7 +309,7 @@ export const learningUnit12: LearningUnit = {
   description: 'Naviguez efficacement avec le système de transport luxembourgeois',
   level: 'A1+',
   vocabulary: unit12Vocabulary,
-  exercises: generateUnit12Exercises(),
+  exercises: generateUnit12Exercises().filter(ex => ex.type !== 'progressive_building'),
   targetScore: 85, // Cohérence section A1+
   estimatedTime: 6 // Maintien durée section 2
 }

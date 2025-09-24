@@ -178,9 +178,9 @@ export class AudioService {
   static playSuccessSound(): void {
     const ctx = this.getAudioContext()
 
-    // Son de succès: accord majeur ascendant
+    // Son de succès doux: accord majeur harmonieux
     const frequencies = [523.25, 659.25, 783.99] // Do, Mi, Sol
-    const duration = 0.15
+    const duration = 0.12
 
     frequencies.forEach((freq, index) => {
       const osc = ctx.createOscillator()
@@ -189,13 +189,14 @@ export class AudioService {
       osc.connect(gain)
       gain.connect(ctx.destination)
 
-      osc.frequency.setValueAtTime(freq, ctx.currentTime + index * 0.1)
-      gain.gain.setValueAtTime(0, ctx.currentTime + index * 0.1)
-      gain.gain.linearRampToValueAtTime(0.2, ctx.currentTime + index * 0.1 + 0.05)
-      gain.gain.linearRampToValueAtTime(0, ctx.currentTime + index * 0.1 + duration)
+      osc.type = 'sine' // Forme d'onde plus douce
+      osc.frequency.setValueAtTime(freq, ctx.currentTime + index * 0.06) // Notes plus rapprochées
+      gain.gain.setValueAtTime(0, ctx.currentTime + index * 0.06)
+      gain.gain.linearRampToValueAtTime(0.08, ctx.currentTime + index * 0.06 + 0.02) // Volume réduit
+      gain.gain.linearRampToValueAtTime(0, ctx.currentTime + index * 0.06 + duration)
 
-      osc.start(ctx.currentTime + index * 0.1)
-      osc.stop(ctx.currentTime + index * 0.1 + duration)
+      osc.start(ctx.currentTime + index * 0.06)
+      osc.stop(ctx.currentTime + index * 0.06 + duration)
     })
   }
 
@@ -299,11 +300,22 @@ export class AudioService {
       throw new Error('Speech synthesis not supported')
     }
 
+    // Réactiver l'audio si nécessaire
+    await this.enableAudio()
+
     const phrases = Array.isArray(content)
       ? content
       : [{ text: content, rate: defaultRate, pitch: defaultPitch }]
 
     const synth = this.getSpeechSynth()
+
+    // Arrêter toute lecture en cours
+    if (synth.speaking) {
+      synth.cancel()
+      // Attendre un peu pour que l'annulation prenne effet
+      await new Promise(resolve => setTimeout(resolve, 100))
+    }
+
     const voice = await this.getPreferredVoice()
 
     for (const phrase of phrases) {
@@ -318,15 +330,39 @@ export class AudioService {
       utterance.volume = 0.8
 
       await new Promise<void>((resolve, reject) => {
-        utterance.onend = () => resolve()
-        utterance.onerror = (event) =>
-          reject(
-            event?.error
-              ? new Error(String(event.error))
-              : new Error('Speech synthesis failed')
-          )
+        let resolved = false
 
-        synth.speak(utterance)
+        const cleanup = () => {
+          if (!resolved) {
+            resolved = true
+            clearTimeout(timeoutId)
+          }
+        }
+
+        const timeoutId = setTimeout(() => {
+          cleanup()
+          reject(new Error('Speech synthesis timeout'))
+        }, 10000) // Timeout de 10 secondes
+
+        utterance.onend = () => {
+          cleanup()
+          resolve()
+        }
+
+        utterance.onerror = (event) => {
+          cleanup()
+          console.warn('Speech synthesis error:', event)
+          // Ne pas rejeter, mais résoudre pour continuer
+          resolve()
+        }
+
+        try {
+          synth.speak(utterance)
+        } catch (error) {
+          cleanup()
+          console.warn('Failed to speak:', error)
+          resolve() // Continuer même en cas d'erreur
+        }
       })
     }
   }
@@ -382,9 +418,25 @@ export class AudioService {
 
   // Validation de l'activation audio (requis par les navigateurs)
   static async enableAudio(): Promise<void> {
-    const ctx = this.getAudioContext()
-    if (ctx.state === 'suspended') {
-      await ctx.resume()
+    try {
+      const ctx = this.getAudioContext()
+      if (ctx.state === 'suspended') {
+        await ctx.resume()
+      }
+
+      // Vérifier aussi speechSynthesis
+      const synth = this.getSpeechSynth()
+      if (synth && synth.paused) {
+        synth.resume()
+      }
+
+      // Réinitialiser le cache des voix si nécessaire
+      if (synth && synth.getVoices().length === 0) {
+        this.preferredVoice = null
+      }
+    } catch (error) {
+      console.warn('Audio enable failed:', error)
+      // Ne pas bloquer l'application
     }
   }
 }

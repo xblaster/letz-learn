@@ -298,7 +298,7 @@ export const learningUnit10: LearningUnit = {
   description: 'Faites vos achats en toute confiance dans les magasins luxembourgeois',
   level: 'A1+',
   vocabulary: unit10Vocabulary,
-  exercises: generateUnit10Exercises(),
+  exercises: generateUnit10Exercises().filter(ex => ex.type !== 'progressive_building'),
   targetScore: 85, // Maintien niveau A1+
   estimatedTime: 6 // Même durée que Unit 9 pour cohérence section
 }

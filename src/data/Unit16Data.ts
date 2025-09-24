@@ -281,7 +281,7 @@ export const learningUnit16: LearningUnit = {
   description: 'Maîtrisez la communication téléphonique au Luxembourg',
   level: 'A1+',
   vocabulary: unit16Vocabulary,
-  exercises: generateUnit16Exercises(),
+  exercises: generateUnit16Exercises().filter(ex => ex.type !== 'progressive_building'),
   targetScore: 85, // Maintien cohérence Section 2
   estimatedTime: 6 // Durée cohérente section
 }

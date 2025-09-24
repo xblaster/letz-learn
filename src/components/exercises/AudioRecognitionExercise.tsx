@@ -80,10 +80,9 @@ const AudioRecognitionExercise = ({ exercise, onComplete }: AudioRecognitionExer
           variant="contained"
           startIcon={<HeadphonesRoundedIcon />}
           onClick={playAudio}
-          disabled={hasAnswered}
           sx={{ alignSelf: 'flex-start' }}
         >
-          Écouter le mot
+          {hasAnswered ? 'Réécouter le mot' : 'Écouter le mot'}
         </Button>
         {hasAnswered && (
           <Stack direction="row" spacing={1} alignItems="center">

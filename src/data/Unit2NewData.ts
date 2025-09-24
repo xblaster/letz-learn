@@ -290,7 +290,7 @@ export const learningUnit2: LearningUnit = {
   description: 'Expansion des présentations : origine, nationalité et profession en contexte luxembourgeois',
   level: 'A1',
   vocabulary: unit2Vocabulary,
-  exercises: generateUnit2Exercises(),
+  exercises: generateUnit2Exercises().filter(ex => ex.type !== 'progressive_building'),
   targetScore: 80,
   estimatedTime: 5
 }

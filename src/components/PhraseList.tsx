@@ -154,7 +154,7 @@ const PhraseList = () => {
               icon={<AutoAwesomeRoundedIcon />}
               label={`${filteredPhrases.length} phrase(s)`}
               color="secondary"
-              sx={{ borderRadius: 999 }}
+              sx={{ borderRadius: 2 }}
             />
           </Stack>
 
@@ -210,7 +210,7 @@ const PhraseList = () => {
               }}
             >
               <Stack direction="row" justifyContent="space-between" alignItems="center">
-                <Chip label={phrase.category} size="small" color="primary" sx={{ borderRadius: 999 }} />
+                <Chip label={phrase.category} size="small" color="primary" sx={{ borderRadius: 2 }} />
                 <IconButton
                   onClick={() => playPronunciation(phrase.luxembourgish)}
                   color="secondary"
@@ -242,8 +242,8 @@ const PhraseList = () => {
           sx={{
             p: 3,
             textAlign: 'center',
-            backgroundColor: 'rgba(255,255,255,0.95)',
-            borderRadius: 4
+            backgroundColor: 'rgba(255,255,255,0.05)',
+            borderRadius: 1
           }}
         >
           <Typography variant="body1" color="text.secondary">

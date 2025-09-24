@@ -28,6 +28,13 @@ import DialogueCompletionExercise from './exercises/DialogueCompletionExercise'
 import PronunciationExercise from './exercises/PronunciationExercise'
 import SentenceConstructionExercise from './exercises/SentenceConstructionExercise'
 import SpeechRecognitionExercise from './exercises/SpeechRecognitionExercise'
+import WordOrderingExercise from './exercises/WordOrderingExercise'
+import PhraseCompletionExercise from './exercises/PhraseCompletionExercise'
+import ProgressiveBuildingExercise from './exercises/ProgressiveBuildingExercise'
+import PatternRecognitionExercise from './exercises/PatternRecognitionExercise'
+import CreativeExpressionExercise from './exercises/CreativeExpressionExercise'
+import ErrorCorrectionExercise from './exercises/ErrorCorrectionExercise'
+import GenericExercise from './exercises/GenericExercise'
 import { keyframes } from '@mui/system'
 import { AudioService } from '../services/AudioService'
 
@@ -56,6 +63,8 @@ const LearningUnit = ({ unit, onUnitComplete, onExit }: LearningUnitProps) => {
   const [showResult, setShowResult] = useState(false)
   const [isCompleted, setIsCompleted] = useState(false)
   const [startTime] = useState(new Date())
+  const [showErrorFeedback, setShowErrorFeedback] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
 
   const currentExercise = unit.exercises[currentExerciseIndex]
   const progress = Math.round(((currentExerciseIndex + 1) / unit.exercises.length) * 100)
@@ -87,16 +96,45 @@ const LearningUnit = ({ unit, onUnitComplete, onExit }: LearningUnitProps) => {
     if (!isCorrect) {
       setHearts(prev => Math.max(0, prev - 1))
 
+      // Créer un message d'explication pédagogique
+      const correctAnswer = currentExercise.correctAnswer
+      const vocabulary = currentExercise.vocabularyItem
+
+      let explanationMessage = `❌ **La bonne réponse était :** "${correctAnswer}"\n\n`
+
+      // Ajouter la traduction si disponible
+      if (vocabulary.french && vocabulary.french !== correctAnswer) {
+        explanationMessage += `🇫🇷 **En français :** ${vocabulary.french}\n\n`
+      }
+
+      // Ajouter la prononciation
+      if (vocabulary.pronunciation) {
+        explanationMessage += `🔊 **Prononciation :** /${vocabulary.pronunciation}/\n\n`
+      }
+
+      // Ajouter le contexte d'usage
+      if (vocabulary.usage) {
+        explanationMessage += `💡 **À retenir :** ${vocabulary.usage}`
+      } else if (currentExercise.context) {
+        explanationMessage += `💡 **Contexte :** ${currentExercise.context}`
+      } else {
+        explanationMessage += `💡 **Conseil :** Révisez cette expression pour mieux la retenir !`
+      }
+
+      setErrorMessage(explanationMessage)
+      setShowErrorFeedback(true)
+
       if (hearts <= 1) {
-        setShowResult(true)
+        // Pas de timeout automatique, l'utilisateur clique pour voir les résultats
         return
       }
+    } else {
+      // Réponse correcte - passage rapide à l'exercice suivant
+      setTimeout(() => {
+        AudioService.playTransitionSound()
+        setCurrentExerciseIndex(prev => prev + 1)
+      }, 1200)
     }
-
-    setTimeout(() => {
-      AudioService.playTransitionSound()
-      setCurrentExerciseIndex(prev => prev + 1)
-    }, 1200)
   }
 
   const completeUnit = async () => {
@@ -129,6 +167,17 @@ const LearningUnit = ({ unit, onUnitComplete, onExit }: LearningUnitProps) => {
     setHearts(5)
     setShowResult(false)
     setIsCompleted(false)
+    setShowErrorFeedback(false)
+  }
+
+  const continueToNextExercise = () => {
+    setShowErrorFeedback(false)
+    if (hearts <= 1) {
+      setShowResult(true)
+    } else {
+      AudioService.playTransitionSound()
+      setCurrentExerciseIndex(prev => prev + 1)
+    }
   }
 
   const renderExercise = () => {
@@ -154,6 +203,24 @@ const LearningUnit = ({ unit, onUnitComplete, onExit }: LearningUnitProps) => {
         return <SentenceConstructionExercise key={currentExercise.id} {...exerciseProps} />
       case 'speech_recognition':
         return <SpeechRecognitionExercise key={currentExercise.id} {...exerciseProps} />
+      case 'word_ordering':
+        return <WordOrderingExercise key={currentExercise.id} {...exerciseProps} />
+      case 'phrase_completion':
+        return <PhraseCompletionExercise key={currentExercise.id} {...exerciseProps} />
+      case 'progressive_building':
+        return <ProgressiveBuildingExercise key={currentExercise.id} {...exerciseProps} />
+      case 'pattern_recognition':
+        return <PatternRecognitionExercise key={currentExercise.id} {...exerciseProps} />
+      case 'creative_expression':
+        return <CreativeExpressionExercise key={currentExercise.id} {...exerciseProps} />
+      case 'error_correction':
+        return <ErrorCorrectionExercise key={currentExercise.id} {...exerciseProps} />
+      case 'register_adaptation':
+      case 'argumentation_building':
+      case 'cultural_context':
+      case 'text_comprehension':
+      case 'opinion_expression':
+        return <GenericExercise key={currentExercise.id} {...exerciseProps} />
       default:
         return <Typography variant="body1">Type d'exercice non supporté</Typography>
     }
@@ -180,7 +247,7 @@ const LearningUnit = ({ unit, onUnitComplete, onExit }: LearningUnitProps) => {
       elevation={0}
       sx={{
         p: { xs: 3, md: 4 },
-        background: 'linear-gradient(180deg, rgba(10,10,20,0.95) 0%, rgba(15,25,35,0.95) 100%)',
+        background: 'linear-gradient(180deg, rgba(10,10,20,0.05) 0%, rgba(15,25,35,0.05) 100%)',
         animation: `${containerAnimation} 0.4s ease`
       }}
     >
@@ -244,12 +311,65 @@ const LearningUnit = ({ unit, onUnitComplete, onExit }: LearningUnitProps) => {
             boxShadow: '0 20px 50px rgba(25, 118, 210, 0.08)'
           }}
         >
-          {renderExercise()}
+          {showErrorFeedback ? (
+            <Box
+              sx={{
+                textAlign: 'center',
+                py: 4,
+                px: 2
+              }}
+            >
+              <Typography variant="h6" color="error" gutterBottom>
+                Pas tout à fait !
+              </Typography>
+              <Box sx={{
+                mb: 3,
+                textAlign: 'left',
+                backgroundColor: 'rgba(255, 243, 224, 0.8)',
+                p: 2,
+                borderRadius: 1,
+                border: '1px solid rgba(255, 152, 0, 0.2)'
+              }}>
+                {errorMessage.split('\n').map((line, index) => {
+                  if (line.trim() === '') return <br key={index} />
+
+                  // Traiter les lignes avec **bold**
+                  if (line.includes('**')) {
+                    const parts = line.split('**')
+                    return (
+                      <Typography key={index} variant="body1" sx={{ mb: 0.5 }}>
+                        {parts.map((part, i) =>
+                          i % 2 === 1 ? <strong key={i}>{part}</strong> : part
+                        )}
+                      </Typography>
+                    )
+                  }
+
+                  return (
+                    <Typography key={index} variant="body1" sx={{ mb: 0.5 }}>
+                      {line}
+                    </Typography>
+                  )
+                })}
+              </Box>
+              <Button
+                variant="contained"
+                color="primary"
+                size="large"
+                onClick={continueToNextExercise}
+                sx={{ mt: 2 }}
+              >
+                {hearts <= 1 ? 'Voir mes résultats' : 'Continuer'}
+              </Button>
+            </Box>
+          ) : (
+            renderExercise()
+          )}
         </Box>
 
         <Box
           sx={{
-            borderRadius: 3,
+            borderRadius: 1,
             background: 'rgba(25,118,210,0.08)',
             px: { xs: 2, md: 3 },
             py: { xs: 1.5, md: 2 },

@@ -319,7 +319,7 @@ export const learningUnit3: LearningUnit = {
   description: 'Nombres 0-10 et applications pratiques : âge, téléphone, codes postaux luxembourgeois',
   level: 'A1',
   vocabulary: unit3Vocabulary,
-  exercises: generateUnit3Exercises(),
+  exercises: generateUnit3Exercises().filter(ex => ex.type !== 'progressive_building'),
   targetScore: 80,
   estimatedTime: 6 // Légèrement plus long pour maîtriser les nombres
 }

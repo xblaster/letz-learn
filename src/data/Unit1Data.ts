@@ -314,7 +314,7 @@ export const learningUnit1: LearningUnit = {
   description: 'Progression scaffoldée des salutations vers la construction de phrases personnelles',
   level: 'A1',
   vocabulary: unit1Vocabulary,
-  exercises: generateUnit1Exercises(),
+  exercises: generateUnit1Exercises().filter(ex => ex.type !== 'progressive_building'),
   targetScore: 80, // Augmenté car progression plus structurée
   estimatedTime: 5 // Augmenté pour permettre apprentissage scaffoldé approprié
 }

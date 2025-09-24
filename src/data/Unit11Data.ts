@@ -309,7 +309,7 @@ export const learningUnit11: LearningUnit = {
   description: 'Découvrez la gastronomie luxembourgeoise et commandez avec aisance',
   level: 'A1+',
   vocabulary: unit11Vocabulary,
-  exercises: generateUnit11Exercises(),
+  exercises: generateUnit11Exercises().filter(ex => ex.type !== 'progressive_building'),
   targetScore: 85, // Maintien cohérence section A1+
   estimatedTime: 6 // Cohérence avec autres unités section 2
 }

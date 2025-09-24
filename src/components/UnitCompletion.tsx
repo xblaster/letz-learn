@@ -99,7 +99,7 @@ const UnitCompletion = ({ unit, accuracy, isSuccess, totalTime, onRestart, onExi
               icon={<CelebrationRoundedIcon />}
               color={isSuccess ? 'success' : 'warning'}
               label={isSuccess ? 'Unité réussie' : 'Objectif à atteindre'}
-              sx={{ alignSelf: 'flex-start', borderRadius: 999, fontWeight: 600 }}
+              sx={{ alignSelf: 'flex-start', borderRadius: 2, fontWeight: 600 }}
             />
             <Typography variant="h3">{result.title}</Typography>
             <Typography variant="body1" color="text.secondary">
@@ -163,7 +163,7 @@ const UnitCompletion = ({ unit, accuracy, isSuccess, totalTime, onRestart, onExi
                 sx={{
                   width: 64,
                   height: 64,
-                  bgcolor: index < starsEarned ? 'warning.main' : 'rgba(255,255,255,0.5)',
+                  bgcolor: index < starsEarned ? 'warning.main' : 'rgba(255,255,255,0.05)',
                   color: index < starsEarned ? 'common.white' : 'text.secondary',
                   fontSize: '1.8rem',
                   boxShadow: index < starsEarned ? '0 12px 24px rgba(255,193,7,0.35)' : 'none',
@@ -192,9 +192,9 @@ const UnitCompletion = ({ unit, accuracy, isSuccess, totalTime, onRestart, onExi
               <Grid item xs={12} sm={6} md={4} key={word.id}>
                 <Box
                   sx={{
-                    borderRadius: 3,
+                    borderRadius: 1,
                     p: 2.5,
-                    backgroundColor: 'rgba(255,255,255,0.92)',
+                    backgroundColor: 'rgba(255,255,255,0.05)',
                     border: '1px solid rgba(25,118,210,0.12)',
                     boxShadow: '0 10px 30px rgba(25,118,210,0.06)'
                   }}
@@ -276,9 +276,9 @@ const InfoStat = ({ icon, label, value, description, color }: InfoStatProps) => 
   <Stack
     spacing={1}
     sx={{
-      borderRadius: 3,
+      borderRadius: 1,
       p: 3,
-      backgroundColor: 'rgba(255,255,255,0.95)',
+      backgroundColor: 'rgba(255,255,255,0.05)',
       border: '1px solid rgba(25,118,210,0.12)',
       minHeight: 160,
       justifyContent: 'center'
@@ -308,9 +308,9 @@ const SuggestionCard = ({ icon, title, description, actionLabel, onAction, varia
   <Stack
     spacing={2}
     sx={{
-      borderRadius: 3,
+      borderRadius: 1,
       p: 3,
-      backgroundColor: 'rgba(255,255,255,0.95)',
+      backgroundColor: 'rgba(255,255,255,0.05)',
       border: `1px solid rgba(25,118,210,0.12)`,
       height: '100%'
     }}

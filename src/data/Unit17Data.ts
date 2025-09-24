@@ -302,7 +302,7 @@ export const learningUnit17: LearningUnit = {
   description: 'Naviguez le marché immobilier luxembourgeois avec confiance',
   level: 'A2',
   vocabulary: unit17Vocabulary,
-  exercises: generateUnit17Exercises(),
+  exercises: generateUnit17Exercises().filter(ex => ex.type !== 'progressive_building'),
   targetScore: 80, // Légèrement réduit pour A2 (complexité accrue)
   estimatedTime: 7 // Augmentation progressive pour A2
 }

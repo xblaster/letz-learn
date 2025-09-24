@@ -283,7 +283,7 @@ export const learningUnit9: LearningUnit = {
   description: 'Maîtrisez les bases des conversations quotidiennes au Luxembourg',
   level: 'A1+',
   vocabulary: unit9Vocabulary,
-  exercises: generateUnit9Exercises(),
+  exercises: generateUnit9Exercises().filter(ex => ex.type !== 'progressive_building'),
   targetScore: 85, // Légèrement plus élevé que Unit 1 (progression naturelle)
   estimatedTime: 6 // Progression: 5→6 minutes pour plus de contenu
 }

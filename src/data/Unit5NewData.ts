@@ -334,7 +334,7 @@ export const learningUnit5: LearningUnit = {
   description: 'Membres famille nucléaire et expressions possessives pour parler de ses proches',
   level: 'A1',
   vocabulary: unit5Vocabulary,
-  exercises: generateUnit5Exercises(),
+  exercises: generateUnit5Exercises().filter(ex => ex.type !== 'progressive_building'),
   targetScore: 80,
   estimatedTime: 5
 }
