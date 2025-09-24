@@ -4,7 +4,9 @@
       "Bash(kubectl apply:*)",
       "Bash(docker build:*)",
       "Bash(docker push:*)",
-      "Bash(kubectl rollout restart:*)"
+      "Bash(kubectl rollout restart:*)",
+      "Bash(npm run build:*)",
+      "Bash(git add:*)"
     ],
     "deny": [],
     "ask": []

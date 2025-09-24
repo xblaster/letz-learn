@@ -13,7 +13,6 @@ import ReplayRoundedIcon from '@mui/icons-material/ReplayRounded'
 import VolumeUpRoundedIcon from '@mui/icons-material/VolumeUpRounded'
 import TipsAndUpdatesRoundedIcon from '@mui/icons-material/TipsAndUpdatesRounded'
 import { Exercise } from '../../types/LearningTypes'
-import { AudioService } from '../../services/AudioService'
 import { SpeechRecognitionService } from '../../services/SpeechRecognitionService'
 
 interface SentenceConstructionExerciseProps {
@@ -72,13 +71,12 @@ const SentenceConstructionExercise = ({ exercise, onComplete }: SentenceConstruc
     setSelectedTokenIds([])
   }
 
-  const speakSentence = async () => {
-    AudioService.playClickSound()
-
-    try {
-      await AudioService.speakLuxembourgish(expectedSentence, 0.75)
-    } catch (error) {
-      console.warn('Pronunciation failed:', error)
+  const speakSentence = () => {
+    if ('speechSynthesis' in window) {
+      const utterance = new SpeechSynthesisUtterance(expectedSentence)
+      utterance.lang = 'de-DE'
+      utterance.rate = 0.8
+      speechSynthesis.speak(utterance)
     }
   }
 

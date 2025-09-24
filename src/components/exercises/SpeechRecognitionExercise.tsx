@@ -14,7 +14,6 @@ import VolumeUpRoundedIcon from '@mui/icons-material/VolumeUpRounded'
 import GraphicEqRoundedIcon from '@mui/icons-material/GraphicEqRounded'
 import TipsAndUpdatesRoundedIcon from '@mui/icons-material/TipsAndUpdatesRounded'
 import { Exercise } from '../../types/LearningTypes'
-import { AudioService } from '../../services/AudioService'
 import { SpeechRecognitionService } from '../../services/SpeechRecognitionService'
 
 interface SpeechRecognitionExerciseProps {
@@ -33,13 +32,12 @@ const SpeechRecognitionExercise = ({ exercise, onComplete }: SpeechRecognitionEx
   const speechSupported = useMemo(() => SpeechRecognitionService.isSupported(), [])
   const expectedSentence = useMemo(() => exercise.expectedSentence ?? exercise.correctAnswer, [exercise.correctAnswer, exercise.expectedSentence])
 
-  const handlePlayModel = async () => {
-    AudioService.playClickSound()
-
-    try {
-      await AudioService.speakLuxembourgish(expectedSentence, 0.75)
-    } catch (err) {
-      console.warn('Pronunciation failed:', err)
+  const handlePlayModel = () => {
+    if ('speechSynthesis' in window) {
+      const utterance = new SpeechSynthesisUtterance(expectedSentence)
+      utterance.lang = 'de-DE'
+      utterance.rate = 0.8
+      speechSynthesis.speak(utterance)
     }
   }
 

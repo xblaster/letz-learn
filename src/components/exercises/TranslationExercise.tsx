@@ -13,7 +13,6 @@ import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded'
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded'
 import TipsAndUpdatesRoundedIcon from '@mui/icons-material/TipsAndUpdatesRounded'
 import { Exercise } from '../../types/LearningTypes'
-import { AudioService } from '../../services/AudioService'
 
 interface TranslationExerciseProps {
   exercise: Exercise
@@ -28,12 +27,12 @@ const TranslationExercise = ({ exercise, onComplete }: TranslationExerciseProps)
   const [hasAnswered, setHasAnswered] = useState(false)
   const [startTime] = useState(Date.now())
 
-  const playCorrectAnswer = async () => {
-    AudioService.playClickSound()
-    try {
-      await AudioService.speakLuxembourgish(exercise.correctAnswer)
-    } catch (error) {
-      console.warn('Pronunciation failed:', error)
+  const playCorrectAnswer = () => {
+    if ('speechSynthesis' in window) {
+      const utterance = new SpeechSynthesisUtterance(exercise.correctAnswer)
+      utterance.lang = 'de-DE'
+      utterance.rate = 0.8
+      speechSynthesis.speak(utterance)
     }
   }
 
