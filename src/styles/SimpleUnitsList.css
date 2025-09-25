@@ -161,6 +161,22 @@
   box-shadow: 0 8px 25px rgba(59, 130, 246, 0.2);
 }
 
+/* Practical life styling for Section 3 units */
+.unit-card.advanced {
+  border-left: 4px solid #f97316;
+}
+
+.unit-card.advanced .unit-icon {
+  background: linear-gradient(135deg, #f97316 0%, #c2410c 100%);
+  color: white;
+  box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
+}
+
+.unit-card.advanced:hover {
+  border-color: #c2410c;
+  box-shadow: 0 8px 25px rgba(249, 115, 22, 0.2);
+}
+
 /* Locked unit styling with motivation hints */
 .unit-card.locked {
   opacity: 0.6;
@@ -378,6 +394,15 @@
   background: rgba(59, 130, 246, 0.2);
 }
 
+.section-card.section-3 {
+  background: rgba(249, 115, 22, 0.15);
+  border-color: rgba(249, 115, 22, 0.3);
+}
+
+.section-card.section-3 .section-progress {
+  background: rgba(249, 115, 22, 0.2);
+}
+
 /* Section completion celebration */
 .section-completed-celebration {
   position: relative;
@@ -411,6 +436,19 @@
 .intermediate-level {
   background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
   color: white !important;
+}
+
+.advanced-level {
+  background: linear-gradient(135deg, #f97316 0%, #c2410c 100%);
+  color: white !important;
+}
+
+.intermediate-badge,
+.advanced-badge {
+  letter-spacing: 0.5px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Progress percentage styling */

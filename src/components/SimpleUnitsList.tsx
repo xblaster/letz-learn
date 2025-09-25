@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import type { LearningUnit, UnitProgress } from '../types/LearningTypes'
+import React, { useState, useEffect, useMemo } from 'react'
+import type { LearningUnit, UnitProgress, UnitSection } from '../types/LearningTypes'
 import '../styles/SimpleUnitsList.css'
 import { beginnerUnitSections } from '../data/unitSections'
 import LearningUnitComponent from './LearningUnit'
@@ -10,23 +10,63 @@ interface SimpleUnitsListProps {
   onUnitComplete: (progress: UnitProgress) => void
 }
 
+const ensureUnlockedSections = (
+  sections: UnitSection[],
+  completedUnitIds: string[],
+  existingUnlocked: string[]
+): string[] => {
+  const knownSectionIds = sections.map(section => section.id)
+  const unlockedSet = new Set(existingUnlocked.filter(id => knownSectionIds.includes(id)))
+
+  if (sections.length > 0) {
+    unlockedSet.add(sections[0].id)
+  }
+
+  sections.forEach((section, index) => {
+    const sectionUnitIds = section.units.map(unit => unit.id)
+    if (sectionUnitIds.length === 0) {
+      return
+    }
+
+    const isSectionCompleted = sectionUnitIds.every(unitId => completedUnitIds.includes(unitId))
+    if (isSectionCompleted) {
+      unlockedSet.add(section.id)
+      const nextSection = sections[index + 1]
+      if (nextSection) {
+        unlockedSet.add(nextSection.id)
+      }
+    }
+  })
+
+  const orderedUnlocked = sections
+    .map(section => section.id)
+    .filter(sectionId => unlockedSet.has(sectionId))
+
+  return orderedUnlocked
+}
+
 const SimpleUnitsList: React.FC<SimpleUnitsListProps> = ({ onBack, onUnitComplete }) => {
+  const sections = useMemo(() => beginnerUnitSections, [])
   const [currentUnit, setCurrentUnit] = useState<LearningUnit | null>(null)
   const [completedUnits, setCompletedUnits] = useState<string[]>([])
-  const [unlockedSections, setUnlockedSections] = useState<string[]>(['section_1'])
+  const [unlockedSections, setUnlockedSections] = useState<string[]>(() =>
+    ensureUnlockedSections(sections, [], [])
+  )
   const [isLoaded, setIsLoaded] = useState(false)
-
-  const sections = beginnerUnitSections
 
   // Charger la progression depuis localStorage au montage
   useEffect(() => {
     const savedProgress = loadProgress()
     if (savedProgress) {
       setCompletedUnits(savedProgress.completedUnits)
-      setUnlockedSections(savedProgress.unlockedSections)
+      setUnlockedSections(
+        ensureUnlockedSections(sections, savedProgress.completedUnits, savedProgress.unlockedSections)
+      )
+    } else {
+      setUnlockedSections(ensureUnlockedSections(sections, [], []))
     }
     setIsLoaded(true)
-  }, [])
+  }, [sections])
 
   // Sauvegarder la progression à chaque changement
   useEffect(() => {
@@ -54,16 +94,7 @@ const SimpleUnitsList: React.FC<SimpleUnitsListProps> = ({ onBack, onUnitComplet
       setCompletedUnits(prev => {
         const updatedCompleted = prev.includes(currentUnit.id) ? prev : [...prev, currentUnit.id]
 
-        // Check if Section 1 is completed to unlock Section 2
-        const section1Units = sections[0].units.map(unit => unit.id)
-        const section1Completed = section1Units.every(unitId => updatedCompleted.includes(unitId))
-
-        if (section1Completed && !unlockedSections.includes('section_2')) {
-          setUnlockedSections(prevSections => {
-            const newSections = [...prevSections, 'section_2']
-            return newSections
-          })
-        }
+        setUnlockedSections(prevSections => ensureUnlockedSections(sections, updatedCompleted, prevSections))
 
         return updatedCompleted
       })
@@ -84,37 +115,56 @@ const SimpleUnitsList: React.FC<SimpleUnitsListProps> = ({ onBack, onUnitComplet
     return unlockedSections.includes(sectionId)
   }
 
-  const isUnitUnlocked = (unit: LearningUnit, section: any) => {
-    if (section.id === 'section_1') return true // Section 1 always unlocked
+  const isUnitUnlocked = (unit: LearningUnit, section: UnitSection) => {
+    if (!isSectionUnlocked(section.id)) return false
 
-    if (!isSectionUnlocked(section.id)) return false // Section not unlocked
-
-    // For Section 2, first unit unlocks when Section 1 is complete
     const unitIndex = section.units.findIndex((u: LearningUnit) => u.id === unit.id)
-    if (unitIndex === 0 && isSectionUnlocked(section.id)) return true
-
-    // Subsequent units unlock when previous unit is completed
-    if (unitIndex > 0) {
-      const previousUnit = section.units[unitIndex - 1]
-      return isUnitCompleted(previousUnit.id)
+    if (unitIndex <= 0) {
+      return true
     }
 
-    return false
+    const previousUnit = section.units[unitIndex - 1]
+    return isUnitCompleted(previousUnit.id)
   }
 
-  const getSectionProgressPercentage = (section: any) => {
+  const getSectionProgressPercentage = (section: UnitSection) => {
     const completedCount = section.units.filter((unit: LearningUnit) => isUnitCompleted(unit.id)).length
     return Math.round((completedCount / section.units.length) * 100)
   }
 
-  const getMotivationalMessage = (section: any) => {
+  const getMotivationalMessage = (section: UnitSection) => {
     const progressPercent = getSectionProgressPercentage(section)
-    if (progressPercent === 0) return "Commencez votre aventure !"
-    if (progressPercent < 25) return "Excellent départ ! Continuez !"
-    if (progressPercent < 50) return "Vous progressez bien !"
-    if (progressPercent < 75) return "Vous êtes sur la bonne voie !"
-    if (progressPercent < 100) return "Presque terminé ! Encore un effort !"
-    return "Section maîtrisée ! Félicitations !"
+
+    const focusMessage = (() => {
+      switch (section.id) {
+        case 'section_1':
+          return 'Vos bases deviennent solides.'
+        case 'section_2':
+          return 'Vos conversations gagnent en fluidité.'
+        case 'section_3':
+          return 'Votre autonomie quotidienne s’installe.'
+        default:
+          return 'Continuez sur cette belle lancée !'
+      }
+    })()
+
+    if (progressPercent === 0) {
+      switch (section.id) {
+        case 'section_1':
+          return 'Plongez dans les salutations luxembourgeoises !'
+        case 'section_2':
+          return 'Prêt·e pour des dialogues du quotidien ?'
+        case 'section_3':
+          return 'Commencez vos démarches pratiques en luxembourgeois !'
+        default:
+          return 'Commencez votre aventure !'
+      }
+    }
+    if (progressPercent < 25) return `Excellent départ ! ${focusMessage}`
+    if (progressPercent < 50) return `Vous progressez bien ! ${focusMessage}`
+    if (progressPercent < 75) return `Vous êtes sur la bonne voie ! ${focusMessage}`
+    if (progressPercent < 100) return `Presque terminé ! ${focusMessage}`
+    return `Section maîtrisée ! ${focusMessage}`
   }
 
   // Si une unité est active, afficher le composant LearningUnit
@@ -146,7 +196,9 @@ const SimpleUnitsList: React.FC<SimpleUnitsListProps> = ({ onBack, onUnitComplet
           return (
             <div
               key={section.id}
-              className={`section-card ${sectionUnlocked ? 'unlocked' : ''} ${section.id === 'section_2' ? 'section-2' : ''}`}
+              className={`section-card ${sectionUnlocked ? 'unlocked' : ''} ${
+                section.id === 'section_2' ? 'section-2' : section.id === 'section_3' ? 'section-3' : ''
+              }`}
               style={{ opacity: sectionUnlocked ? 1 : 0.7 }}
             >
               <div className="section-header">
@@ -184,12 +236,24 @@ const SimpleUnitsList: React.FC<SimpleUnitsListProps> = ({ onBack, onUnitComplet
               {section.units.map((unit, unitIndex) => {
                 const unitCompleted = isUnitCompleted(unit.id)
                 const unitUnlocked = isUnitUnlocked(unit, section)
-                const isIntermediate = section.id === 'section_2'
+                const isBeyondBeginner = section.order > 1
+                const isPracticalLevel = section.order > 2
+                const levelCardClass = isPracticalLevel ? 'advanced' : isBeyondBeginner ? 'intermediate' : ''
+                const levelPillClass = isPracticalLevel
+                  ? 'advanced-level'
+                  : isBeyondBeginner
+                  ? 'intermediate-level'
+                  : ''
+                const badgeLabel = (() => {
+                  if (section.order === 2) return 'INTERMÉDIAIRE A1+'
+                  if (section.order > 2) return 'VIE PRATIQUE A2'
+                  return null
+                })()
 
                 return (
                   <div
                     key={unit.id}
-                    className={`unit-card ${unitCompleted ? 'completed' : ''} ${!unitUnlocked ? 'locked' : ''} ${isIntermediate ? 'intermediate' : ''}`}
+                    className={`unit-card ${unitCompleted ? 'completed' : ''} ${!unitUnlocked ? 'locked' : ''} ${levelCardClass}`}
                     onClick={() => unitUnlocked && handleUnitClick(unit)}
                     style={{
                       animationDelay: `${unitIndex * 0.1}s`
@@ -202,13 +266,15 @@ const SimpleUnitsList: React.FC<SimpleUnitsListProps> = ({ onBack, onUnitComplet
                       <h3 className="unit-title">{unit.title}</h3>
                       <p className="unit-description">{unit.description}</p>
                       <div className="unit-meta">
-                        <span className={`unit-level ${isIntermediate ? 'intermediate-level' : ''}`}>
+                        <span className={`unit-level ${levelPillClass}`}>
                           {unit.level}
                         </span>
                         <span className="unit-time">~{unit.estimatedTime} min</span>
                         <span className="unit-words">{unit.vocabulary.length} mots</span>
-                        {isIntermediate && (
-                          <span className="intermediate-badge" style={{
+                        {badgeLabel && (
+                          <span
+                            className={`intermediate-badge ${isPracticalLevel ? 'advanced-badge' : ''}`}
+                            style={{
                             background: section.color,
                             color: 'white',
                             padding: '0.25rem 0.5rem',
@@ -216,13 +282,17 @@ const SimpleUnitsList: React.FC<SimpleUnitsListProps> = ({ onBack, onUnitComplet
                             fontSize: '0.7rem',
                             fontWeight: 600
                           }}>
-                            INTERMÉDIAIRE
+                            {badgeLabel}
                           </span>
                         )}
                       </div>
                     </div>
                     <div className="unit-arrow" style={{
-                      color: unitUnlocked ? (isIntermediate ? section.color : '#9ca3af') : '#d1d5db'
+                      color: unitUnlocked
+                        ? isBeyondBeginner
+                          ? section.color
+                          : '#9ca3af'
+                        : '#d1d5db'
                     }}>
                       {unitUnlocked ? '→' : ''}
                     </div>
