@@ -80,6 +80,28 @@ export const generateUnit1Exercises = (): Exercise[] => {
     context: 'Traduction de base français-luxembourgeois'
   })
 
+  // 1.3 Association de vocabulaire clé
+  exercises.push({
+    id: 'word_pairing_greetings',
+    type: 'word_pairing',
+    vocabularyItem: unit1Vocabulary[0],
+    question: 'Associez chaque mot luxembourgeois à sa traduction française.',
+    context: 'Consolidez vos premières salutations et expressions courantes.',
+    correctAnswer: 'all_matched',
+    hint: 'Cliquez sur un mot luxembourgeois puis sur sa traduction française.',
+    columnLabels: {
+      left: 'Luxembourgeois',
+      right: 'Français'
+    },
+    wordPairs: [
+      { id: 'moien', left: 'Moien', right: 'Bonjour' },
+      { id: 'addi', left: 'Äddi', right: 'Au revoir' },
+      { id: 'merci', left: 'Merci', right: 'Merci' },
+      { id: 'jo', left: 'Jo', right: 'Oui' },
+      { id: 'ech', left: 'ech', right: 'je' }
+    ]
+  })
+
   // =============================================================================
   // ÉTAPE 2 : ASSEMBLAGE GUIDÉ SIMPLE (2-3 mots)
   // =============================================================================

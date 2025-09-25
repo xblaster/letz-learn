@@ -70,6 +70,27 @@ export const generateUnit3Exercises = (): Exercise[] => {
     })
   })
 
+  exercises.push({
+    id: 'word_pairing_politeness',
+    type: 'word_pairing',
+    vocabularyItem: unit3Vocabulary[0],
+    question: 'Reliez chaque mot luxembourgeois à son équivalent français.',
+    context: 'Faites la différence entre les formes polies et familières.',
+    correctAnswer: 'all_matched',
+    hint: 'Associez d\'abord le vocabulaire puis passez aux expressions.',
+    columnLabels: {
+      left: 'Luxembourgeois',
+      right: 'Français'
+    },
+    wordPairs: [
+      { id: 'wei', left: 'Wéi', right: 'Comment' },
+      { id: 'heescht', left: 'heescht', right: 'vous appelez' },
+      { id: 'dir', left: 'Dir', right: 'vous (politesse)' },
+      { id: 'du', left: 'du', right: 'tu' },
+      { id: 'aeren', left: 'Ären Numm', right: 'votre nom' }
+    ]
+  })
+
   // Ajouter 3 exercices de dialogue pratique (politesse vs familiarité)
   exercises.push({
     id: 'dialogue_formal',

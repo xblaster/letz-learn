@@ -34,6 +34,7 @@ import ProgressiveBuildingExercise from './exercises/ProgressiveBuildingExercise
 import PatternRecognitionExercise from './exercises/PatternRecognitionExercise'
 import CreativeExpressionExercise from './exercises/CreativeExpressionExercise'
 import ErrorCorrectionExercise from './exercises/ErrorCorrectionExercise'
+import WordPairingExercise from './exercises/WordPairingExercise'
 import GenericExercise from './exercises/GenericExercise'
 import { keyframes } from '@mui/system'
 import { useSoundEffects } from '../hooks/useSoundEffects'
@@ -219,6 +220,8 @@ const LearningUnit = ({ unit, onUnitComplete, onExit }: LearningUnitProps) => {
         return <CreativeExpressionExercise key={currentExercise.id} {...exerciseProps} />
       case 'error_correction':
         return <ErrorCorrectionExercise key={currentExercise.id} {...exerciseProps} />
+      case 'word_pairing':
+        return <WordPairingExercise key={currentExercise.id} {...exerciseProps} />
       case 'register_adaptation':
       case 'argumentation_building':
       case 'cultural_context':
@@ -414,6 +417,7 @@ const getExerciseTypeName = (type?: Exercise['type']): string => {
     pattern_recognition: 'Reconnaissance de motifs',
     creative_expression: 'Expression créative',
     error_correction: "Correction d'erreurs",
+    word_pairing: 'Association de mots',
     register_adaptation: 'Adaptation de registre',
     argumentation_building: "Construction d'arguments",
     cultural_context: 'Contexte culturel',

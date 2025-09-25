@@ -22,6 +22,15 @@ export interface Exercise {
   wordBank?: string[]
   expectedSentence?: string
   hint?: string
+  wordPairs?: Array<{
+    id: string
+    left: string
+    right: string
+  }>
+  columnLabels?: {
+    left: string
+    right: string
+  }
 }
 
 export type CEFRLevel =
@@ -86,6 +95,7 @@ export type ExerciseType =
   | 'pattern_recognition'  // Reconnaître structures
   | 'creative_expression'  // Production libre avec contraintes (B1+)
   | 'error_correction'     // Identifier et corriger erreurs (A2+)
+  | 'word_pairing'         // Associer mots entre deux langues
   | 'register_adaptation'  // Adapter selon contexte formel/informel (B1+)
   | 'argumentation_building' // Construire arguments structurés (B1+)
   | 'cultural_context'     // Compréhension culturelle luxembourgeoise (A2+)

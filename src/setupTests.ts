@@ -6,29 +6,38 @@ declare global {
   }
 }
 
-if (typeof window !== 'undefined' && !window.matchMedia) {
+if (typeof window !== 'undefined') {
+  const matchMediaMock = (query: string) => ({
+    matches: false,
+    media: query,
+    onchange: null,
+    addListener: () => {},
+    removeListener: () => {},
+    addEventListener: () => {},
+    removeEventListener: () => {},
+    dispatchEvent: () => false
+  })
+
   Object.defineProperty(window, 'matchMedia', {
     writable: true,
-    value: jest.fn().mockImplementation((query: string) => ({
-      matches: false,
-      media: query,
-      onchange: null,
-      addListener: jest.fn(),
-      removeListener: jest.fn(),
-      addEventListener: jest.fn(),
-      removeEventListener: jest.fn(),
-      dispatchEvent: jest.fn()
-    }))
+    configurable: true,
+    value: matchMediaMock
+  })
+
+  Object.defineProperty(globalThis, 'matchMedia', {
+    writable: true,
+    configurable: true,
+    value: matchMediaMock
   })
 }
 
 if (typeof window !== 'undefined' && !('speechSynthesis' in window)) {
   ;(window as any).speechSynthesis = {
-    speak: jest.fn(),
-    cancel: jest.fn(),
-    getVoices: jest.fn(() => []),
-    addEventListener: jest.fn(),
-    removeEventListener: jest.fn(),
+    speak: () => {},
+    cancel: () => {},
+    getVoices: () => [],
+    addEventListener: () => {},
+    removeEventListener: () => {},
     onvoiceschanged: null
   }
 }
