@@ -70,6 +70,28 @@ export const generateUnit2Exercises = (): Exercise[] => {
     })
   })
 
+  // Association des mots clés de l'unité
+  exercises.push({
+    id: 'word_pairing_identity',
+    type: 'word_pairing',
+    vocabularyItem: unit2Vocabulary[0],
+    question: 'Associez chaque expression luxembourgeoise à sa traduction française.',
+    context: 'Retenez les combinaisons essentielles pour vous présenter.',
+    correctAnswer: 'all_matched',
+    hint: 'Cliquez sur une colonne puis sur l\'autre pour créer les bonnes paires.',
+    columnLabels: {
+      left: 'Luxembourgeois',
+      right: 'Français'
+    },
+    wordPairs: [
+      { id: 'ech', left: 'Ech', right: 'Je' },
+      { id: 'sinn', left: 'sinn', right: 'suis' },
+      { id: 'vun', left: 'vun', right: 'de / du' },
+      { id: 'wunnen', left: 'wunnen', right: 'habiter' },
+      { id: 'letzebuerg', left: 'Lëtzebuerg', right: 'Luxembourg' }
+    ]
+  })
+
   // Ajouter 2 exercices de structure grammaticale
   exercises.push({
     id: 'grammar_presentation',
