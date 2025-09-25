@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
-import { Alert, Box, Button, Grid, Stack, Typography } from '@mui/material'
+import { Alert, Box, Button, Stack, Typography } from '@mui/material'
+import LuxembourgishButton from '../LuxembourgishButton'
 import { Exercise } from '../../types/LearningTypes'
 
 interface WordPairingExerciseProps {
@@ -158,8 +159,8 @@ const WordPairingExercise = ({ exercise, onComplete }: WordPairingExerciseProps)
         )}
       </Stack>
 
-      <Grid container spacing={2} sx={{ mt: 1 }}>
-        <Grid item xs={12} md={6}>
+      <Stack direction={{ xs: 'column', md: 'row' }} spacing={2} sx={{ mt: 1 }}>
+        <Box sx={{ flex: 1 }}>
           <Typography variant="subtitle2" gutterBottom>
             {columnLabels.left}
           </Typography>
@@ -169,12 +170,14 @@ const WordPairingExercise = ({ exercise, onComplete }: WordPairingExerciseProps)
               const isSelected = selectedLeft === value
 
               return (
-                <Button
+                <LuxembourgishButton
                   key={value}
                   variant={isMatched ? 'contained' : 'outlined'}
                   color={isMatched ? 'success' : isSelected ? 'primary' : 'secondary'}
                   onClick={() => handleLeftClick(value)}
                   disabled={isMatched}
+                  luxembourgishText={value}
+                  playOnClick={!isMatched}
                   sx={{
                     justifyContent: 'flex-start',
                     textTransform: 'none',
@@ -184,13 +187,13 @@ const WordPairingExercise = ({ exercise, onComplete }: WordPairingExerciseProps)
                   }}
                 >
                   {value}
-                </Button>
+                </LuxembourgishButton>
               )
             })}
           </Stack>
-        </Grid>
+        </Box>
 
-        <Grid item xs={12} md={6}>
+        <Box sx={{ flex: 1 }}>
           <Typography variant="subtitle2" gutterBottom>
             {columnLabels.right}
           </Typography>
@@ -219,8 +222,8 @@ const WordPairingExercise = ({ exercise, onComplete }: WordPairingExerciseProps)
               )
             })}
           </Stack>
-        </Grid>
-      </Grid>
+        </Box>
+      </Stack>
     </Box>
   )
 }

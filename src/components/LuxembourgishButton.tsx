@@ -19,20 +19,20 @@ const LuxembourgishButton = ({
 }: LuxembourgishButtonProps) => {
   const { speakText } = useLuxembourgishSpeech()
 
-  const handleButtonClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
-    // Jouer le son luxembourgeois en premier si activé
+  const handleButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    // Exécuter le onClick original en premier
+    if (onClick) {
+      onClick(event)
+    }
+
+    // Puis jouer le son luxembourgeois si activé
     if (playOnClick && luxembourgishText) {
       try {
-        await speakText(luxembourgishText)
+        speakText(luxembourgishText)
         onSpeechComplete?.()
       } catch (error) {
         console.warn('Speech failed:', error)
       }
-    }
-
-    // Ensuite exécuter le onClick original
-    if (onClick) {
-      onClick(event)
     }
   }
 
