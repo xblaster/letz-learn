@@ -1,9 +1,31 @@
 import React, { useState } from 'react'
-import { AudioService } from '../services/AudioService'
+import { useSoundEffects } from '../hooks/useSoundEffects'
+
+const speak = async (text: string) => {
+  if (typeof window === 'undefined' || !('speechSynthesis' in window)) {
+    throw new Error('Speech synthesis not supported')
+  }
+
+  return new Promise<void>(resolve => {
+    const utterance = new SpeechSynthesisUtterance(text)
+    utterance.lang = 'de-DE'
+    utterance.rate = 0.95
+    utterance.onend = () => resolve()
+    window.speechSynthesis.cancel()
+    window.speechSynthesis.speak(utterance)
+  })
+}
 
 const AudioDebugger: React.FC = () => {
   const [status, setStatus] = useState<string>('Non testé')
   const [isAndroid, setIsAndroid] = useState<boolean>(false)
+  const {
+    playTestTone,
+    playTransitionSound,
+    playSuccessSound,
+    playErrorSound,
+    playCompletionSound
+  } = useSoundEffects()
 
   React.useEffect(() => {
     setIsAndroid(/Android/i.test(navigator.userAgent))
@@ -13,21 +35,11 @@ const AudioDebugger: React.FC = () => {
     setStatus('Test en cours...')
 
     try {
-      // Tester l'activation audio
-      await AudioService.enableAudio()
-      setStatus('Audio activé ✅')
-
-      // Tester les sons
-      AudioService.playClickSound()
-      await new Promise(resolve => setTimeout(resolve, 500))
-
-      AudioService.playSuccessSound()
-      await new Promise(resolve => setTimeout(resolve, 1000))
-
-      setStatus('Sons testés ✅')
-
-      // Tester la synthèse vocale
-      await AudioService.speakLuxembourgish('Moien!')
+      await playTestTone()
+      await new Promise(resolve => setTimeout(resolve, 400))
+      await playSuccessSound()
+      await new Promise(resolve => setTimeout(resolve, 400))
+      await speak('Test audio réussi')
       setStatus('Synthèse vocale testée ✅')
 
     } catch (error) {
@@ -38,19 +50,23 @@ const AudioDebugger: React.FC = () => {
   const testSpeech = async () => {
     try {
       setStatus('Test synthèse vocale...')
-      await AudioService.speakLuxembourgish('Wéi geet et?')
+      await speak('Wéi geet et?')
       setStatus('Synthèse vocale OK ✅')
     } catch (error) {
       setStatus(`Erreur synthèse: ${error}`)
     }
   }
 
-  const testSounds = () => {
+  const testSounds = async () => {
     setStatus('Test des sons...')
     try {
-      AudioService.playClickSound()
-      setTimeout(() => AudioService.playSuccessSound(), 300)
-      setTimeout(() => AudioService.playCompletionSound(), 800)
+      await playTransitionSound()
+      await new Promise(resolve => setTimeout(resolve, 250))
+      await playSuccessSound()
+      await new Promise(resolve => setTimeout(resolve, 250))
+      await playErrorSound()
+      await new Promise(resolve => setTimeout(resolve, 250))
+      await playCompletionSound()
       setStatus('Sons joués ✅')
     } catch (error) {
       setStatus(`Erreur sons: ${error}`)
@@ -102,8 +118,8 @@ const AudioDebugger: React.FC = () => {
 
       <div style={{ marginTop: '10px', fontSize: '10px', color: '#666' }}>
         <div>UserAgent: {navigator.userAgent.substring(0, 30)}...</div>
-        <div>AudioContext: {window.AudioContext ? '✅' : '❌'}</div>
-        <div>SpeechSynthesis: {window.speechSynthesis ? '✅' : '❌'}</div>
+        <div>AudioContext: {'AudioContext' in window ? '✅' : '❌'}</div>
+        <div>SpeechSynthesis: {'speechSynthesis' in window ? '✅' : '❌'}</div>
       </div>
     </div>
   )

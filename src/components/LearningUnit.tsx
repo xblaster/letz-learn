@@ -36,7 +36,7 @@ import CreativeExpressionExercise from './exercises/CreativeExpressionExercise'
 import ErrorCorrectionExercise from './exercises/ErrorCorrectionExercise'
 import GenericExercise from './exercises/GenericExercise'
 import { keyframes } from '@mui/system'
-import { AudioService } from '../services/AudioService'
+import { useSoundEffects } from '../hooks/useSoundEffects'
 
 interface LearningUnitProps {
   unit: LearningUnitType
@@ -65,6 +65,7 @@ const LearningUnit = ({ unit, onUnitComplete, onExit }: LearningUnitProps) => {
   const [startTime] = useState(new Date())
   const [showErrorFeedback, setShowErrorFeedback] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
+  const { playSuccessSound, playErrorSound, playTransitionSound, playCompletionSound } = useSoundEffects()
 
   const currentExercise = unit.exercises[currentExerciseIndex]
   const progress = Math.round(((currentExerciseIndex + 1) / unit.exercises.length) * 100)
@@ -88,10 +89,14 @@ const LearningUnit = ({ unit, onUnitComplete, onExit }: LearningUnitProps) => {
     const updatedResults = [...exerciseResults, result]
     setExerciseResults(updatedResults)
 
-    await AudioService.enableAudio()
     const correctAnswers = updatedResults.filter(r => r.isCorrect).length
     const accuracy = Math.round((correctAnswers / updatedResults.length) * 100)
-    AudioService.playFeedbackSound(isCorrect, accuracy)
+
+    if (isCorrect) {
+      void playSuccessSound()
+    } else {
+      void playErrorSound()
+    }
 
     if (!isCorrect) {
       setHearts(prev => Math.max(0, prev - 1))
@@ -131,7 +136,7 @@ const LearningUnit = ({ unit, onUnitComplete, onExit }: LearningUnitProps) => {
     } else {
       // Réponse correcte - passage rapide à l'exercice suivant
       setTimeout(() => {
-        AudioService.playTransitionSound()
+        void playTransitionSound()
         setCurrentExerciseIndex(prev => prev + 1)
       }, 1200)
     }
@@ -154,8 +159,7 @@ const LearningUnit = ({ unit, onUnitComplete, onExit }: LearningUnitProps) => {
       completedAt: endTime
     }
 
-    await AudioService.enableAudio()
-    AudioService.playCompletionSound()
+    void playCompletionSound()
 
     setIsCompleted(true)
     onUnitComplete(progress)
@@ -175,7 +179,7 @@ const LearningUnit = ({ unit, onUnitComplete, onExit }: LearningUnitProps) => {
     if (hearts <= 1) {
       setShowResult(true)
     } else {
-      AudioService.playTransitionSound()
+      void playTransitionSound()
       setCurrentExerciseIndex(prev => prev + 1)
     }
   }
