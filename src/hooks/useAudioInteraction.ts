@@ -1,22 +1,21 @@
-import { useEffect, useState } from 'react'
-import { AudioService } from '../services/AudioService'
+import { useEffect, useRef, useState } from 'react'
+import { primeAudioContext } from '../utils/soundEffects'
 
 export const useAudioInteraction = () => {
   const [audioEnabled, setAudioEnabled] = useState(false)
   const [userInteracted, setUserInteracted] = useState(false)
+  const interactedRef = useRef(false)
 
   useEffect(() => {
-    const handleUserInteraction = async () => {
-      if (!userInteracted) {
-        setUserInteracted(true)
-        try {
-          await AudioService.enableAudio()
-          setAudioEnabled(true)
-          console.log('Audio enabled after user interaction')
-        } catch (error) {
-          console.warn('Failed to enable audio:', error)
-        }
+    const handleUserInteraction = () => {
+      if (interactedRef.current) {
+        return
       }
+
+      interactedRef.current = true
+      setUserInteracted(true)
+      setAudioEnabled(typeof window !== 'undefined' && 'speechSynthesis' in window)
+      void primeAudioContext()
     }
 
     // Écouter les interactions utilisateur pour activer l'audio
@@ -30,11 +29,11 @@ export const useAudioInteraction = () => {
         document.removeEventListener(event, handleUserInteraction)
       })
     }
-  }, [userInteracted])
+  }, [])
 
   const playAudioSafely = async (audioFunction: () => Promise<void> | void) => {
     try {
-      if (!userInteracted) {
+      if (!interactedRef.current) {
         console.warn('Audio not enabled yet, waiting for user interaction')
         return
       }
