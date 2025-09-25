@@ -1,4 +1,5 @@
 import { useCallback } from 'react'
+import { luxToGerman } from '../utils/luxToGerman'
 
 const speakWithSystemVoice = (text: string) => {
   if (typeof window === 'undefined') {
@@ -10,7 +11,8 @@ const speakWithSystemVoice = (text: string) => {
     return
   }
 
-  const utterance = new SpeechSynthesisUtterance(text)
+  const preprocessedText = luxToGerman(text)
+  const utterance = new SpeechSynthesisUtterance(preprocessedText)
   utterance.lang = 'de-DE'
   utterance.rate = 0.85
 
