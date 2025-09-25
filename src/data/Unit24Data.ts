@@ -1,167 +1,168 @@
-// Unit 24: Integratioun a Gemeinschaft - A2 Vie pratique
-// Section 3: Vie pratique (A2)
+import { Exercise, LearningUnit, VocabularyItem } from '../types/LearningTypes'
 
-import { LearningUnit, VocabularyItem, Exercise } from '../types/LearningTypes'
+// Section 3 — Vie pratique et autonomie (A2)
+// S3U8 : Services publics
 
 export const unit24Vocabulary: VocabularyItem[] = [
   {
-    id: 'integratioun',
-    luxembourgish: 'Integratioun',
-    french: 'intégration',
-    pronunciation: 'in-te-gra-TSI-oun',
-    usage: 'Processus pour participer activement à la société luxembourgeoise.'
+    id: 's3u8_gemeng',
+    luxembourgish: 'Gemeng',
+    french: 'commune',
+    pronunciation: 'ge-MENG',
+    usage: 'Identifier l’administration locale.'
   },
   {
-    id: 'cours_lux',
-    luxembourgish: 'Cours de Lëtzebuergesch',
-    french: 'cours de luxembourgeois',
-    pronunciation: 'KOUR de LET-ze-bour-gesch',
-    usage: 'Cours organisés par communes et associations pour apprendre la langue.'
+    id: 's3u8_formulaire',
+    luxembourgish: 'Formulaire',
+    french: 'formulaire',
+    pronunciation: 'for-mu-LAIR',
+    usage: 'Compléter un formulaire administratif.'
   },
   {
-    id: 'sproochentest',
-    luxembourgish: 'Sproochentest',
-    french: 'test de langue',
-    pronunciation: 'SHPROH-khen-test',
-    usage: 'Examen officiel demandé pour la nationalité.'
+    id: 's3u8_dokumenter',
+    luxembourgish: 'Dokumenter',
+    french: 'documents',
+    pronunciation: 'do-ku-MEN-ter',
+    usage: 'Rassembler les pièces justificatives.'
   },
   {
-    id: 'volontariat',
-    luxembourgish: 'Fräiwëllegeprojet',
-    french: 'projet de volontariat',
-    pronunciation: 'FRAÏ-vël-le-ge-pro-jet',
-    usage: 'Projet bénévole pour rencontrer des habitants.'
+    id: 's3u8_rendezvous',
+    luxembourgish: 'Rendez-vous fixé',
+    french: 'rendez-vous fixé',
+    pronunciation: 'ron-day-VOO fik-SAY',
+    usage: 'Respecter un rendez-vous administratif.'
   },
   {
-    id: 'fest',
-    luxembourgish: 'Fest',
-    french: 'fête locale',
-    pronunciation: 'FEST',
-    usage: 'Événement communal ou national rassemblant les habitants.'
+    id: 's3u8_certificat',
+    luxembourgish: 'Certificat',
+    french: 'certificat',
+    pronunciation: 'ser-ti-fi-KA',
+    usage: 'Demander un certificat officiel.'
   },
   {
-    id: 'geschichtsatelier',
-    luxembourgish: 'Geschichtsatelier',
-    french: 'atelier d\'histoire locale',
-    pronunciation: 'ge-SHIKHTS-atelier',
-    usage: 'Atelier qui raconte l\'histoire et les traditions du pays.'
+    id: 's3u8_meldezettel',
+    luxembourgish: 'Meldezettel',
+    french: 'certificat de résidence',
+    pronunciation: 'MEL-de-tset-tel',
+    usage: 'Document clé pour s’inscrire à la commune.'
   },
   {
-    id: 'asso',
-    luxembourgish: 'Veräin',
-    french: 'association',
-    pronunciation: 've-RAÏN',
-    usage: 'Association sportive ou culturelle pour créer des liens.'
+    id: 's3u8_annexe',
+    luxembourgish: 'Annexe',
+    french: 'annexe',
+    pronunciation: 'an-NEKS',
+    usage: 'Ajouter des pièces complémentaires.'
   },
   {
-    id: 'buergerpakt',
-    luxembourgish: 'Biergerpakt',
-    french: 'pacte citoyen',
-    pronunciation: 'BIER-ger-pakt',
-    usage: 'Programme d\'accueil communal pour nouveaux habitants.'
+    id: 's3u8_nummer',
+    luxembourgish: 'Nummer',
+    french: 'numéro',
+    pronunciation: 'NU-mmer',
+    usage: 'Prendre un numéro d’attente.'
   },
   {
-    id: 'gemeindfest',
-    luxembourgish: 'Gemengefest',
-    french: 'fête communale',
-    pronunciation: 'ge-MENG-ge-fest',
-    usage: 'Fête organisée par la commune avec animations.'
+    id: 's3u8_schalter',
+    luxembourgish: 'Schalter',
+    french: 'guichet',
+    pronunciation: 'SHAL-ter',
+    usage: 'Se présenter au guichet approprié.'
   },
   {
-    id: 'nationalitet',
-    luxembourgish: 'Nationalitéit',
-    french: 'nationalité',
-    pronunciation: 'na-tsio-na-li-TÄIT',
-    usage: 'Statut juridique qui reconnaît votre appartenance au pays.'
+    id: 's3u8_empfang',
+    luxembourgish: 'Empfang',
+    french: 'accueil',
+    pronunciation: 'EM-pfank',
+    usage: 'Demander de l’aide à l’accueil.'
   }
 ]
 
 export const generateUnit24Exercises = (): Exercise[] => [
   {
-    id: 'u24_translation_integratioun',
-    type: 'translation',
-    vocabularyItem: unit24Vocabulary[0],
-    question: 'Comment dit-on « intégration » en luxembourgeois ?',
-    options: ['Integratioun', 'Veräin', 'Fest'],
-    correctAnswer: 'Integratioun',
-    context: 'Nommer votre objectif donne du sens à chaque rencontre.'
-  },
-  {
-    id: 'u24_dialogue_cours',
+    id: 's3u8_reactivation_identite',
     type: 'dialogue_completion',
     vocabularyItem: unit24Vocabulary[1],
-    question: 'Vous invitez un ami à apprendre la langue. Vous dites :',
-    options: ['Kommt mat an de Cours de Lëtzebuergesch!', 'Ech ginn op d\'Gemeng.', 'Ech spueren am Spuerkont.'],
-    correctAnswer: 'Kommt mat an de Cours de Lëtzebuergesch!',
-    context: 'Partager un cours crée un soutien mutuel inspirant.'
+    question: 'Complétez : « Ech fëllen de ___ fir den Dossier aus. »',
+    options: ['Formulaire', 'Certificat', 'Annexe'],
+    correctAnswer: 'Formulaire',
+    context: 'Réactiver la complétion de formulaires administratifs.'
   },
   {
-    id: 'u24_sentence_sproochentest',
-    type: 'sentence_construction',
-    vocabularyItem: unit24Vocabulary[2],
-    question: 'Formez une phrase pour dire que vous préparez le test de langue.',
-    wordBank: ['Ech', 'bereeden', 'de', 'Sproochentest', 'vir'],
-    correctAnswer: 'Ech bereeden de Sproochentest vir',
-    expectedSentence: 'Ech bereeden de Sproochentest vir',
-    hint: 'Le verbe à particule « virbereeden » envoie « vir » à la fin.',
-    context: 'Mettre en mots votre préparation renforce votre confiance.'
-  },
-  {
-    id: 'u24_cultural_volontariat',
-    type: 'cultural_context',
-    vocabularyItem: unit24Vocabulary[3],
-    question: 'Quelle activité vous rapproche d\'habitants engagés ?',
-    options: ['Fräiwëllegeprojet', 'Gemengefest', 'Sproochentest'],
-    correctAnswer: 'Fräiwëllegeprojet',
-    context: 'Le bénévolat ouvre des échanges chaleureux.'
-  },
-  {
-    id: 'u24_translation_verain',
+    id: 's3u8_documents',
     type: 'translation',
-    vocabularyItem: unit24Vocabulary[6],
-    question: 'Comment parle-t-on d\'une association en luxembourgeois ?',
-    options: ['Veräin', 'Biergerpakt', 'Fest'],
-    correctAnswer: 'Veräin',
-    context: 'Identifier les associations vous aide à participer activement.'
+    vocabularyItem: unit24Vocabulary[2],
+    question: 'Quel mot désigne les documents à fournir ?',
+    options: ['Dokumenter', 'Schalter', 'Empfang'],
+    correctAnswer: 'Dokumenter',
+    context: 'Préparer la liste des pièces justificatives.'
   },
   {
-    id: 'u24_dialogue_buergerpakt',
+    id: 's3u8_rdv',
+    type: 'pattern_recognition',
+    vocabularyItem: unit24Vocabulary[3],
+    question: 'Quelle phrase confirme le rendez-vous ?',
+    options: [
+      'Ech hunn den Rendez-vous fixé muer um 10 Auer.',
+      'Ech ginn an d’Spuerkeess.',
+      'Ech reservéieren en Ticket.'
+    ],
+    correctAnswer: 'Ech hunn den Rendez-vous fixé muer um 10 Auer.',
+    context: 'Respecter les horaires de la commune.'
+  },
+  {
+    id: 's3u8_certificat',
     type: 'dialogue_completion',
-    vocabularyItem: unit24Vocabulary[7],
-    question: 'La commune vous propose un programme d\'accueil. Vous répondez :',
-    options: ['Ech maachen beim Biergerpakt mat.', 'Ech liesen de Fahrplang.', 'Ech froe fir eng Residenzbestätegung.'],
-    correctAnswer: 'Ech maachen beim Biergerpakt mat.',
-    context: 'Accepter le pacte citoyen favorise votre intégration positive.'
-  },
-  {
-    id: 'u24_word_order_fest',
-    type: 'word_ordering',
     vocabularyItem: unit24Vocabulary[4],
-    question: 'Remettez les mots en ordre pour annoncer une fête locale.',
-    wordBank: ['D', 'Gemeng', 'organiséiert', 'e', 'Fest'],
-    correctAnswer: 'D Gemeng organiséiert e Fest',
-    expectedSentence: 'D Gemeng organiséiert e Fest',
-    hint: 'Commencez par l\'article abrégé « D ».',
-    context: 'Inviter vos amis aux fêtes renforce votre cercle social.'
+    question: 'Choisissez la phrase pour demander un certificat :',
+    options: [
+      'Ech géif gären en Certificat fir meng Dossier kréien.',
+      'Ech maachen eng Invitatioun fir muer.',
+      'Ech kafen eng Broschür.'
+    ],
+    correctAnswer: 'Ech géif gären en Certificat fir meng Dossier kréien.',
+    context: 'Utiliser le conditionnel de politesse.'
   },
   {
-    id: 'u24_cultural_nationalitet',
-    type: 'cultural_context',
+    id: 's3u8_meldezettel',
+    type: 'phrase_completion',
+    vocabularyItem: unit24Vocabulary[5],
+    question: 'Complétez : « De ___ ass néideg fir d’Aschreiwung. »',
+    options: ['Meldezettel', 'Nummer', 'Empfang'],
+    correctAnswer: 'Meldezettel',
+    context: 'Connaître les documents incontournables.'
+  },
+  {
+    id: 's3u8_guichet',
+    type: 'dialogue_completion',
+    vocabularyItem: unit24Vocabulary[8],
+    question: 'Quelle phrase indique à quel guichet aller ?',
+    options: [
+      'De Schalter B ass fir d’Meldezettelen.',
+      'D’Annexe ass an der Broschür.',
+      'D’Nummer ass 25.'
+    ],
+    correctAnswer: 'De Schalter B ass fir d’Meldezettelen.',
+    context: 'S’orienter dans l’administration.'
+  },
+  {
+    id: 's3u8_accueil',
+    type: 'sentence_construction',
     vocabularyItem: unit24Vocabulary[9],
-    question: 'Quel mot nomme l\'objectif final de naturalisation ?',
-    options: ['Nationalitéit', 'Integratioun', 'Cours de Lëtzebuergesch'],
-    correctAnswer: 'Nationalitéit',
-    context: 'Visualiser votre but final maintient votre motivation sur la durée.'
+    question: 'Assemblez la phrase pour demander de l’aide à l’accueil.',
+    wordBank: ['Gudde', 'Moien,', 'ech', 'bräicht', 'Hëllef', 'um', 'Empfang.'],
+    correctAnswer: 'Gudde Moien, ech bräicht Hëllef um Empfang.',
+    expectedSentence: 'Gudde Moien, ech bräicht Hëllef um Empfang.',
+    context: 'Encourager une attitude respectueuse et confiante.'
   }
 ]
 
 export const learningUnit24: LearningUnit = {
-  id: 'unit_24',
-  title: 'Integratioun a Gemeinschaft',
-  description: 'Participez aux événements locaux et préparez vos démarches citoyennes.',
+  id: 'S3U8',
+  title: 'Services publics',
+  description:
+    'Je peux compléter un dossier administratif, demander les bons documents et me repérer au guichet communal.',
   level: 'A2',
   vocabulary: unit24Vocabulary,
   exercises: generateUnit24Exercises(),
-  targetScore: 80,
-  estimatedTime: 8
+  targetScore: 88,
+  estimatedTime: 11
 }

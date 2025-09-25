@@ -1,167 +1,168 @@
-// Unit 22: Aarbecht a Formatioun - A2 Vie pratique
-// Section 3: Vie pratique (A2)
+import { Exercise, LearningUnit, VocabularyItem } from '../types/LearningTypes'
 
-import { LearningUnit, VocabularyItem, Exercise } from '../types/LearningTypes'
+// Section 3 — Vie pratique et autonomie (A2)
+// S3U6 : Mode et services
 
 export const unit22Vocabulary: VocabularyItem[] = [
   {
-    id: 'arbechtskontrakt',
-    luxembourgish: 'Aarbechtskontrakt',
-    french: 'contrat de travail',
-    pronunciation: 'AAR-bekhts-kon-trakt',
-    usage: 'Document qui définit vos conditions de travail.'
+    id: 's3u6_greisst',
+    luxembourgish: 'Gréisst',
+    french: 'taille',
+    pronunciation: 'GRÄÏSST',
+    usage: 'Demander ou indiquer une taille en boutique.'
   },
   {
-    id: 'stage',
-    luxembourgish: 'Stage',
-    french: 'stage',
-    pronunciation: 'SHTASH',
-    usage: 'Période d\'apprentissage pratique en entreprise.'
+    id: 's3u6_umtausche',
+    luxembourgish: 'ëmtauschen',
+    french: 'échanger',
+    pronunciation: 'UM-tao-shen',
+    usage: 'Réaliser un échange de produit.'
   },
   {
-    id: 'gehalt',
-    luxembourgish: 'Gehalt',
-    french: 'salaire',
-    pronunciation: 'geh-HALT',
-    usage: 'Rémunération mensuelle versée par l\'employeur.'
+    id: 's3u6_usprobéieren',
+    luxembourgish: 'usprobéieren',
+    french: 'essayer',
+    pronunciation: 'OUSS-pro-bay-ren',
+    usage: 'Demander à essayer un vêtement.'
   },
   {
-    id: 'arbechtsamt',
-    luxembourgish: 'ADEM',
-    french: 'agence pour l\'emploi',
-    pronunciation: 'A-DEMM',
-    usage: 'Agence luxembourgeoise de placement et de formation.'
+    id: 's3u6_service',
+    luxembourgish: 'Service no-verkaf',
+    french: 'service après-vente',
+    pronunciation: 'SER-vees no-VER-kaf',
+    usage: 'Obtenir une réparation ou un conseil après-vente.'
   },
   {
-    id: 'weiderbildung',
-    luxembourgish: 'Weiderbildung',
-    french: 'formation continue',
-    pronunciation: 'VAI-der-bil-dung',
-    usage: 'Formation pour développer vos compétences.'
+    id: 's3u6_garantie',
+    luxembourgish: 'Garantie',
+    french: 'garantie',
+    pronunciation: 'ga-ran-TI',
+    usage: 'Vérifier la durée de garantie du produit.'
   },
   {
-    id: 'motivationnsbréif',
-    luxembourgish: 'Motivatiounsbréif',
-    french: 'lettre de motivation',
-    pronunciation: 'mo-ti-VA-tsions-brêf',
-    usage: 'Lettre envoyée pour exprimer votre motivation à un employeur.'
+    id: 's3u6_kees',
+    luxembourgish: 'Kees',
+    french: 'caisse',
+    pronunciation: 'KAYS',
+    usage: 'Indiquer la caisse où payer ou échanger.'
   },
   {
-    id: 'gesprech',
-    luxembourgish: 'Gespréich',
-    french: 'entretien',
-    pronunciation: 'ge-SHPRÄÏSH',
-    usage: 'Entretien de recrutement ou d\'évaluation.'
+    id: 's3u6_rabattbon',
+    luxembourgish: 'Rabattbon',
+    french: 'bon de réduction',
+    pronunciation: 'ra-BATT-bon',
+    usage: 'Présenter un bon de réduction avec politesse.'
   },
   {
-    id: 'arbechtszäiten',
-    luxembourgish: 'Aarbechtszäiten',
-    french: 'horaires de travail',
-    pronunciation: 'AAR-bekhts-TSÄÏ-ten',
-    usage: 'Heures convenues dans votre contrat.'
+    id: 's3u6_liwwerung',
+    luxembourgish: 'Liwwerung',
+    french: 'livraison',
+    pronunciation: 'LEE-ver-ung',
+    usage: 'Discuter des modalités de livraison.'
   },
   {
-    id: 'team',
-    luxembourgish: 'Equipe / Team',
-    french: 'équipe',
-    pronunciation: 'EE-keep',
-    usage: 'Groupe de collègues avec qui vous collaborez.'
+    id: 's3u6_stoff',
+    luxembourgish: 'Stoff',
+    french: 'tissu',
+    pronunciation: 'SHTOFF',
+    usage: 'Choisir le tissu adapté.'
   },
   {
-    id: 'arbechtsrecht',
-    luxembourgish: 'Aarbechtsrecht',
-    french: 'droit du travail',
-    pronunciation: 'AAR-bekhts-rekht',
-    usage: 'Règles qui protègent salariés et employeurs.'
+    id: 's3u6_qualiteit',
+    luxembourgish: 'Qualitéit',
+    french: 'qualité',
+    pronunciation: 'kwa-li-TAIT',
+    usage: 'Parler de la qualité du produit.'
   }
 ]
 
 export const generateUnit22Exercises = (): Exercise[] => [
   {
-    id: 'u22_translation_kontrakt',
-    type: 'translation',
+    id: 's3u6_reactivation_politesse',
+    type: 'dialogue_completion',
     vocabularyItem: unit22Vocabulary[0],
-    question: 'Comment dit-on « contrat de travail » en luxembourgeois ?',
-    options: ['Aarbechtskontrakt', 'Motivatiounsbréif', 'Stage'],
-    correctAnswer: 'Aarbechtskontrakt',
-    context: 'Connaître vos documents clés vous rend confiant·e.'
+    question: 'Complétez : « Ech bräicht dës Jackett eng Gréisst méi ___. »',
+    options: ['grouss', 'ëmtauschen', 'Qualitéit'],
+    correctAnswer: 'grouss',
+    context: 'Réactiver les structures de demande polie.'
   },
   {
-    id: 'u22_dialogue_adem',
+    id: 's3u6_echange',
+    type: 'translation',
+    vocabularyItem: unit22Vocabulary[1],
+    question: 'Quel verbe signifie « échanger » un article ?',
+    options: ['ëmtauschen', 'usprobéieren', 'Liwwerung'],
+    correctAnswer: 'ëmtauschen',
+    context: 'Formuler clairement la demande d’échange.'
+  },
+  {
+    id: 's3u6_cabine',
+    type: 'pattern_recognition',
+    vocabularyItem: unit22Vocabulary[2],
+    question: 'Quelle phrase demande à essayer le vêtement ?',
+    options: [
+      'Kann ech et kuerz usprobéieren?',
+      'Wou ass d’Kees?',
+      'Gëtt et eng Garantie?'
+    ],
+    correctAnswer: 'Kann ech et kuerz usprobéieren?',
+    context: 'Encourager l’interaction respectueuse en boutique.'
+  },
+  {
+    id: 's3u6_service',
     type: 'dialogue_completion',
     vocabularyItem: unit22Vocabulary[3],
-    question: 'Où prenez-vous rendez-vous pour un accompagnement emploi ?',
-    options: ['Bei der ADEM', 'Um Tram', 'An der Gemeng'],
-    correctAnswer: 'Bei der ADEM',
-    context: 'Savoir à qui s\'adresser ouvre des opportunités positives.'
+    question: 'Choisissez la phrase pour demander le service après-vente :',
+    options: [
+      'Wéi funktionéiert de Service no-verkaf?',
+      'Wou läit de Wanderwee?',
+      'Wéi héich ass de Präis?'
+    ],
+    correctAnswer: 'Wéi funktionéiert de Service no-verkaf?',
+    context: 'Obtenir de l’aide avec bienveillance.'
   },
   {
-    id: 'u22_sentence_stage',
-    type: 'sentence_construction',
-    vocabularyItem: unit22Vocabulary[1],
-    question: 'Composez une phrase pour annoncer que vous commencez un stage.',
-    wordBank: ['Ech', 'fänken', 'e', 'Stage', 'un'],
-    correctAnswer: 'Ech fänken e Stage un',
-    expectedSentence: 'Ech fänken e Stage un',
-    hint: 'Le verbe « ufänken » place la particule « un » à la fin.',
-    context: 'Célébrer un nouveau départ soutient votre motivation.'
-  },
-  {
-    id: 'u22_cultural_weiderbildung',
-    type: 'cultural_context',
+    id: 's3u6_garantie',
+    type: 'phrase_completion',
     vocabularyItem: unit22Vocabulary[4],
-    question: 'Comment parle-t-on des formations financées pour adultes ?',
-    options: ['Weiderbildung', 'Gehalt', 'Equipe'],
-    correctAnswer: 'Weiderbildung',
-    context: 'Identifier les ressources renforce votre confiance professionnelle.'
+    question: 'Complétez : « D’___ gëllt nach zwielef Méint. »',
+    options: ['Garantie', 'Liwwerung', 'Stoff'],
+    correctAnswer: 'Garantie',
+    context: 'Vérifier la durée de garantie avant l’échange.'
   },
   {
-    id: 'u22_translation_motivatioun',
-    type: 'translation',
-    vocabularyItem: unit22Vocabulary[5],
-    question: 'Comment dit-on « lettre de motivation » en luxembourgeois ?',
-    options: ['Motivatiounsbréif', 'Aarbechtsrecht', 'Aarbechtszäiten'],
-    correctAnswer: 'Motivatiounsbréif',
-    context: 'Nommer votre document valorise votre candidature.'
-  },
-  {
-    id: 'u22_dialogue_gesprech',
+    id: 's3u6_livraison',
     type: 'dialogue_completion',
-    vocabularyItem: unit22Vocabulary[6],
-    question: 'Vous confirmez votre présence à un entretien. Vous dites :',
-    options: ['Ech sinn beim Gespréich dobäi.', 'Ech fueren op d\'Gemeng.', 'Ech liesen de Fahrplang.'],
-    correctAnswer: 'Ech sinn beim Gespréich dobäi.',
-    context: 'Se montrer disponible crée une ambiance collaborative.'
-  },
-  {
-    id: 'u22_word_order_arbechtszaiten',
-    type: 'word_ordering',
     vocabularyItem: unit22Vocabulary[7],
-    question: 'Remettez les mots en ordre pour évoquer les horaires.',
-    wordBank: ['Meng', 'Aarbechtszäiten', 'si', 'flexibel'],
-    correctAnswer: 'Meng Aarbechtszäiten si flexibel',
-    expectedSentence: 'Meng Aarbechtszäiten si flexibel',
-    hint: 'Le verbe « sinn » reste en deuxième position.',
-    context: 'Parler de flexibilité instaure un climat positif au travail.'
+    question: 'Quelle phrase clarifie la livraison ?',
+    options: [
+      'D’Liwwerung kënnt muer nomëttes.',
+      'Ech reservéieren e Concert.',
+      'Ech brauch en Antibiotikum.'
+    ],
+    correctAnswer: 'D’Liwwerung kënnt muer nomëttes.',
+    context: 'Informer le client des délais.'
   },
   {
-    id: 'u22_cultural_team',
-    type: 'cultural_context',
-    vocabularyItem: unit22Vocabulary[8],
-    question: 'Quel mot mixte français-anglais décrit souvent votre équipe ?',
-    options: ['Equipe / Team', 'Stage', 'Aarbechtsrecht'],
-    correctAnswer: 'Equipe / Team',
-    context: 'Valoriser votre équipe renforce le sentiment d\'appartenance.'
+    id: 's3u6_qualite',
+    type: 'sentence_construction',
+    vocabularyItem: unit22Vocabulary[9],
+    question: 'Assemblez la phrase qui met en avant la qualité.',
+    wordBank: ['D’Qualitéit', 'ass', 'héich', 'trotz', 'dem', 'Rabattbon.'],
+    correctAnswer: 'D’Qualitéit ass héich trotz dem Rabattbon.',
+    expectedSentence: 'D’Qualitéit ass héich trotz dem Rabattbon.',
+    context: 'Rassurer sur la qualité lors de l’échange.'
   }
 ]
 
 export const learningUnit22: LearningUnit = {
-  id: 'unit_22',
-  title: 'Aarbecht a Formatioun',
-  description: 'Préparez vos démarches emploi et vos dialogues professionnels.',
+  id: 'S3U6',
+  title: 'Mode et services',
+  description:
+    'Je peux gérer un échange ou une réparation, discuter de la garantie et rester cordial·e avec le service client.',
   level: 'A2',
   vocabulary: unit22Vocabulary,
   exercises: generateUnit22Exercises(),
-  targetScore: 80,
-  estimatedTime: 8
+  targetScore: 88,
+  estimatedTime: 10
 }

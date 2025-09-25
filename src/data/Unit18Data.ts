@@ -1,151 +1,168 @@
-// Unit 18: Santé - Stratégie Duolingo A2 système santé Luxembourg
-// Section 3: Vie pratique (A2)
+import { Exercise, LearningUnit, VocabularyItem } from '../types/LearningTypes'
 
-import { LearningUnit, VocabularyItem, Exercise } from '../types/LearningTypes'
+// Section 3 — Vie pratique et autonomie (A2)
+// S3U2 : Santé
 
-// Vocabulaire Unit 18 - Santé Luxembourg authentique A2
 export const unit18Vocabulary: VocabularyItem[] = [
-  // TIER 1: Quick wins - santé universelle
   {
-    id: 'dokter',
-    luxembourgish: 'Dokter',
-    french: 'Médecin',
-    pronunciation: 'DOK-ter',
-    usage: 'Professionnel de santé, familier'
-  },
-  {
-    id: 'pharmacie',
-    luxembourgish: 'Pharmacie',
-    french: 'Pharmacie',
-    pronunciation: 'far-ma-SEE',
-    usage: 'Lieu de médicaments, identique français'
-  },
-  {
-    id: 'wéi',
-    luxembourgish: 'Wéi',
-    french: 'Mal/Douleur',
-    pronunciation: 'VAY',
-    usage: 'Sensation désagréable'
-  },
-
-  // TIER 2: Cultural hooks - système santé Luxembourg
-  {
-    id: 'cns',
-    luxembourgish: 'CNS',
-    french: 'Caisse Nationale de Santé',
-    pronunciation: 'tsé-en-ES',
-    usage: 'Sécurité sociale luxembourgeoise obligatoire'
-  },
-  {
-    id: 'kierchbierg_klinik',
-    luxembourgish: 'Kierchbierg Klinik',
-    french: 'Clinique Kirchberg',
-    pronunciation: 'KIRK-berg KLI-nik',
-    usage: 'Hôpital moderne prestigieux Luxembourg'
-  },
-
-  // TIER 3: Vocabulaire médical A2
-  {
-    id: 'krank',
-    luxembourgish: 'krank',
-    french: 'malade',
-    pronunciation: 'KRANK',
-    usage: 'État de maladie'
-  },
-  {
-    id: 'medicament',
-    luxembourgish: 'Medicament',
-    french: 'Médicament',
-    pronunciation: 'me-di-ka-MANG',
-    usage: 'Remède médical'
-  },
-  {
-    id: 'ech_hu_wéi',
-    luxembourgish: 'Ech hu wéi',
-    french: 'J\'ai mal',
-    pronunciation: 'ekh HOO VAY',
-    usage: 'Expression douleur/mal-être'
-  },
-  {
-    id: 'rendez_vous',
+    id: 's3u2_rendezvous',
     luxembourgish: 'Rendez-vous',
-    french: 'Rendez-vous médical',
+    french: 'rendez-vous',
     pronunciation: 'ron-day-VOO',
-    usage: 'RDV médical (réutilisation Unit 15 + spécialisation)'
+    usage: 'Prendre rendez-vous chez le médecin.'
+  },
+  {
+    id: 's3u2_rezept',
+    luxembourgish: 'Rezept',
+    french: 'ordonnance',
+    pronunciation: 're-TSEPT',
+    usage: 'Demander ou présenter une prescription médicale.'
+  },
+  {
+    id: 's3u2_medikament',
+    luxembourgish: 'Medikament',
+    french: 'médicament',
+    pronunciation: 'me-di-ka-MENT',
+    usage: 'Parler d’un traitement à la pharmacie.'
+  },
+  {
+    id: 's3u2_versecherung',
+    luxembourgish: 'Versécherung',
+    french: 'assurance',
+    pronunciation: 'ver-SAY-scher-ung',
+    usage: 'Présenter sa carte d’assurance maladie.'
+  },
+  {
+    id: 's3u2_symptomer',
+    luxembourgish: 'Symptomer',
+    french: 'symptômes',
+    pronunciation: 'SIMP-to-mer',
+    usage: 'Décrire ce que l’on ressent au médecin.'
+  },
+  {
+    id: 's3u2_peng',
+    luxembourgish: 'Péng',
+    french: 'douleur',
+    pronunciation: 'PENG',
+    usage: 'Localiser et qualifier une douleur.'
+  },
+  {
+    id: 's3u2_gesondheetskaart',
+    luxembourgish: 'Gesondheetskaart',
+    french: 'carte de santé',
+    pronunciation: 'ge-ZOND-heets-kaart',
+    usage: 'Présenter sa carte CNS à l’accueil.'
+  },
+  {
+    id: 's3u2_thermometer',
+    luxembourgish: 'Thermometer',
+    french: 'thermomètre',
+    pronunciation: 'TER-mo-may-ter',
+    usage: 'Discuter de la fièvre mesurée.'
+  },
+  {
+    id: 's3u2_urgence',
+    luxembourgish: 'Urgence',
+    french: 'urgence',
+    pronunciation: 'ur-JANS',
+    usage: 'Identifier si la situation est urgente.'
+  },
+  {
+    id: 's3u2_antibiotikum',
+    luxembourgish: 'Antibiotikum',
+    french: 'antibiotique',
+    pronunciation: 'an-ti-bio-TI-kum',
+    usage: 'Parler d’un traitement prescrit.'
   }
 ]
 
-export const generateUnit18Exercises = (): Exercise[] => {
-  const exercises: Exercise[] = []
-
-  // Quick wins santé universelle
-  exercises.push({
-    id: 'quick_win_doctor',
-    type: 'audio_recognition',
+export const generateUnit18Exercises = (): Exercise[] => [
+  {
+    id: 's3u2_reactivation_politesse',
+    type: 'dialogue_completion',
     vocabularyItem: unit18Vocabulary[0],
-    question: 'Problème de santé. Professionnel à consulter :',
-    options: ['Dokter', 'Pharmacie', 'CNS'].sort(() => Math.random() - 0.5),
-    correctAnswer: 'Dokter',
-    context: 'Quick win: professionnel santé universel'
-  })
-
-  // Cultural hook - système santé Luxembourg
-  exercises.push({
-    id: 'cultural_cns_system',
+    question: 'Complétez : « Ech hätt gär e ___ fir dësen Donneschdeg. »',
+    options: ['Rendez-vous', 'Thermometer', 'Péng'],
+    correctAnswer: 'Rendez-vous',
+    context: 'Réactiver la prise de rendez-vous polie.'
+  },
+  {
+    id: 's3u2_decrire_symptomes',
+    type: 'translation',
+    vocabularyItem: unit18Vocabulary[4],
+    question: 'Quel mot désigne les symptômes que vous décrivez ?',
+    options: ['Symptomer', 'Urgence', 'Versécherung'],
+    correctAnswer: 'Symptomer',
+    context: 'Préparer la discussion avec le médecin.'
+  },
+  {
+    id: 's3u2_douleur',
+    type: 'pattern_recognition',
+    vocabularyItem: unit18Vocabulary[5],
+    question: 'Quelle phrase exprime une douleur claire ?',
+    options: [
+      'Ech hunn Péng am Réck zënter gëschter.',
+      'Ech maachen eng Invitatioun fir muer.',
+      'Ech sichen eng Wunneng am Quartier.'
+    ],
+    correctAnswer: 'Ech hunn Péng am Réck zënter gëschter.',
+    context: 'Utiliser la structure « ech hunn Péng » recommandée.'
+  },
+  {
+    id: 's3u2_assurance',
     type: 'dialogue_completion',
     vocabularyItem: unit18Vocabulary[3],
-    question: 'Couverture santé obligatoire Luxembourg. Organisme :',
-    options: ['CNS', 'Dokter', 'Medicament'].sort(() => Math.random() - 0.5),
-    correctAnswer: 'CNS',
-    context: 'Cultural hook: système social luxembourgeois'
-  })
-
-  // Spaced repetition - RDV médical (Unit 15 + santé)
-  exercises.push({
-    id: 'spaced_medical_appointment',
+    question: 'Choisissez la phrase pour présenter votre assurance :',
+    options: [
+      'Hei ass meng Versécherung, merci.',
+      'Ech hunn eng Invitatioun haut.',
+      'Ech kommen direkt zeréck.'
+    ],
+    correctAnswer: 'Hei ass meng Versécherung, merci.',
+    context: 'Respecter les procédures administratives en cabinet.'
+  },
+  {
+    id: 's3u2_ordonnance',
+    type: 'phrase_completion',
+    vocabularyItem: unit18Vocabulary[1],
+    question: 'Complétez : « De Dokter stellt mir e ___ aus. »',
+    options: ['Rezept', 'Antibiotikum', 'Thermometer'],
+    correctAnswer: 'Rezept',
+    context: 'Préparer la visite à la pharmacie après la consultation.'
+  },
+  {
+    id: 's3u2_traitement',
+    type: 'dialogue_completion',
+    vocabularyItem: unit18Vocabulary[9],
+    question: 'Quelle phrase confirme que vous prenez le traitement prescrit ?',
+    options: [
+      'Ech huelen d’Antibiotikum all Moien.',
+      'Ech fueren an de Quartier.',
+      'Ech reservéieren e Konzert.'
+    ],
+    correctAnswer: 'Ech huelen d’Antibiotikum all Moien.',
+    context: 'Montrer son engagement dans le suivi médical.'
+  },
+  {
+    id: 's3u2_urgence',
     type: 'sentence_construction',
     vocabularyItem: unit18Vocabulary[8],
-    question: 'Assemblez votre demande de RDV médical',
-    wordBank: ['Ech', 'brauchen', 'eng', 'Rendez-vous', 'mam', 'Dokter'].sort(() => Math.random() - 0.5),
-    correctAnswer: 'Ech brauchen eng Rendez-vous mam Dokter',
-    expectedSentence: 'Ech brauchen eng Rendez-vous mam Dokter',
-    hint: 'Réutilisation RDV Unit 15 + contexte médical',
-    context: 'Spaced repetition: RDV spécialisé médical'
-  })
-
-  // Context variation - douleur/mal-être
-  exercises.push({
-    id: 'context_pain_expression',
-    type: 'dialogue_completion',
-    vocabularyItem: unit18Vocabulary[7],
-    question: 'Consultation médicale. Expression de votre mal-être :',
-    options: ['Ech hu wéi', 'Dokter', 'Pharmacie'].sort(() => Math.random() - 0.5),
-    correctAnswer: 'Ech hu wéi',
-    context: 'Context variation: expression symptôme'
-  })
-
-  // Production orale - consultation médicale
-  exercises.push({
-    id: 'speech_medical_consultation',
-    type: 'speech_recognition',
-    vocabularyItem: unit18Vocabulary[7],
-    question: 'Exprimez votre mal-être au médecin',
-    correctAnswer: 'Ech hu wéi',
-    expectedSentence: 'Ech hu wéi',
-    hint: 'ekh HOO VAY',
-    context: 'Production orale: consultation médicale'
-  })
-
-  return exercises
-}
+    question: 'Assemblez la phrase pour orienter vers l’urgence.',
+    wordBank: ['Et', 'ass', 'eng', 'Urgence,', 'rufft', '112!'],
+    correctAnswer: 'Et ass eng Urgence, rufft 112!',
+    expectedSentence: 'Et ass eng Urgence, rufft 112!',
+    context: 'Identifier rapidement les situations critiques.'
+  }
+]
 
 export const learningUnit18: LearningUnit = {
-  id: 'unit_18',
+  id: 'S3U2',
   title: 'Santé',
-  description: 'Gérez vos besoins de santé dans le système luxembourgeois',
+  description:
+    'Je peux décrire mes symptômes, présenter mes documents de santé et préparer une consultation médicale efficace.',
   level: 'A2',
   vocabulary: unit18Vocabulary,
   exercises: generateUnit18Exercises(),
-  targetScore: 80,
-  estimatedTime: 7
+  targetScore: 88,
+  estimatedTime: 10
 }

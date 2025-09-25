@@ -1,308 +1,168 @@
-// Unit 17: Logement - Stratégie Duolingo A2 immobilier Luxembourg
-// Section 3: Vie pratique (A2) - Complexité accrue avec engagement maintenu
+import { Exercise, LearningUnit, VocabularyItem } from '../types/LearningTypes'
 
-import { LearningUnit, VocabularyItem, Exercise } from '../types/LearningTypes'
+// Section 3 — Vie pratique et autonomie (A2)
+// S3U1 : Logement
 
-// Vocabulaire Unit 17 - Logement Luxembourg authentique A2
 export const unit17Vocabulary: VocabularyItem[] = [
-  // TIER 1: Quick wins - concepts logement universels
   {
-    id: 'haus',
-    luxembourgish: 'Haus',
-    french: 'Maison',
-    pronunciation: 'HOWSS',
-    usage: 'Logement individuel, familier'
-  },
-  {
-    id: 'appartement',
+    id: 's3u1_appartement',
     luxembourgish: 'Appartement',
-    french: 'Appartement',
+    french: 'appartement',
     pronunciation: 'a-par-te-MANG',
-    usage: 'Logement collectif, identique au français'
+    usage: 'Décrire le type de logement recherché.'
   },
   {
-    id: 'chambre',
-    luxembourgish: 'Chambre',
-    french: 'Chambre',
-    pronunciation: 'SHAM-ber',
-    usage: 'Pièce de repos, universel'
-  },
-
-  // TIER 2: Cultural hooks - marché immobilier Luxembourg spécifique
-  {
-    id: 'deier_präisser',
-    luxembourgish: 'Deier Präisser',
-    french: 'Prix chers',
-    pronunciation: 'DAY-er PRAY-ser',
-    usage: 'Réalité immobilière luxembourgeoise (prix élevés)'
+    id: 's3u1_wunneng',
+    luxembourgish: 'Wunneng',
+    french: 'habitation',
+    pronunciation: 'WOU-neng',
+    usage: 'Parler d’un logement de manière générale.'
   },
   {
-    id: 'limpertsberg',
-    luxembourgish: 'Limpertsberg',
-    french: 'Limpertsberg',
-    pronunciation: 'LIM-pers-berg',
-    usage: 'Quartier résidentiel chic Luxembourg-Ville'
+    id: 's3u1_locatioun',
+    luxembourgish: 'Locatioun',
+    french: 'location',
+    pronunciation: 'lo-ka-TSOUN',
+    usage: 'Mentionner le contrat de location.'
   },
   {
-    id: 'belair',
-    luxembourgish: 'Belair',
-    french: 'Belair',
-    pronunciation: 'be-LAIR',
-    usage: 'Quartier populaire Luxembourg-Ville'
-  },
-
-  // TIER 3: Vocabulaire immobilier A2 (complexité accrue)
-  {
-    id: 'louwen',
-    luxembourgish: 'louwen',
-    french: 'louer',
-    pronunciation: 'LOW-en',
-    usage: 'Action de location (très courant Luxembourg)'
+    id: 's3u1_loyers',
+    luxembourgish: 'Loyer',
+    french: 'loyer',
+    pronunciation: 'lo-YAY',
+    usage: 'Comparer les prix des logements.'
   },
   {
-    id: 'kafen_haus',
-    luxembourgish: 'kafen (Haus)',
-    french: 'acheter (maison)',
-    pronunciation: 'KAH-fen',
-    usage: 'Achat immobilier (réutilisation Unit 10 + contexte)'
+    id: 's3u1_quartier',
+    luxembourgish: 'Quartier',
+    french: 'quartier',
+    pronunciation: 'kar-TIAY',
+    usage: 'Situer le logement dans la ville.'
   },
   {
-    id: 'miet',
-    luxembourgish: 'Miet',
-    french: 'Loyer',
-    pronunciation: 'MEET',
-    usage: 'Paiement mensuel logement'
-  },
-
-  // TIER 4: Expressions pratiques immobilier A2
-  {
-    id: 'ech_sichen',
-    luxembourgish: 'Ech sichen',
-    french: 'Je cherche',
-    pronunciation: 'ekh ZI-khen',
-    usage: 'Recherche active logement'
+    id: 's3u1_balkon',
+    luxembourgish: 'Balkon',
+    french: 'balcon',
+    pronunciation: 'BAL-kon',
+    usage: 'Décrire les atouts du logement.'
   },
   {
-    id: 'wou_wunnen',
-    luxembourgish: 'Wou wunnen Dir?',
-    french: 'Où habitez-vous ?',
-    pronunciation: 'VOO VUN-nen deer',
-    usage: 'Question résidence (politesse formelle A2)'
+    id: 's3u1_miwwelen',
+    luxembourgish: 'Miwwelen',
+    french: 'meubles',
+    pronunciation: 'MI-vel-en',
+    usage: 'Vérifier si le logement est meublé.'
+  },
+  {
+    id: 's3u1_paart',
+    luxembourgish: 'Paart',
+    french: 'porte',
+    pronunciation: 'PART',
+    usage: 'Décrire l’entrée et la sécurité.'
+  },
+  {
+    id: 's3u1_noperschaft',
+    luxembourgish: 'Noperschaft',
+    french: 'voisinage',
+    pronunciation: 'NO-per-shaft',
+    usage: 'Parler de l’ambiance du quartier.'
+  },
+  {
+    id: 's3u1_vertrag',
+    luxembourgish: 'Vertrag',
+    french: 'contrat',
+    pronunciation: 'fer-TRAK',
+    usage: 'Analyser les clauses du contrat de location.'
   }
 ]
 
-// Générateur d'exercices - Immobilier Luxembourg A2 (complexité progressive)
-export const generateUnit17Exercises = (): Exercise[] => {
-  const exercises: Exercise[] = []
-
-  // =============================================================================
-  // PHASE 1: QUICK WINS - Logement universel (20%)
-  // =============================================================================
-
-  // 1.1 Reconnaissance logement familier
-  exercises.push({
-    id: 'quick_win_house',
-    type: 'audio_recognition',
-    vocabularyItem: unit17Vocabulary[0], // Haus
-    question: 'Vous entendez parler de type de logement. Il s\'agit d\'une :',
-    options: ['Haus', 'Restaurant', 'Auto'].sort(() => Math.random() - 0.5),
-    correctAnswer: 'Haus',
-    context: 'Quick win: logement universel'
-  })
-
-  // 1.2 Concept appartement international
-  exercises.push({
-    id: 'quick_win_apartment',
-    type: 'translation',
+export const generateUnit17Exercises = (): Exercise[] => [
+  {
+    id: 's3u1_reactivation_famille',
+    type: 'dialogue_completion',
     vocabularyItem: unit17Vocabulary[1],
-    question: 'Comment dit-on "appartement" en luxembourgeois ?',
-    options: ['Appartement', 'Chambre', 'Haus'].sort(() => Math.random() - 0.5),
-    correctAnswer: 'Appartement',
-    context: 'Quick win: mot international identique'
-  })
-
-  // =============================================================================
-  // PHASE 2: CULTURAL HOOKS - Marché immobilier Luxembourg (25%)
-  // =============================================================================
-
-  // 2.1 Réalité économique luxembourgeoise
-  exercises.push({
-    id: 'cultural_expensive_housing',
-    type: 'dialogue_completion',
+    question: 'Complétez : « Mir sichen eng ___ fir eis Famill mat zwee Kanner. »',
+    options: ['Wunneng', 'Balkon', 'Paart'],
+    correctAnswer: 'Wunneng',
+    context: 'Réactiver les descriptions familiales des sections précédentes.'
+  },
+  {
+    id: 's3u1_comparer_loyer',
+    type: 'translation',
     vocabularyItem: unit17Vocabulary[3],
-    question: 'Marché immobilier Luxembourg (parmi les plus chers au monde). Caractéristique :',
-    options: ['Deier Präisser', 'Gratis', 'Kaffi'].sort(() => Math.random() - 0.5),
-    correctAnswer: 'Deier Präisser',
-    context: 'Cultural hook: réalité économique Luxembourg'
-  })
-
-  // 2.2 Quartier chic Luxembourg-Ville
-  exercises.push({
-    id: 'cultural_limpertsberg',
-    type: 'dialogue_completion',
+    question: 'Quel mot utilise-t-on pour parler du loyer ?',
+    options: ['Loyer', 'Quartier', 'Vertrag'],
+    correctAnswer: 'Loyer',
+    context: 'Comparer différentes annonces immobilières.'
+  },
+  {
+    id: 's3u1_localisation',
+    type: 'pattern_recognition',
     vocabularyItem: unit17Vocabulary[4],
-    question: 'Recherche logement haut de gamme Luxembourg-Ville. Quartier prestigieux :',
-    options: ['Limpertsberg', 'Belair', 'Kirchberg'].sort(() => Math.random() - 0.5),
-    correctAnswer: 'Limpertsberg',
-    context: 'Cultural hook: géographie résidentielle Luxembourg'
-  })
-
-  // 2.3 Quartier accessible Luxembourg-Ville
-  exercises.push({
-    id: 'cultural_belair_popular',
-    type: 'dialogue_completion',
-    vocabularyItem: unit17Vocabulary[5],
-    question: 'Recherche logement accessible Luxembourg-Ville. Quartier populaire :',
-    options: ['Belair', 'Limpertsberg', 'Deier Präisser'].sort(() => Math.random() - 0.5),
-    correctAnswer: 'Belair',
-    context: 'Cultural hook: alternatives résidentielles'
-  })
-
-  // =============================================================================
-  // PHASE 3: SPACED REPETITION - Actions + logement A2 (20%)
-  // =============================================================================
-
-  // 3.1 Réintégration recherche + complexité A2
-  exercises.push({
-    id: 'spaced_searching_housing',
-    type: 'sentence_construction',
-    vocabularyItem: unit17Vocabulary[9],
-    question: 'Assemblez votre recherche active de logement',
-    wordBank: ['Ech', 'sichen', 'eng', 'Appartement'].sort(() => Math.random() - 0.5),
-    correctAnswer: 'Ech sichen eng Appartement',
-    expectedSentence: 'Ech sichen eng Appartement',
-    hint: 'Je + chercher + un/une + logement (complexité A2)',
-    context: 'Spaced repetition: recherche active A2'
-  })
-
-  // 3.2 Réintégration achat (Unit 10) + complexité immobilier
-  exercises.push({
-    id: 'spaced_buying_house',
-    type: 'progressive_building',
-    vocabularyItem: unit17Vocabulary[7],
-    question: 'Construisez votre intention d\'achat immobilier',
-    wordBank: ['Ech', 'wëll', 'eng', 'Haus', 'kafen'],
-    correctAnswer: 'Ech wëll eng Haus kafen',
-    expectedSentence: 'Ech wëll eng Haus kafen',
-    hint: 'Réutilisation "kafen" Unit 10 + contexte immobilier',
-    context: 'Spaced repetition: achat + spécialisation'
-  })
-
-  // =============================================================================
-  // PHASE 4: CONTEXT VARIATION - Situations logement A2 (25%)
-  // =============================================================================
-
-  // 4.1 Contexte location (majorité Luxembourg)
-  exercises.push({
-    id: 'context_rental_market',
+    question: 'Quelle phrase situe clairement le logement ?',
+    options: [
+      'De Quartier ass roueg an no beim Tram.',
+      'D’Locatioun ass ganz deier.',
+      'Den Vertrag ass komplizéiert.'
+    ],
+    correctAnswer: 'De Quartier ass roueg an no beim Tram.',
+    context: 'Mettre en valeur l’accessibilité dans l’annonce.'
+  },
+  {
+    id: 's3u1_meubles',
     type: 'dialogue_completion',
     vocabularyItem: unit17Vocabulary[6],
-    question: 'Marché Luxembourg (70% locataires). Action principale logement :',
-    options: ['Louwen', 'Kafen', 'Sichen'].sort(() => Math.random() - 0.5),
-    correctAnswer: 'Louwen',
-    context: 'Context variation: marché locatif dominant'
-  })
-
-  // 4.2 Contexte coût logement
-  exercises.push({
-    id: 'context_rental_cost',
+    question: 'Choisissez la question pour savoir si le logement est meublé :',
+    options: [
+      'Sinn Miwwelen abegraff?',
+      'Wéi grouss ass de Balkon?',
+      'Wéi laang ass de Vertrag?'
+    ],
+    correctAnswer: 'Sinn Miwwelen abegraff?',
+    context: 'Vérifier la disponibilité du mobilier pour l’installation.'
+  },
+  {
+    id: 's3u1_contrat',
+    type: 'phrase_completion',
+    vocabularyItem: unit17Vocabulary[9],
+    question: 'Complétez : « De ___ gëllt fir dräi Joer. »',
+    options: ['Vertrag', 'Quartier', 'Paart'],
+    correctAnswer: 'Vertrag',
+    context: 'Analyser la durée de location proposée.'
+  },
+  {
+    id: 's3u1_annonce',
+    type: 'sentence_construction',
+    vocabularyItem: unit17Vocabulary[5],
+    question: 'Assemblez la phrase pour valoriser un point fort.',
+    wordBank: ['D’Appartement', 'huet', 'e', 'sonnege', 'Balkon.'],
+    correctAnswer: 'D’Appartement huet e sonnege Balkon.',
+    expectedSentence: 'D’Appartement huet e sonnege Balkon.',
+    context: 'Préparer la présentation de l’annonce finale.'
+  },
+  {
+    id: 's3u1_voisinage',
     type: 'dialogue_completion',
     vocabularyItem: unit17Vocabulary[8],
-    question: 'Budget mensuel logement Luxembourg. Paiement principal :',
-    options: ['Miet', 'Ticket', 'Kaffi'].sort(() => Math.random() - 0.5),
-    correctAnswer: 'Miet',
-    context: 'Context variation: gestion budget logement'
-  })
-
-  // 4.3 Question résidence formelle A2
-  exercises.push({
-    id: 'context_formal_residence',
-    type: 'dialogue_completion',
-    vocabularyItem: unit17Vocabulary[10],
-    question: 'Conversation formelle nouveaux collègues. Question résidence polie :',
-    options: ['Wou wunnen Dir?', 'Wéi geet et?', 'Wéini?'].sort(() => Math.random() - 0.5),
-    correctAnswer: 'Wou wunnen Dir?',
-    context: 'Context variation: politesse formelle A2'
-  })
-
-  // =============================================================================
-  // PHASE 5: PRODUCTION ORALE - Recherche logement A2 (10%)
-  // =============================================================================
-
-  // 5.1 Expression recherche logement complète
-  exercises.push({
-    id: 'speech_housing_search',
-    type: 'speech_recognition',
-    vocabularyItem: unit17Vocabulary[9],
-    question: 'Exprimez votre recherche d\'appartement à Luxembourg',
-    correctAnswer: 'Ech sichen eng Appartement zu Lëtzebuerg',
-    expectedSentence: 'Ech sichen eng Appartement zu Lëtzebuerg',
-    hint: 'ekh ZI-khen eng a-par-te-MANG tsoo LET-se-bu-erg',
-    context: 'Production orale: recherche logement complexe A2'
-  })
-
-  return exercises
-}
-
-// Métriques d'engagement Unit 17 - Ouverture Section 3 A2
-export function getUnit17EngagementMetrics() {
-  const exercises = generateUnit17Exercises()
-
-  const typeDistribution = exercises.reduce((acc, ex) => {
-    acc[ex.type] = (acc[ex.type] || 0) + 1
-    return acc
-  }, {} as Record<string, number>)
-
-  return {
-    totalExercises: exercises.length,
-    typeDistribution,
-    engagementStrategy: {
-      quickWins: 20, // Logement universel (maintien confiance)
-      culturalHooks: 25, // Marché immobilier Luxembourg réaliste
-      spacedRepetition: 20, // Recherche/achat + spécialisation
-      contextVariation: 25, // Location/achat/quartiers différents
-      oralProduction: 10 // Expression recherche complexe A2
-    },
-    complexityIncrease: {
-      level: 'A1+ → A2',
-      newFeatures: ['Questions formelles (Dir)', 'Phrases plus longues', 'Vocabulaire spécialisé'],
-      maintainedEngagement: 'Cultural hooks réalité Luxembourg',
-      culturalAuthenticity: 'Quartiers réels, prix réalistes'
-    },
-    targetMetrics: {
-      retentionD7: '50%+', // Légèrement réduit pour A2 (normal)
-      timeToCompletion: '6-8min', // Légèrement plus long (complexité)
-      satisfactionScore: '4.3+/5',
-      practicalRelevance: '90%+' // Haute utilité pratique logement
-    }
+    question: 'Quelle phrase décrit un voisinage accueillant ?',
+    options: [
+      'D’Noperschaft ass ganz hëllefsbereet.',
+      'D’Paart ass zou.',
+      'D’Locatioun ass kuerz.'
+    ],
+    correctAnswer: 'D’Noperschaft ass ganz hëllefsbereet.',
+    context: 'Insister sur l’intégration dans la communauté locale.'
   }
-}
+]
 
-// Validation transition Section 2 A1+ → Section 3 A2
-export function validateUnit17Progression() {
-  return {
-    transitionFrom: 'Section 2 A1+ (Communication quotidienne)',
-    transitionTo: 'Section 3 A2 (Vie pratique)',
-    complexityIncrease: {
-      grammar: 'Questions polies formelles (Dir)',
-      vocabulary: 'Spécialisé immobilier',
-      sentences: 'Plus longues et complexes',
-      cultural: 'Réalités économiques concrètes'
-    },
-    engagementMaintained: 'Quick wins + Cultural hooks + Spaced repetition',
-    scaffolding: 'Communication sociale → Applications pratiques spécialisées',
-    preparation: 'Prêt pour Unités 18-24 (vie pratique approfondie)'
-  }
-}
-
-// Définition Unit 17 - Logement Luxembourg A2 (ouverture Section 3)
 export const learningUnit17: LearningUnit = {
-  id: 'unit_17',
+  id: 'S3U1',
   title: 'Logement',
-  description: 'Naviguez le marché immobilier luxembourgeois avec confiance',
+  description:
+    'Je peux décrire un logement, comparer des loyers et présenter un quartier adapté à ma situation familiale.',
   level: 'A2',
   vocabulary: unit17Vocabulary,
-  exercises: generateUnit17Exercises().filter(ex => ex.type !== 'progressive_building'),
-  targetScore: 80, // Légèrement réduit pour A2 (complexité accrue)
-  estimatedTime: 7 // Augmentation progressive pour A2
+  exercises: generateUnit17Exercises(),
+  targetScore: 88,
+  estimatedTime: 10
 }
