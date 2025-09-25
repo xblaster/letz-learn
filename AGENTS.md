@@ -4,6 +4,7 @@ Bienvenue dans le dépôt de l'application **Lëtzebuergesch Léieren**. Ce docu
 
 ## 1. Gouvernance de produit (vision chef·fe de projet)
 - Avant toute évolution fonctionnelle, consultez `CHEF_PROJET_ROADMAP.md`, `Architecture-Analysis-48-Units.md` et `CONSTRUCTION_RESUME.md` pour vérifier l'alignement stratégique.
+- Pour les initiatives pédagogiques luxembourgeoises, complétez cette revue avec `Pedagogical_Strategy_Rework.md` (notamment son Étape 6 sur le pilotage continu) afin de garantir la cohérence du parcours et la boucle d'amélioration.
 - Documentez toute fonctionnalité livrée ou retirée dans `README-APP.md` et mettez à jour les diagrammes ou notes d'architecture concernées.
 - Maintenez la cohérence des parcours pédagogiques : si une unité change, revoyez les dépendances et l'impact sur les tests end-to-end.
 
