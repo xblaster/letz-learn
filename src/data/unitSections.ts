@@ -23,6 +23,12 @@ import { learningUnit16 } from './Unit16Data'
 // Import practical life units (Section 3)
 import { learningUnit17 } from './Unit17Data'
 import { learningUnit18 } from './Unit18Data'
+import { learningUnit19 } from './Unit19Data'
+import { learningUnit20 } from './Unit20Data'
+import { learningUnit21 } from './Unit21Data'
+import { learningUnit22 } from './Unit22Data'
+import { learningUnit23 } from './Unit23Data'
+import { learningUnit24 } from './Unit24Data'
 
 export const beginnerUnitSections: UnitSection[] = [
   {
@@ -82,7 +88,13 @@ export const beginnerUnitSections: UnitSection[] = [
     order: 3,
     units: [
       learningUnit17,
-      learningUnit18
+      learningUnit18,
+      learningUnit19,
+      learningUnit20,
+      learningUnit21,
+      learningUnit22,
+      learningUnit23,
+      learningUnit24
     ],
     pathLayout: [
       { x: 25, y: 20 },
