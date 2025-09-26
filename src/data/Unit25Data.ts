@@ -1,276 +1,168 @@
-// Unité 25 : Histoire du Luxembourg (A2+) - SECTION 4: Culture et société
-// Progression CEFR: A2+ vers B1 - Complexité linguistique et culturelle authentique
+import { Exercise, LearningUnit, VocabularyItem } from '../types/LearningTypes'
 
-import { LearningUnit, VocabularyItem, Exercise } from '../types/LearningTypes'
+// Section 4 — Culture et société (A2+)
+// S4U1 : Histoire du Luxembourg
 
-// Vocabulaire spécialisé Histoire Luxembourg - Authenticité culturelle maximale
 export const unit25Vocabulary: VocabularyItem[] = [
-  // VOCABULAIRE HISTORIQUE FONDAMENTAL
   {
-    id: 'chateau',
-    luxembourgish: 'Schlass',
-    french: 'château',
-    pronunciation: 'SHLASS',
-    usage: 'Le château-fort luxembourgeois, symbole historique fondateur'
-  },
-  {
-    id: 'krieg',
-    luxembourgish: 'Krich',
-    french: 'guerre',
-    pronunciation: 'KRIKH',
-    usage: 'Référence aux conflits européens qui ont marqué le Luxembourg'
-  },
-  {
-    id: 'onofhaengegkeet',
-    luxembourgish: 'Onofhängegkeet',
-    french: 'indépendance',
-    pronunciation: 'o-nof-HÄN-geh-keet',
-    usage: 'Indépendance luxembourgeoise de 1839/1867'
-  },
-  {
-    id: 'geschicht',
-    luxembourgish: 'Geschicht',
-    french: 'histoire',
-    pronunciation: 'geh-SHIKHT',
-    usage: 'Histoire nationale luxembourgeoise'
-  },
-  {
-    id: 'festung',
-    luxembourgish: 'Festung',
-    french: 'forteresse',
-    pronunciation: 'FES-tung',
-    usage: 'La forteresse de Luxembourg, "Gibraltar du Nord"'
-  },
-  {
-    id: 'groussherzogtum',
+    id: 's4u1_groussherzogtum',
     luxembourgish: 'Groussherzogtum',
     french: 'grand-duché',
-    pronunciation: 'GROUSS-her-tsok-tum',
-    usage: 'Statut politique unique du Luxembourg'
+    pronunciation: 'GROOSS-hair-tsog-toom',
+    usage: 'Nom officiel du pays à replacer dans un récit historique.'
   },
   {
-    id: 'grondung',
-    luxembourgish: 'Grondung',
-    french: 'fondation',
-    pronunciation: 'GRON-dung',
-    usage: 'Fondation de la ville en 963 par Siegfried'
+    id: 's4u1_onofhängegkeet',
+    luxembourgish: 'Onofhängegkeet',
+    french: 'indépendance',
+    pronunciation: 'ON-of-hang-gek-kait',
+    usage: 'Évoquer l’indépendance politique du Luxembourg.'
   },
   {
-    id: 'traditioun',
-    luxembourgish: 'Traditioun',
-    french: 'tradition',
-    pronunciation: 'tra-di-tsi-OUN',
-    usage: 'Traditions historiques luxembourgeoises'
-  },
-  // EXPRESSIONS TEMPORELLES A2+
-  {
-    id: 'am_joer',
-    luxembourgish: 'am Joer',
-    french: 'en l\'année',
-    pronunciation: 'am YO-er',
-    usage: 'Expression temporelle pour dates historiques'
+    id: 's4u1_neutraliteit',
+    luxembourgish: 'Neutralitéit',
+    french: 'neutralité',
+    pronunciation: 'noy-tra-li-TAIT',
+    usage: 'Décrire la neutralité du pays dans l’histoire européenne.'
   },
   {
-    id: 'fréier',
-    luxembourgish: 'fréier',
-    french: 'autrefois',
-    pronunciation: 'FRAY-er',
-    usage: 'Référence au passé historique'
+    id: 's4u1_festung',
+    luxembourgish: 'Festung',
+    french: 'forteresse',
+    pronunciation: 'FES-toung',
+    usage: 'Parler des fortifications de la capitale.'
+  },
+  {
+    id: 's4u1_industrialiséierung',
+    luxembourgish: 'Industrialiséierung',
+    french: 'industrialisation',
+    pronunciation: 'in-dus-tree-a-li-ZEE-rung',
+    usage: 'Expliquer la transformation économique du pays.'
+  },
+  {
+    id: 's4u1_resistenz',
+    luxembourgish: 'Resistenz',
+    french: 'résistance',
+    pronunciation: 're-zi-STENTS',
+    usage: 'Raconter les mouvements de résistance durant la guerre.'
+  },
+  {
+    id: 's4u1_monarchie',
+    luxembourgish: 'Monarchie',
+    french: 'monarchie',
+    pronunciation: 'mo-nar-SHIE',
+    usage: 'Décrire l’institution monarchique actuelle.'
+  },
+  {
+    id: 's4u1_verfassung',
+    luxembourgish: 'Verfassung',
+    french: 'constitution',
+    pronunciation: 'fer-FASS-ung',
+    usage: 'Parler des fondements légaux du pays.'
+  },
+  {
+    id: 's4u1_joerhonnert',
+    luxembourgish: 'Joerhonnert',
+    french: 'siècle',
+    pronunciation: 'yor-HON-nert',
+    usage: 'Structurer un récit chronologique.'
+  },
+  {
+    id: 's4u1_chronologie',
+    luxembourgish: 'Chronologie',
+    french: 'chronologie',
+    pronunciation: 'kro-no-lo-ZHIE',
+    usage: 'Organiser les événements dans le temps.'
   }
 ]
 
-// Générateur d'exercices A2+ avec progression culturelle
-export const generateUnit25Exercises = (): Exercise[] => {
-  const exercises: Exercise[] = []
-
-  // =============================================================================
-  // ÉTAPE 1 : VOCABULAIRE HISTORIQUE DE BASE (A2+)
-  // =============================================================================
-
-  // 1.1 Reconnaissance audio contextuelle
-  exercises.push({
-    id: 'audio_schlass_context',
-    type: 'audio_recognition',
-    vocabularyItem: unit25Vocabulary[0], // Schlass
-    question: 'Écoutez ce mot historique luxembourgeois. Que désigne-t-il ?',
-    options: ['château', 'église', 'maison'].sort(() => Math.random() - 0.5),
-    correctAnswer: 'château',
-    context: 'Patrimoine architectural luxembourgeois'
-  })
-
-  // 1.2 Association culturelle authentique
-  exercises.push({
-    id: 'cultural_festung_context',
-    type: 'cultural_context',
-    vocabularyItem: unit25Vocabulary[4], // Festung
-    question: 'Pourquoi Luxembourg était-il appelé le "Gibraltar du Nord" ?',
-    options: [
-      'À cause de sa forteresse imprenable',
-      'À cause de son climat',
-      'À cause de sa langue'
-    ].sort(() => Math.random() - 0.5),
-    correctAnswer: 'À cause de sa forteresse imprenable',
-    context: 'Contexte historique européen des fortifications'
-  })
-
-  // =============================================================================
-  // ÉTAPE 2 : CONSTRUCTION HISTORIQUE COMPLEXE (A2+ vers B1)
-  // =============================================================================
-
-  // 2.1 Construction de phrases historiques
-  exercises.push({
-    id: 'historical_sentence_963',
-    type: 'sentence_construction',
-    vocabularyItem: unit25Vocabulary[6], // Grondung
-    question: 'Construisez une phrase sur la fondation de Luxembourg en 963',
-    wordBank: ['Siegfried', 'huet', 'Luxembourg', 'gegrënnt', 'am', 'Joer', '963'].sort(() => Math.random() - 0.5),
-    correctAnswer: 'Siegfried huet Luxembourg am Joer 963 gegrënnt',
-    expectedSentence: 'Siegfried huet Luxembourg am Joer 963 gegrënnt',
-    hint: 'Structure: Sujet + auxiliaire + objet + temps + verbe principal',
-    context: 'Fondation historique du Luxembourg par le comte Siegfried'
-  })
-
-  // 2.2 Complétion chronologique
-  exercises.push({
-    id: 'chronology_independence',
-    type: 'phrase_completion',
-    vocabularyItem: unit25Vocabulary[2], // Onofhängegkeet
-    question: 'Complétez: "D\'Onofhängegkeet vum Luxembourg war am Joer ___"',
-    options: ['1839', '1815', '1945'].sort(() => Math.random() - 0.5),
-    correctAnswer: '1839',
-    expectedSentence: 'D\'Onofhängegkeet vum Luxembourg war am Joer 1839',
-    context: 'Traité de Londres 1839 - indépendance luxembourgeoise'
-  })
-
-  // =============================================================================
-  // ÉTAPE 3 : COMPRÉHENSION TEXTUELLE AUTHENTIQUE (A2+)
-  // =============================================================================
-
-  // 3.1 Compréhension de texte historique court
-  exercises.push({
-    id: 'text_comprehension_castle',
-    type: 'text_comprehension',
+export const generateUnit25Exercises = (): Exercise[] => [
+  {
+    id: 's4u1_reactivation_periode',
+    type: 'dialogue_completion',
+    vocabularyItem: unit25Vocabulary[8],
+    question: 'Complétez : « Am 19. ___ huet d’Industrialiséierung ugefaangen. »',
+    options: ['Joerhonnert', 'Festung', 'Monarchie'],
+    correctAnswer: 'Joerhonnert',
+    context: 'Réactiver les repères temporels travaillés en sections précédentes.'
+  },
+  {
+    id: 's4u1_grand_duche',
+    type: 'translation',
     vocabularyItem: unit25Vocabulary[0],
-    question: 'Lisez: "De Schlass zu Luxembourg war eng wichteg Festung. Et huet d\'Stad geschützt." Que protégeait le château ?',
-    options: ['la ville', 'le pays', 'la rivière'].sort(() => Math.random() - 0.5),
-    correctAnswer: 'la ville',
-    context: 'Rôle défensif du château historique de Luxembourg'
-  })
-
-  // 3.2 Correction d'erreurs historiques
-  exercises.push({
-    id: 'error_correction_date',
-    type: 'error_correction',
-    vocabularyItem: unit25Vocabulary[6],
-    question: 'Corrigez l\'erreur: "Luxembourg gouf am Joer 1963 gegrënnt"',
+    question: 'Comment nomme-t-on officiellement le Luxembourg ?',
+    options: ['Groussherzogtum', 'Verfassung', 'Resistenz'],
+    correctAnswer: 'Groussherzogtum',
+    context: 'Introduire un récit destiné à de nouveaux résident·e·s.'
+  },
+  {
+    id: 's4u1_neutralite',
+    type: 'pattern_recognition',
+    vocabularyItem: unit25Vocabulary[2],
+    question: 'Quelle phrase explique la neutralité luxembourgeoise ?',
     options: [
-      'Luxembourg gouf am Joer 963 gegrënnt',
-      'Luxembourg gouf am Joer 1863 gegrënnt',
-      'Luxembourg gouf am Joer 1063 gegrënnt'
-    ].sort(() => Math.random() - 0.5),
-    correctAnswer: 'Luxembourg gouf am Joer 963 gegrënnt',
-    context: 'Correction de dates historiques fondamentales'
-  })
-
-  // =============================================================================
-  // ÉTAPE 4 : EXPRESSION CULTURELLE AVANCÉE (B1)
-  // =============================================================================
-
-  // 4.1 Description historique libre
-  exercises.push({
-    id: 'creative_fortress_description',
-    type: 'creative_expression',
-    vocabularyItem: unit25Vocabulary[4],
-    question: 'Décrivez en 2-3 phrases pourquoi la Festung était importante pour l\'Europe',
-    wordBank: ['strategesch', 'wichteg', 'Europa', 'kontrolléiert', 'Handelsstrassen', 'geschützt'],
-    correctAnswer: 'D\'Festung war strategesch wichteg fir Europa well si d\'Handelsstrassen kontrolléiert huet',
-    expectedSentence: 'D\'Festung war strategesch wichteg fir Europa',
-    hint: 'Utilisez des connecteurs logiques (well = parce que)',
-    context: 'Importance géostratégique historique de Luxembourg'
-  })
-
-  // 4.2 Dialogue historique contextuel
-  exercises.push({
-    id: 'dialogue_museum_visit',
+      'D’Neutralitéit huet eng wichteg Roll am europäesche Gläichgewiicht gespillt.',
+      'D’Festung ass haut eng Musée.',
+      'D’Monarchie organiséiert eng Feier.'
+    ],
+    correctAnswer: 'D’Neutralitéit huet eng wichteg Roll am europäesche Gläichgewiicht gespillt.',
+    context: 'Mettre en avant la singularité politique du pays.'
+  },
+  {
+    id: 's4u1_forteresse',
     type: 'dialogue_completion',
     vocabularyItem: unit25Vocabulary[3],
-    question: 'Dans un musée luxembourgeois, le guide dit: "Dës Geschicht ass ganz ___"',
-    options: ['interessant', 'schwéier', 'kuerz'].sort(() => Math.random() - 0.5),
-    correctAnswer: 'interessant',
-    context: 'Situation authentique de visite culturelle'
-  })
-
-  // =============================================================================
-  // ÉTAPE 5 : ARGUMENTATION CULTURELLE (B1)
-  // =============================================================================
-
-  // 5.1 Construction d'arguments historiques
-  exercises.push({
-    id: 'argumentation_independence',
-    type: 'argumentation_building',
-    vocabularyItem: unit25Vocabulary[2],
-    question: 'Argumentez pourquoi l\'indépendance de 1839 était importante',
-    wordBank: ['well', 'dowéinst', 'awer', 'och', 'souveräin', 'neutral', 'Identitéit'],
-    correctAnswer: 'D\'Onofhängegkeet war wichteg well Luxembourg souveräin a neutral ginn ass',
-    expectedSentence: 'D\'Onofhängegkeet war wichteg well Luxembourg souveräin ginn ass',
-    hint: 'Utilisez "well" pour introduire votre argument principal',
-    context: 'Argumentation sur l\'importance historique de l\'indépendance'
-  })
-
-  // 5.2 Expression d'opinion nuancée
-  exercises.push({
-    id: 'opinion_historical_importance',
-    type: 'opinion_expression',
-    vocabularyItem: unit25Vocabulary[5],
-    question: 'Exprimez votre opinion: Qu\'est-ce qui rend le Groussherzogtum unique en Europe ?',
+    question: 'Choisissez la phrase décrivant la forteresse :',
     options: [
-      'Et ass kleng awer ganz wichteg fir d\'EU',
-      'Et ass nëmmen eng kleng Stad',
-      'Et ass wéi all aner Länner'
-    ].sort(() => Math.random() - 0.5),
-    correctAnswer: 'Et ass kleng awer ganz wichteg fir d\'EU',
-    context: 'Expression d\'opinion sur le statut unique du Luxembourg'
-  })
-
-  return exercises
-}
-
-// Fonction de validation CEFR A2+ vers B1
-export function validateUnit25Structure(): {
-  cefrLevel: string
-  culturalAuthenticity: number
-  constructionPercentage: number
-  scaffoldingQuality: 'excellent' | 'good' | 'poor'
-} {
-  const exercises = generateUnit25Exercises()
-  const totalExercises = exercises.length
-
-  // Calcul pourcentage construction (objectif: 35% minimum pour A2+)
-  const constructionTypes = ['sentence_construction', 'creative_expression', 'argumentation_building', 'text_comprehension']
-  const constructionCount = exercises.filter(ex => constructionTypes.includes(ex.type)).length
-  const constructionPercentage = (constructionCount / totalExercises) * 100
-
-  // Évaluation authenticité culturelle
-  const culturalTypes = ['cultural_context', 'text_comprehension', 'creative_expression']
-  const culturalCount = exercises.filter(ex => culturalTypes.includes(ex.type)).length
-  const culturalAuthenticity = (culturalCount / totalExercises) * 100
-
-  return {
-    cefrLevel: 'A2+ vers B1',
-    culturalAuthenticity: Math.round(culturalAuthenticity),
-    constructionPercentage: Math.round(constructionPercentage),
-    scaffoldingQuality: constructionPercentage >= 35 && culturalAuthenticity >= 30 ? 'excellent' : 'good'
+      'D’Festung vu Lëtzebuerg gouf deelweis ofgerappt am 19. Joerhonnert.',
+      'D’Resistenz huet d’Festung restauréiert.',
+      'D’Verfassung schützt d’Festung.'
+    ],
+    correctAnswer: 'D’Festung vu Lëtzebuerg gouf deelweis ofgerappt am 19. Joerhonnert.',
+    context: 'Relier patrimoine bâti et chronologie.'
+  },
+  {
+    id: 's4u1_resistance',
+    type: 'cultural_context',
+    vocabularyItem: unit25Vocabulary[5],
+    question: 'Quel élément montre l’engagement de la Resistenz pendant la Seconde Guerre mondiale ?',
+    options: [
+      'Organisatioun vu Streiken am September 1942',
+      'Construction de la Festung',
+      'Révision de la Verfassung 1868'
+    ],
+    correctAnswer: 'Organisatioun vu Streiken am September 1942',
+    context: 'Mettre en valeur la mémoire partagée des communautés.'
+  },
+  {
+    id: 's4u1_constitution',
+    type: 'phrase_completion',
+    vocabularyItem: unit25Vocabulary[7],
+    question: 'Complétez : « D’___ vun 1868 definéiert d’Rechter vun de Bierger. »',
+    options: ['Verfassung', 'Groussherzogtum', 'Chronologie'],
+    correctAnswer: 'Verfassung',
+    context: 'Relier institutions et droits citoyens.'
+  },
+  {
+    id: 's4u1_capsule',
+    type: 'sentence_construction',
+    vocabularyItem: unit25Vocabulary[4],
+    question: 'Assemblez la phrase de conclusion pour la capsule audio.',
+    wordBank: ['D’Industrialiséierung', 'huet', 'd’Land', 'staark', 'verännert.'],
+    correctAnswer: 'D’Industrialiséierung huet d’Land staark verännert.',
+    expectedSentence: 'D’Industrialiséierung huet d’Land staark verännert.',
+    context: 'Préparer la capsule accueillant les nouveaux résidents.'
   }
-}
+]
 
-// Définition complète Unité 25 - Histoire du Luxembourg
 export const learningUnit25: LearningUnit = {
-  id: 'unit_25',
+  id: 'S4U1',
   title: 'Histoire du Luxembourg',
-  description: 'Découvrez l\'histoire fascinante du Grand-Duché à travers châteaux, guerres et indépendance',
-  level: 'A2',
+  description:
+    'Je peux raconter un événement historique marquant, relier la neutralité et la monarchie et créer une capsule audio d’accueil.',
+  level: 'A2+',
   vocabulary: unit25Vocabulary,
   exercises: generateUnit25Exercises(),
-  targetScore: 85, // Plus élevé pour niveau A2+
-  estimatedTime: 8 // Temps augmenté pour complexité culturelle
+  targetScore: 90,
+  estimatedTime: 12
 }

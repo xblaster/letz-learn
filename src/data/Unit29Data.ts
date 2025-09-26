@@ -1,136 +1,168 @@
-// Unité 29 : Médias luxembourgeois (A2+) - SECTION 4: Culture et société
-// Progression CEFR: A2+ - Paysage médiatique national
+import { Exercise, LearningUnit, VocabularyItem } from '../types/LearningTypes'
 
-import { LearningUnit, VocabularyItem, Exercise } from '../types/LearningTypes'
+// Section 4 — Culture et société (A2+)
+// S4U5 : Médias et information
 
 export const unit29Vocabulary: VocabularyItem[] = [
   {
-    id: 'journal',
-    luxembourgish: 'Journal',
+    id: 's4u5_zeitung',
+    luxembourgish: 'Zeitung',
     french: 'journal',
-    pronunciation: 'zhur-NAL',
-    usage: 'Presse écrite luxembourgeoise (Luxemburger Wort, Tageblatt)'
+    pronunciation: 'TSAI-toung',
+    usage: 'Support papier pour suivre l’actualité.'
   },
   {
-    id: 'radio',
-    luxembourgish: 'Radio',
-    french: 'radio',
-    pronunciation: 'RA-di-o',
-    usage: 'Radio 100,7 ou RTL Radio en luxembourgeois'
-  },
-  {
-    id: 'télé',
-    luxembourgish: 'Télé',
-    french: 'télévision',
-    pronunciation: 'tay-LAY',
-    usage: 'RTL Télé Lëtzebuerg, chaîne nationale'
-  },
-  {
-    id: 'informatiounen',
-    luxembourgish: 'Informatiounen',
-    french: 'informations',
-    pronunciation: 'in-for-ma-tsi-OU-nen',
-    usage: 'Actualités diffusées en luxembourgeois'
-  },
-  {
-    id: 'presse',
-    luxembourgish: 'Presse',
-    french: 'presse',
-    pronunciation: 'PRESS',
-    usage: 'Ensemble des médias luxembourgeois'
-  },
-  {
-    id: 'aktuell',
-    luxembourgish: 'aktuell',
-    french: 'actuel',
-    pronunciation: 'ak-tu-ELL',
-    usage: 'Informations d\'actualité'
-  },
-  {
-    id: 'emissioun',
-    luxembourgish: 'Emissioun',
-    french: 'émission',
-    pronunciation: 'eh-mi-si-OUN',
-    usage: 'Programme télévisé ou radiophonique'
-  },
-  {
-    id: 'novellen',
-    luxembourgish: 'Novellen',
+    id: 's4u5_noriichten',
+    luxembourgish: 'Noriichten',
     french: 'nouvelles',
-    pronunciation: 'no-VEL-len',
-    usage: 'Nouvelles, actualités en luxembourgeois'
+    pronunciation: 'NO-reecht-en',
+    usage: 'Terminer ou introduire un bulletin d’information.'
+  },
+  {
+    id: 's4u5_radiosender',
+    luxembourgish: 'Radiosender',
+    french: 'station de radio',
+    pronunciation: 'RA-dee-oh-zender',
+    usage: 'Recommander une station luxembourgeoise.'
+  },
+  {
+    id: 's4u5_onlineportal',
+    luxembourgish: 'Onlineportal',
+    french: 'portail en ligne',
+    pronunciation: 'ON-line-portal',
+    usage: 'Consulter les actualités numériques.'
+  },
+  {
+    id: 's4u5_editorial',
+    luxembourgish: 'Editorial',
+    french: 'éditorial',
+    pronunciation: 'e-di-to-REE-al',
+    usage: 'Analyser une opinion publiée.'
+  },
+  {
+    id: 's4u5_quelle',
+    luxembourgish: 'Quelle',
+    french: 'source',
+    pronunciation: 'KWEL-le',
+    usage: 'Citer la source d’une information.'
+  },
+  {
+    id: 's4u5_rubrik',
+    luxembourgish: 'Rubrik',
+    french: 'rubrique',
+    pronunciation: 'RU-brik',
+    usage: 'Identifier la section thématique du média.'
+  },
+  {
+    id: 's4u5_podcast',
+    luxembourgish: 'Podcast',
+    french: 'podcast',
+    pronunciation: 'POD-kast',
+    usage: 'Partager un contenu audio à la demande.'
+  },
+  {
+    id: 's4u5_kommentar',
+    luxembourgish: 'Kommentar',
+    french: 'commentaire',
+    pronunciation: 'kom-man-TAR',
+    usage: 'Rédiger ou analyser un commentaire en ligne.'
+  },
+  {
+    id: 's4u5_faktcheck',
+    luxembourgish: 'Faktcheck',
+    french: 'vérification des faits',
+    pronunciation: 'FAKT-check',
+    usage: 'Vérifier la fiabilité d’une information.'
   }
 ]
 
-export const generateUnit29Exercises = (): Exercise[] => {
-  const exercises: Exercise[] = []
-
-  exercises.push({
-    id: 'cultural_rtl_context',
-    type: 'cultural_context',
-    vocabularyItem: unit29Vocabulary[2],
-    question: 'Quelle est la chaîne de télévision nationale du Luxembourg ?',
-    options: ['RTL Télé Lëtzebuerg', 'France 2', 'ARD'],
-    correctAnswer: 'RTL Télé Lëtzebuerg',
-    context: 'Médias audiovisuels luxembourgeois'
-  })
-
-  exercises.push({
-    id: 'media_consumption_construction',
-    type: 'sentence_construction',
-    vocabularyItem: unit29Vocabulary[3],
-    question: 'Décrivez votre consommation d\'informations',
-    wordBank: ['Ech', 'kucken', 'd\'Informatiounen', 'op', 'der', 'Télé'],
-    correctAnswer: 'Ech kucken d\'Informatiounen op der Télé',
-    expectedSentence: 'Ech kucken d\'Informatiounen op der Télé',
-    context: 'Habitudes médiatiques personnelles'
-  })
-
-  exercises.push({
-    id: 'text_comprehension_radio',
-    type: 'text_comprehension',
+export const generateUnit29Exercises = (): Exercise[] => [
+  {
+    id: 's4u5_reactivation_bulletin',
+    type: 'dialogue_completion',
     vocabularyItem: unit29Vocabulary[1],
-    question: 'Lisez: "Radio 100,7 sëndt op Lëtzebuergesch. D\'Leit lauschteren eidel gär." Pourquoi les gens aiment cette radio ?',
-    options: ['elle diffuse en luxembourgeois', 'elle joue que de la musique', 'elle est gratuite'],
-    correctAnswer: 'elle diffuse en luxembourgeois',
-    context: 'Importance de la langue dans les médias'
-  })
-
-  exercises.push({
-    id: 'creative_media_preference',
-    type: 'creative_expression',
-    vocabularyItem: unit29Vocabulary[4],
-    question: 'Exprimez votre préférence médiatique',
-    wordBank: ['Ech', 'liesen', 'gär', 'de', 'Journal', 'fir', 'aktuell', 'Novellen'],
-    correctAnswer: 'Ech liesen gär de Journal fir aktuell Novellen',
-    expectedSentence: 'Ech liesen gär de Journal fir aktuell Novellen',
-    context: 'Préférences personnelles pour l\'information'
-  })
-
-  exercises.push({
-    id: 'opinion_luxembourg_media',
-    type: 'opinion_expression',
-    vocabularyItem: unit29Vocabulary[7],
-    question: 'Votre opinion sur les médias en luxembourgeois',
+    question: 'Complétez : « Ech lauschteren all Moien d’___ um Radio 100,7. »',
+    options: ['Noriichten', 'Podcast', 'Rubrik'],
+    correctAnswer: 'Noriichten',
+    context: 'Réactiver le suivi quotidien de l’actualité.'
+  },
+  {
+    id: 's4u5_source',
+    type: 'translation',
+    vocabularyItem: unit29Vocabulary[5],
+    question: 'Quel mot invite à citer la source ?',
+    options: ['Quelle', 'Onlineportal', 'Editorial'],
+    correctAnswer: 'Quelle',
+    context: 'Encourager l’esprit critique face aux informations.'
+  },
+  {
+    id: 's4u5_radio',
+    type: 'pattern_recognition',
+    vocabularyItem: unit29Vocabulary[2],
+    question: 'Quelle phrase recommande une station de radio ?',
     options: [
-      'Si sinn wichteg fir eis Sprooch ze erhalen',
-      'Et gëtt ze vill Informatiounen',
-      'Ech verstin näischt'
+      'De Radiosender 100,7 bitt Emissiounen an dräi Sproochen.',
+      'D’Zeitung ass al.',
+      'De Podcast ass laang.'
     ],
-    correctAnswer: 'Si sinn wichteg fir eis Sprooch ze erhalen',
-    context: 'Rôle des médias dans la préservation linguistique'
-  })
-
-  return exercises
-}
+    correctAnswer: 'De Radiosender 100,7 bitt Emissiounen an dräi Sproochen.',
+    context: 'Valoriser la pluralité linguistique des médias.'
+  },
+  {
+    id: 's4u5_editorial',
+    type: 'dialogue_completion',
+    vocabularyItem: unit29Vocabulary[4],
+    question: 'Choisissez la phrase pour parler d’un éditorial :',
+    options: [
+      'Den Editorial erkläert firwat d’Politik sech ännert.',
+      'De Podcast spillt Musek.',
+      'D’Rubrik ass e Rezept.'
+    ],
+    correctAnswer: 'Den Editorial erkläert firwat d’Politik sech ännert.',
+    context: 'Comprendre la différence entre faits et opinions.'
+  },
+  {
+    id: 's4u5_factcheck',
+    type: 'phrase_completion',
+    vocabularyItem: unit29Vocabulary[9],
+    question: 'Complétez : « Mir maachen e ___ ier mir d’Noriicht deelen. »',
+    options: ['Faktcheck', 'Kommentar', 'Rubrik'],
+    correctAnswer: 'Faktcheck',
+    context: 'Renforcer la vérification des informations partagées.'
+  },
+  {
+    id: 's4u5_commentaire',
+    type: 'dialogue_completion',
+    vocabularyItem: unit29Vocabulary[8],
+    question: 'Quelle phrase invite à un commentaire responsable ?',
+    options: [
+      'Schreif e respektvollen Kommentar ënner dem Artikel.',
+      'Schreif eng Rubrik.',
+      'Schreif e Faktcheck.'
+    ],
+    correctAnswer: 'Schreif e respektvollen Kommentar ënner dem Artikel.',
+    context: 'Favoriser la discussion respectueuse en ligne.'
+  },
+  {
+    id: 's4u5_revue',
+    type: 'sentence_construction',
+    vocabularyItem: unit29Vocabulary[7],
+    question: 'Assemblez la phrase de recommandation média.',
+    wordBank: ['Ech', 'lauschteren', 'de', 'Podcast', 'fir', 'eng', 'Revue', 'de', 'Presse.'],
+    correctAnswer: 'Ech lauschteren de Podcast fir eng Revue de Presse.',
+    expectedSentence: 'Ech lauschteren de Podcast fir eng Revue de Presse.',
+    context: 'Préparer une revue de presse bilingue.'
+  }
+]
 
 export const learningUnit29: LearningUnit = {
-  id: 'unit_29',
-  title: 'Médias luxembourgeois',
-  description: 'Paysage médiatique national : journal, radio, télé en luxembourgeois',
-  level: 'A2',
+  id: 'S4U5',
+  title: 'Médias et information',
+  description:
+    'Je peux comparer différentes sources, vérifier les faits et recommander des médias fiables aux apprenant·e·s.',
+  level: 'A2+',
   vocabulary: unit29Vocabulary,
   exercises: generateUnit29Exercises(),
-  targetScore: 85,
-  estimatedTime: 8
+  targetScore: 90,
+  estimatedTime: 12
 }

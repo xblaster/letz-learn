@@ -1,167 +1,168 @@
-// Unit 23: Famill a Schoul - A2 Vie pratique
-// Section 3: Vie pratique (A2)
+import { Exercise, LearningUnit, VocabularyItem } from '../types/LearningTypes'
 
-import { LearningUnit, VocabularyItem, Exercise } from '../types/LearningTypes'
+// Section 3 — Vie pratique et autonomie (A2)
+// S3U7 : Alimentation et cuisine
 
 export const unit23Vocabulary: VocabularyItem[] = [
   {
-    id: 'kräibierg',
-    luxembourgish: 'Krëpp',
-    french: 'crèche',
-    pronunciation: 'KREPP',
-    usage: 'Structure d\'accueil pour les enfants de 0 à 3 ans.'
+    id: 's3u7_bouneschlupp',
+    luxembourgish: 'Bouneschlupp',
+    french: 'soupe de haricots',
+    pronunciation: 'BOU-ne-shlupp',
+    usage: 'Plat traditionnel luxembourgeois à cuisiner.'
   },
   {
-    id: 'maison_relais',
-    luxembourgish: 'Maison Relais',
-    french: 'service d\'accueil périscolaire',
-    pronunciation: 'mé-zon re-LÄ',
-    usage: 'Accueil après l\'école dans la plupart des communes.'
+    id: 's3u7_grompereszalot',
+    luxembourgish: 'Grompereszalot',
+    french: 'salade de pommes de terre',
+    pronunciation: 'GROM-per-es-za-lot',
+    usage: 'Recette emblématique pour un repas partagé.'
   },
   {
-    id: 'schoul',
-    luxembourgish: 'Schoul',
-    french: 'école',
-    pronunciation: 'SHOUL',
-    usage: 'Établissement scolaire pour enfants et adolescents.'
+    id: 's3u7_zutaten',
+    luxembourgish: 'Zutaten',
+    french: 'ingrédients',
+    pronunciation: 'TSU-ta-ten',
+    usage: 'Lister les ingrédients nécessaires.'
   },
   {
-    id: 'cycle',
-    luxembourgish: 'Cycle',
-    french: 'cycle scolaire',
-    pronunciation: 'SI-kel',
-    usage: 'Période d\'apprentissage dans l\'enseignement fondamental.'
+    id: 's3u7_rezept',
+    luxembourgish: 'Rezept',
+    french: 'recette',
+    pronunciation: 're-TSEPT',
+    usage: 'Suivre ou partager une recette.'
   },
   {
-    id: 'bichelchen',
-    luxembourgish: 'Bichelchen',
-    french: 'cahier',
-    pronunciation: 'BI-shel-khen',
-    usage: 'Petit cahier pour les devoirs et messages enseignants.'
+    id: 's3u7_scheiwen',
+    luxembourgish: 'Scheiwen',
+    french: 'tranches',
+    pronunciation: 'SHY-ven',
+    usage: 'Couper des légumes ou du pain en tranches.'
   },
   {
-    id: 'schoulmaterial',
-    luxembourgish: 'Schoulmaterial',
-    french: 'fournitures scolaires',
-    pronunciation: 'SHOUL-ma-te-ri-AL',
-    usage: 'Matériel scolaire demandé en début d\'année.'
+    id: 's3u7_laeffel',
+    luxembourgish: 'Läffel',
+    french: 'cuillère',
+    pronunciation: 'LÄ-ffel',
+    usage: 'Mesurer ou mélanger la préparation.'
   },
   {
-    id: 'elterendeel',
-    luxembourgish: 'Elterendeel',
-    french: 'parent',
-    pronunciation: 'EL-teren-deel',
-    usage: 'Parent ou tuteur impliqué dans la scolarité.'
+    id: 's3u7_gramm',
+    luxembourgish: 'Gramm',
+    french: 'gramme',
+    pronunciation: 'GRAM',
+    usage: 'Peser les ingrédients avec précision.'
   },
   {
-    id: 'reunioun',
-    luxembourgish: 'Eltereversammelung',
-    french: 'réunion parents-professeurs',
-    pronunciation: 'EL-tere-fer-SAM-me-lung',
-    usage: 'Réunion pour échanger avec l\'enseignant·e.'
+    id: 's3u7_ofwiessen',
+    luxembourgish: 'Ofwiessen',
+    french: 'peser',
+    pronunciation: 'OF-vee-ssen',
+    usage: 'Action de peser les ingrédients.'
   },
   {
-    id: 'canteen',
-    luxembourgish: 'Schoulkantin',
-    french: 'cantine scolaire',
-    pronunciation: 'SHOUL-kan-tinn',
-    usage: 'Repas chaud proposé aux enfants à midi.'
+    id: 's3u7_uwen',
+    luxembourgish: 'Uewen',
+    french: 'four',
+    pronunciation: 'OO-ven',
+    usage: 'Cuire la préparation au four.'
   },
   {
-    id: 'schoultransport',
-    luxembourgish: 'Schoultransport',
-    french: 'transport scolaire',
-    pronunciation: 'SHOUL-trans-port',
-    usage: 'Bus organisés par la commune pour les élèves.'
+    id: 's3u7_marineieren',
+    luxembourgish: 'Marinéieren',
+    french: 'mariner',
+    pronunciation: 'ma-ri-NAY-ren',
+    usage: 'Préparer une marinade savoureuse.'
   }
 ]
 
 export const generateUnit23Exercises = (): Exercise[] => [
   {
-    id: 'u23_translation_krepp',
-    type: 'translation',
-    vocabularyItem: unit23Vocabulary[0],
-    question: 'Comment dit-on « crèche » en luxembourgeois ?',
-    options: ['Krëpp', 'Schoul', 'Schoultransport'],
-    correctAnswer: 'Krëpp',
-    context: 'Nommer la structure d\'accueil facilite vos inscriptions.'
-  },
-  {
-    id: 'u23_dialogue_maison_relais',
+    id: 's3u7_reactivation_courses',
     type: 'dialogue_completion',
-    vocabularyItem: unit23Vocabulary[1],
-    question: 'Vous remerciez le service périscolaire. Vous dites :',
-    options: ['D\'Maison Relais ass immens hëllefräich.', 'Ech fänken e Stage un.', 'Ech huelen de Rendez-vous.'],
-    correctAnswer: 'D\'Maison Relais ass immens hëllefräich.',
-    context: 'Exprimer de la gratitude crée un lien chaleureux.'
+    vocabularyItem: unit23Vocabulary[2],
+    question: 'Complétez : « Hei sinn d’___ fir d’Bouneschlupp. »',
+    options: ['Zutaten', 'Gramm', 'Läffel'],
+    correctAnswer: 'Zutaten',
+    context: 'Réactiver la liste d’ingrédients vue au marché.'
   },
   {
-    id: 'u23_sentence_bichelchen',
-    type: 'sentence_construction',
-    vocabularyItem: unit23Vocabulary[4],
-    question: 'Formez une phrase pour dire que le cahier est signé.',
-    wordBank: ['D\'', 'Bichelchen', 'ass', 'ënnerschriwwen'],
-    correctAnswer: 'D\' Bichelchen ass ënnerschriwwen',
-    expectedSentence: 'D\' Bichelchen ass ënnerschriwwen',
-    hint: 'L\'article se contracte avec le mot suivant.',
-    context: 'Suivre les communications renforce la confiance avec l\'école.'
-  },
-  {
-    id: 'u23_cultural_cycle',
-    type: 'cultural_context',
+    id: 's3u7_recette',
+    type: 'translation',
     vocabularyItem: unit23Vocabulary[3],
-    question: 'Comment s\'appellent les étapes de l\'enseignement fondamental ?',
-    options: ['Cycle', 'Krëpp', 'Elterendeel'],
-    correctAnswer: 'Cycle',
-    context: 'Comprendre l\'organisation scolaire rassure toute la famille.'
+    question: 'Quel mot désigne la recette à suivre ?',
+    options: ['Rezept', 'Uewen', 'Scheiwen'],
+    correctAnswer: 'Rezept',
+    context: 'Partager un document culinaire avec le groupe.'
   },
   {
-    id: 'u23_translation_schoulmaterial',
-    type: 'translation',
-    vocabularyItem: unit23Vocabulary[5],
-    question: 'Comment parle-t-on des fournitures scolaires ?',
-    options: ['Schoulmaterial', 'Schoulkantin', 'Schoultransport'],
-    correctAnswer: 'Schoulmaterial',
-    context: 'Préparer le matériel montre votre engagement parental.'
+    id: 's3u7_mesure',
+    type: 'pattern_recognition',
+    vocabularyItem: unit23Vocabulary[6],
+    question: 'Quelle phrase précise la quantité ?',
+    options: [
+      'Mir brauchen 200 Gramm Gromperen.',
+      'Mir ginn op e Concert.',
+      'Mir kafen eng Invitatioun.'
+    ],
+    correctAnswer: 'Mir brauchen 200 Gramm Gromperen.',
+    context: 'Garantir la réussite de la recette.'
   },
   {
-    id: 'u23_dialogue_reunion',
+    id: 's3u7_decoupe',
     type: 'dialogue_completion',
+    vocabularyItem: unit23Vocabulary[4],
+    question: 'Choisissez la consigne pour couper en tranches :',
+    options: [
+      'Schneid d’Gromperen a fein Scheiwen.',
+      'Setz d’Bouneschlupp an den Uewen.',
+      'Ofwiess d’Ingrediente genee.'
+    ],
+    correctAnswer: 'Schneid d’Gromperen a fein Scheiwen.',
+    context: 'Suivre les étapes du tutoriel vidéo.'
+  },
+  {
+    id: 's3u7_peser',
+    type: 'phrase_completion',
     vocabularyItem: unit23Vocabulary[7],
-    question: 'Vous confirmez votre présence à la réunion. Vous dites :',
-    options: ['Ech kommen op d\'Eltereversammelung.', 'Ech spueren am Spuerkont.', 'Ech ginn op d\'Gemeng.'],
-    correctAnswer: 'Ech kommen op d\'Eltereversammelung.',
-    context: 'Être présent·e renforce la collaboration avec l\'enseignant·e.'
+    question: 'Complétez : « Mir ___ d’Zutaten op der Kichenwaage. »',
+    options: ['ofwiessen', 'marinéieren', 'baken'],
+    correctAnswer: 'ofwiessen',
+    context: 'Renforcer la précision culinaire.'
   },
   {
-    id: 'u23_word_order_canteen',
-    type: 'word_ordering',
+    id: 's3u7_cuisson',
+    type: 'dialogue_completion',
     vocabularyItem: unit23Vocabulary[8],
-    question: 'Remettez les mots en ordre pour parler de la cantine.',
-    wordBank: ['D', 'Schoulkantin', 'bitt', 'gesond', 'Iessen'],
-    correctAnswer: 'D Schoulkantin bitt gesond Iessen',
-    expectedSentence: 'D Schoulkantin bitt gesond Iessen',
-    hint: 'Commencez par l\'article abrégé « D » pour le féminin.',
-    context: 'Soulever la qualité des repas encourage de bonnes habitudes.'
+    question: 'Quelle phrase indique la cuisson au four ?',
+    options: [
+      'Setz d’Schott an den Uewen fir 30 Minutten.',
+      'Setz d’Schott an d’Spillowend.',
+      'Setz d’Schott an d’Kees.'
+    ],
+    correctAnswer: 'Setz d’Schott an den Uewen fir 30 Minutten.',
+    context: 'Respecter les temps de cuisson.'
   },
   {
-    id: 'u23_cultural_transport',
-    type: 'cultural_context',
+    id: 's3u7_marinade',
+    type: 'sentence_construction',
     vocabularyItem: unit23Vocabulary[9],
-    question: 'Quel service garantit un trajet sûr vers l\'école ?',
-    options: ['Schoultransport', 'Krëpp', 'Bichelchen'],
-    correctAnswer: 'Schoultransport',
-    context: 'Connaitre les aides locales rassure sur l\'organisation familiale.'
+    question: 'Assemblez la phrase finale pour présenter la marinade.',
+    wordBank: ['Mir', 'marinéiere', 'd’Geméis', 'iwwer', 'Nuecht.'],
+    correctAnswer: 'Mir marinéiere d’Geméis iwwer Nuecht.',
+    expectedSentence: 'Mir marinéiere d’Geméis iwwer Nuecht.',
+    context: 'Préparer une vidéo culinaire engageante.'
   }
 ]
 
 export const learningUnit23: LearningUnit = {
-  id: 'unit_23',
-  title: 'Famill a Schoul',
-  description: 'Accompagnez vos enfants et échangez avec l\'école en confiance.',
+  id: 'S3U7',
+  title: 'Alimentation et cuisine',
+  description:
+    'Je peux suivre une recette luxembourgeoise, mesurer précisément les ingrédients et partager une préparation conviviale.',
   level: 'A2',
   vocabulary: unit23Vocabulary,
   exercises: generateUnit23Exercises(),
-  targetScore: 80,
-  estimatedTime: 8
+  targetScore: 88,
+  estimatedTime: 11
 }
