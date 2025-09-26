@@ -82,7 +82,19 @@ export type ExerciseType =
 - ✅ Construction: 45% (objectif >30%)
 - ✅ Contexte luxembourgeois authentique
 
-#### 6. **Unité 3 "Nombres essentiels"** (100% ✅)
+#### 6. **Unité 2 "Présentations détaillées"** (100% ✅)
+
+**POINTS CLÉS :**
+- Vocabulaire orienté identité : `kommen`, `aus`, `Lëtzebuerg`, `schaffen`, `als`
+- 5 étapes scaffoldées complètes (audio → dialogue créatif)
+- Contextes authentiques : networking Chambre de Commerce, inscription Esch-sur-Alzette, procédures administratives
+
+**MÉTRIQUES :**
+- ✅ Révision Unit1 intégrée (>30% occurrences `ech`/`sinn`)
+- ✅ Contextes luxembourgeois multiples (business, administration, nationalité)
+- ✅ Score cible 80 / durée estimée 5 minutes
+
+#### 7. **Unité 3 "Nombres essentiels"** (100% ✅)
 
 **CONTENU DÉVELOPPÉ :**
 - Nombres 0-5 luxembourgeois (null, een, zwou, dräi, véier)
@@ -96,50 +108,128 @@ export type ExerciseType =
 - Code postal luxembourgeois (commence par "véier")
 - Système de validation spécialisé
 
+#### 8. **Unité 4 "Temps et jours"** (100% ✅)
+
+**CONTENU DÉTAILLÉ :**
+- Vocabulaire ciblé : Méindeg, Dënschdeg, Samschdeg, Sonnden, haut, muer + révision (`ech`, `sinn`, `schaffen`)
+- 13 exercices répartis sur 5 étapes (progressive_building, word_ordering, speech_recognition)
+- Contextes luxembourgeois : rendez-vous CHL, marché Place Guillaume II, gastronomie locale
+
+**VALIDATIONS :**
+- ✅ Progression temporelle cohérente (emploi du temps + week-end)
+- ✅ 5 contextes culturels explicites (santé, famille, traditions, restauration)
+- ✅ Score cible 80 / durée estimée 5 minutes
+
+#### 9. **Unité 5 "Famille proche"** (100% ✅)
+
+**POINTS FORTS :**
+- Vocabulaire familial prioritaire : Famill, Papp, Mamm, Kand, `mäin`, `är`
+- 5 étapes scaffoldées complètes avec 13 exercices (dialogue scolaire, traditions, garde partagée)
+- Possessifs travaillés systématiquement (progressive_building, word_ordering, speech_recognition)
+
+**MÉTRIQUES :**
+- ✅ >50% des exercices mobilisent `mäin` / possessifs
+- ✅ Contextes luxembourgeois : école communale, réunions parent-professeur, repas dominical
+- ✅ Score cible 80 / durée estimée 5 minutes
+
 ---
 
 ## 🚧 TÂCHES EN COURS
 
-### **Section 1 "Premiers pas" - 2/8 unités complétées**
+### **Section 1 "Premiers pas" - 5/8 unités complétées**
 
 #### ✅ **Unité 1** : Premières rencontres (RESTRUCTURÉE)
+#### ✅ **Unité 2** : Présentations détaillées (NOUVELLE)
 #### ✅ **Unité 3** : Nombres essentiels (COMPLÉTÉE)
+#### ✅ **Unité 4** : Temps et jours (NOUVELLE)
+#### ✅ **Unité 5** : Famille proche (NOUVELLE)
 
 #### 🔄 **EN DÉVELOPPEMENT :**
-- **Unité 2** : Présentations détaillées (nom, origine, résidence)
-- **Unité 4** : Temps et jours (commencé - fichier créé)
-- **Unité 5** : Famille proche
-- **Unité 6** : Directions de base
-- **Unité 7** : Urgences et aide
-- **Unité 8** : Politesse avancée
+- **Unité 6** : Directions de base — prototype actuel sur météo (`Unit6NewData.ts`) à réaligner vers navigation Luxembourg
+- **Unité 7** : Urgences et aide — scénarios 112/113 à définir
+- **Unité 8** : Politesse avancée — dialogues administration & services publics à storyboarder
+
+##### 🔧 **Feuille de route Unité 6 "Directions de base"** *(Owner : Pédago + Front)*
+- **Objectif communicatif** : guider un visiteur du funiculaire Pfaffenthal au Musée Dräi Eechelen.
+- **Vocabulaire prioritaire** : `lénks`, `riets`, `grad eraus`, `no`, `laanscht`, `géift Dir`, `géi w.e.g.`
+- **Progression en 5 étapes** :
+  1. *Audio recognition* — mots isolés directionnels (prononciation claire vs dialecte).
+  2. *Word ordering* — reconstituer "Géi riets bei der Gare".
+  3. *Sentence construction* — combiner lieu + direction + repère ("Géi laanscht de Park").
+  4. *Dialogue completion* — interaction guichet Mobilitéit (tram T1 ↔ autobus 16).
+  5. *Creative expression* — décrire un mini-itinéraire vers la Place Guillaume II.
+- **Contextes luxembourgeois** : funiculaire Pfaffenthal, tram Glacis, panneaux bilingues ville de Luxembourg.
+- **Dépendances** :
+  - Conversion du fichier `Unit6NewData.ts` → structure "directions" (ETA 6h).
+  - Validation toponymie avec expert local (ETA 1h synchronisée).
+  - QA accessibilité audio (contraste bruit fond + prononciation) via `validateAudioClarity` (ETA 30min).
+
+##### 🚑 **Feuille de route Unité 7 "Urgences et aide"** *(Owner : Pédago)*
+- **Objectif communicatif** : demander de l'aide efficacement (112 vs 113) et indiquer un problème.
+- **Vocabulaire prioritaire** : `Hëllef`, `Noutfall`, `Police`, `Pompjeeën`, `Dokter`, `Apdikt`, `ech hu mech verwonnt`.
+- **Scénarios clés** :
+  - Appel téléphonique au 112 pour accident léger sur la piste cyclable.
+  - Dialogue à la Maison Médicale Gare pour un rendez-vous urgent.
+  - Orientation vers la pharmacie de garde (informations sur `www.pharmacie.lu`).
+- **Progression en 5 étapes** :
+  1. *Pattern recognition* — associer situation ↔ numéro (112 incendie, 113 police).
+  2. *Audio comprehension* — comprendre questions opérateur (nom, lieu, type urgence).
+  3. *Sentence construction* — formuler phrases simples "Ech brauch en Dokter".
+  4. *Speech recognition* — répéter instructions critiques ("Bleift um Telefon").
+  5. *Role-play* — simuler conversation complète avec temps de réponse limité.
+- **Dépendances** : préparation audio (acteurs natifs), script QA terminologie médicale, check inclusion pictogrammes dans UI.
+- **Livrables attendus** : storyboards détaillés, lexique validé, script audio prêt pour enregistrement.
+
+##### 🤝 **Feuille de route Unité 8 "Politesse avancée"** *(Owner : Pédago + UX)*
+- **Objectif communicatif** : maîtriser les registres formel/informel lors d'interactions administratives.
+- **Vocabulaire prioritaire** : `Entschëllegt`, `däerf ech`, `w.e.g.`, `merci villmools`, `et wier flott`, `Gudde Moien Här/Madamm`.
+- **Contextes ciblés** : administration communale, guichet CFL, invitation professionnelle, service horeca.
+- **Progression en 5 étapes** :
+  1. *Register adaptation* — choisir formule appropriée selon contexte (amis vs bourgmestre).
+  2. *Dialogue completion* — rendez-vous à la commune (demande document).
+  3. *Phrase completion* — compléter remerciements + excuses.
+  4. *Creative expression* — rédiger message polite follow-up email.
+  5. *Error correction* — transformer une phrase trop directe en version polie.
+- **Dépendances** : guidelines ton UX (micro-copies), validation terminologie par relecteur natif, intégration d'icônes respectant charte dark mode.
+- **Livrables attendus** : storyboard Figma (UX), script exercices (pédago), set audio formel/informel.
 
 ---
 
 ## 📋 PLAN DE DÉVELOPPEMENT RESTANT
 
-### **PRIORITÉ 1 : Compléter Section 1** (6 unités restantes)
+### **PRIORITÉ 1 : Compléter Section 1** (3 unités restantes + QA)
 
-**Unité 4: Temps et jours** (EN COURS)
-- Vocabulaire : Moundeg, Mäerteg, Samschdeg, haut, muer, moies, owes
-- Contextes : Planning Kirchberg, services publics, marché Place Guillaume II
-- Progressive building : emploi du temps, rendez-vous
+**Unité 6: Directions de base** *(En production — 30%)*
+- **Livrable** : dataset `Unit6Data.ts` conforme + storyboard PDF.
+- **Tâches clés** :
+  - Réécrire les 12 exercices (5 étapes) avec focus navigation centre-ville.
+  - Ajouter deux clips audio directionnels (voix f/m) + annotations phonétiques.
+  - Mettre à jour mini-carte dans UI (assets `public/maps/pfaffenthal.png`).
+- **Checks qualité** : ratio QCM <35%, présence min. 4 repères luxembourgeois, test prononciation dans `npm run qa:audio`.
+- **Blocants** : attente validation toponymie (due J+1), alignement UI responsive pour carte.
 
-**Unité 5: Famille proche**
-- Révision + extension Unit3NewData existante
-- Vocabulaire : Famill, Papp, Mamm, Kand + structures possessives
-- Contextes : inscription crèche, médecin pédiatre
+**Unité 7: Urgences et aide** *(En cadrage — 10%)*
+- **Livrable** : script pédagogique + liste audio + flow appels 112/113.
+- **Tâches clés** :
+  - Cartographier 3 scénarios urgences (accident vélo, enfant malade, intrusion domicile).
+  - Définir prompts speech_recognition avec variations d'accents (FR/DE).
+  - Coordonner avec UX pour affichage numéros sur écran d'appel.
+- **Checks qualité** : inclure différenciation 112/113, 30% révision lexique unités 1-5, stress test timing <45s.
+- **Blocants** : disponibilité acteurs natifs pour enregistrement, validation juridique terminologie.
 
-**Unité 6: Directions de base**
-- Vocabulaire : lénks, riets, geradeaus, op, ënner
-- Contextes : navigation Luxembourg-Ville, transports CFL
+**Unité 8: Politesse avancée** *(Pré-production — 5%)*
+- **Livrable** : canevas d'exercices + bibliothèque expressions formelles.
+- **Tâches clés** :
+  - Rédiger matrices registres (informel / neutre / formel) pour 6 situations types.
+  - Créer activités register_adaptation + creative_expression (Figma → JSON).
+  - Lier feedback UX micro-copy (ton respectueux, accessible).
+- **Checks qualité** : min. 4 contextes administrations, 2 interactions horeca, 1 email de suivi complet.
+- **Blocants** : attente guidelines ton du Product Marketing, vérification orthographe accentuation.
 
-**Unité 7: Urgences et aide**
-- Vocabulaire : Hëllef, Police, Dokter, Pompjeeën
-- Contextes : numéros d'urgence 112/113, situations critiques
-
-**Unité 8: Politesse avancée**
-- Vocabulaire : w.e.g., Entschëlleg, Pardon, däerf ech
-- Contextes : interactions formelles, administration
+**QA Section 1 (Unités 1→5)** *(Sprint en cours)*
+- Lancer `validateUnit2Progression`, `validateUnit4Progression`, `validateUnit5Progression` et consigner résultats dans `QA-Section1.md`.
+- Vérifier imports centralisés dans `src/data/unitSections.ts` et préparer mapping pour unités 6-8.
+- Préparer renommage `UnitXNewData.ts` → `UnitXData.ts` et plan de migration tests snapshot.
 
 ### **PRIORITÉ 2 : Sections 2-3** (16 unités)
 
@@ -195,38 +285,39 @@ export type ExerciseType =
 
 ## 🚀 PROCHAINES ÉTAPES IMMÉDIATES
 
-1. **Finaliser Unit4NewData.ts** (Temps et jours)
-2. **Créer Units 5-8** pour compléter Section 1
-3. **Implémenter composants React** pour navigation multi-sections
+1. **Refondre `Unit6NewData.ts`** en module "Directions de base" (remplacer vocabulaire météo → navigation)
+2. **Storyboarder les Units 7 & 8** (urgences, politesse) avec lexiques validés par un locuteur natif
+3. **Mettre à jour la navigation multi-sections** (`unitSections.ts` + maquettes React) pour accueillir 8 unités A1
 
 ### 🧹 PLAN DE NETTOYAGE DES DONNÉES D'UNITÉS
 
 - ✅ **Centraliser les imports** des unités via `src/data/unitSections.ts` pour éviter les références directes aux fichiers `*NewData.ts`.
 - 🔄 **Renommer progressivement** les fichiers `UnitXNewData.ts` en `UnitXData.ts` une fois les anciennes versions archivées.
 - 🔄 **Mettre à jour les imports** restants vers la nouvelle convention afin d'éliminer toute occurrence de `New` dans le code applicatif.
+- 🔄 **Synchroniser `unitSections.ts`** après refonte des Units 6-8 pour assurer la navigation complète Section 1.
 - 🔄 **Ajouter un script de validation** (ex: `npm run validate:units`) pour vérifier la conformité des structures `LearningUnit` et du niveau CECR (`CEFRLevel`).
 - 🔄 **Documenter la structure** des unités (schéma de données, conventions de nommage) dans un guide dédié pour faciliter les contributions futures.
-4. **Tests et validation** progression pédagogique
-5. **Déploiement thème dark** et UX mobile
+- 🔄 **Tests et validation** progression pédagogique (définir checklist automatisée + QA manuelle)
+- 🔄 **Déploiement thème dark** et UX mobile (préparer checklist avant release pilote)
 
 ---
 
 ## 📊 MÉTRIQUES DE PROGRESSION
 
 ```
-PROGRESSION GLOBALE : 17% (8/48 unités)
+PROGRESSION GLOBALE (refonte) : 10% (5/48 unités)
 
-Section 1 (A1):        25% (2/8 unités)
-Section 2 (A1+):        0% (0/8 unités)
-Section 3 (A2):         0% (0/8 unités)
-Section 4 (A2+):        0% (0/8 unités)
-Section 5 (B1):         0% (0/8 unités)
-Section 6 (B1+/B2):     0% (0/8 unités)
+Section 1 (A1) :     62% (5/8 unités)
+Section 2 (A1+) :     0% (0/8 unités)
+Section 3 (A2)  :     0% (0/8 unités)
+Section 4 (A2+) :     0% (0/8 unités)
+Section 5 (B1)  :     0% (0/8 unités)
+Section 6 (B1+/B2) :  0% (0/8 unités)
 
 ARCHITECTURE:         100% ✅
-UX/DESIGN:           100% ✅
-TYPES EXERCICES:     100% ✅
-QUALITÉ PÉDAGO:       100% ✅ (unités créées)
+UX/DESIGN:            100% ✅
+TYPES EXERCICES:      100% ✅
+QUALITÉ PÉDAGO:        100% ✅ (unités 1→5 conformes)
 ```
 
 ---
