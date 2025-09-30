@@ -424,8 +424,9 @@ function App() {
                 startIcon={<ArrowBackRoundedIcon />}
                 onClick={() => setCurrentView('menu')}
                 sx={{ borderRadius: 999 }}
+                aria-label="Zréck op d'Haaptmenü – du bass um richtege Wee! (Retour vers le menu principal)"
               >
-
+                Zréck op d'Haaptmenü – du bass um richtege Wee! (Retour vers le menu principal)
               </Button>
             )}
           </Stack>
