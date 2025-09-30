@@ -1,20 +1,14 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import VocabularyQuiz from '../components/VocabularyQuiz'
+import { vocabularyQuizItems } from '../data/VocabularyQuizData'
 
-const vocabularySequence = [
-  { luxembourgish: 'Moien', french: 'Bonjour' },
-  { luxembourgish: 'Äddi', french: 'Au revoir' },
-  { luxembourgish: 'Merci', french: 'Merci' },
-  { luxembourgish: 'Pardon', french: 'Excusez-moi' },
-  { luxembourgish: 'Wéi geet et?', french: 'Comment allez-vous?' },
-  { luxembourgish: 'Ech verstinn net', french: 'Je ne comprends pas' },
-  { luxembourgish: 'Wou ass...?', french: 'Où est...?' },
-  { luxembourgish: 'Wéivill kascht dat?', french: 'Combien ça coûte?' },
-  { luxembourgish: 'Waasser', french: 'Eau' },
-  { luxembourgish: 'Kaffi', french: 'Café' }
-]
+const translationMap = new Map(
+  vocabularyQuizItems.map(item => [item.luxembourgish, item.french])
+)
 
-const translationMap = new Map(vocabularySequence.map(item => [item.luxembourgish, item.french]))
+const vocabularyDetailsMap = new Map(
+  vocabularyQuizItems.map(item => [item.luxembourgish, item])
+)
 
 describe('VocabularyQuiz', () => {
   let mathRandomSpy: jest.SpyInstance<number, []>
@@ -38,6 +32,13 @@ describe('VocabularyQuiz', () => {
     expect(match).not.toBeNull()
     const currentWord = match ? match[1].trim() : ''
     expect(translationMap.has(currentWord)).toBe(true)
+
+    const currentWordDetails = vocabularyDetailsMap.get(currentWord)
+    expect(currentWordDetails).toBeDefined()
+    expect(
+      screen.getByText(`Prononciation : ${currentWordDetails?.pronunciation}`)
+    ).toBeInTheDocument()
+    expect(screen.getByText(currentWordDetails!.usage)).toBeInTheDocument()
 
     const optionButtons = screen
       .getAllByRole('button')
@@ -97,7 +98,7 @@ describe('VocabularyQuiz', () => {
   it('shows the quiz result summary after answering all questions', async () => {
     render(<VocabularyQuiz />)
 
-    for (let index = 0; index < vocabularySequence.length; index += 1) {
+    for (let index = 0; index < vocabularyQuizItems.length; index += 1) {
       await screen.findByText(`Question ${index + 1}`)
 
       const heading = screen.getByRole('heading', { level: 3 })
@@ -110,7 +111,7 @@ describe('VocabularyQuiz', () => {
 
       fireEvent.click(screen.getByRole('button', { name: correctAnswer! }))
 
-      const nextLabel = index === vocabularySequence.length - 1 ? 'Terminer' : 'Question suivante'
+      const nextLabel = index === vocabularyQuizItems.length - 1 ? 'Terminer' : 'Question suivante'
       fireEvent.click(screen.getByRole('button', { name: nextLabel }))
     }
 
