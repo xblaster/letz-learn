@@ -12,41 +12,24 @@ import {
 import QuizRoundedIcon from '@mui/icons-material/QuizRounded'
 import AutoAwesomeRoundedIcon from '@mui/icons-material/AutoAwesomeRounded'
 
-interface VocabularyItem {
-  luxembourgish: string
-  french: string
-  category: string
-}
-
-const vocabularyData: VocabularyItem[] = [
-  { luxembourgish: 'Moien', french: 'Bonjour', category: 'salutations' },
-  { luxembourgish: 'Äddi', french: 'Au revoir', category: 'salutations' },
-  { luxembourgish: 'Merci', french: 'Merci', category: 'politesse' },
-  { luxembourgish: 'Pardon', french: 'Excusez-moi', category: 'politesse' },
-  { luxembourgish: 'Wéi geet et?', french: 'Comment allez-vous?', category: 'conversation' },
-  { luxembourgish: 'Ech verstinn net', french: 'Je ne comprends pas', category: 'conversation' },
-  { luxembourgish: 'Wou ass...?', french: 'Où est...?', category: 'questions' },
-  { luxembourgish: 'Wéivill kascht dat?', french: 'Combien ça coûte?', category: 'questions' },
-  { luxembourgish: 'Waasser', french: 'Eau', category: 'nourriture' },
-  { luxembourgish: 'Kaffi', french: 'Café', category: 'nourriture' }
-]
+import { vocabularyQuizItems, VocabularyQuizItem } from '../data/VocabularyQuizData'
 
 const VocabularyQuiz = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [score, setScore] = useState(0)
   const [selectedAnswer, setSelectedAnswer] = useState('')
   const [showResult, setShowResult] = useState(false)
-  const [shuffledQuestions, setShuffledQuestions] = useState<VocabularyItem[]>([])
+  const [shuffledQuestions, setShuffledQuestions] = useState<VocabularyQuizItem[]>([])
   const [options, setOptions] = useState<string[]>([])
 
   useEffect(() => {
-    const shuffled = [...vocabularyData].sort(() => Math.random() - 0.5)
+    const shuffled = [...vocabularyQuizItems].sort(() => Math.random() - 0.5)
     setShuffledQuestions(shuffled)
     generateOptions(shuffled[0])
   }, [])
 
-  const generateOptions = (correct: VocabularyItem) => {
-    const incorrectOptions = vocabularyData
+  const generateOptions = (correct: VocabularyQuizItem) => {
+    const incorrectOptions = vocabularyQuizItems
       .filter(item => item.french !== correct.french)
       .sort(() => Math.random() - 0.5)
       .slice(0, 3)
@@ -80,7 +63,7 @@ const VocabularyQuiz = () => {
     setScore(0)
     setSelectedAnswer('')
     setShowResult(false)
-    const shuffled = [...vocabularyData].sort(() => Math.random() - 0.5)
+    const shuffled = [...vocabularyQuizItems].sort(() => Math.random() - 0.5)
     setShuffledQuestions(shuffled)
     generateOptions(shuffled[0])
   }
@@ -186,6 +169,12 @@ const VocabularyQuiz = () => {
           <Typography variant="h3" sx={{ mt: 1 }}>
             « {currentWord.luxembourgish} »
           </Typography>
+          <Typography variant="subtitle2" color="text.secondary" sx={{ mt: 1 }}>
+            Prononciation : {currentWord.pronunciation}
+          </Typography>
+          <Typography variant="body2" color="text.secondary" sx={{ mt: 1.5 }}>
+            {currentWord.usage}
+          </Typography>
         </Box>
 
         <Stack spacing={1.5}>
@@ -195,7 +184,7 @@ const VocabularyQuiz = () => {
 
             return (
               <Button
-                key={option}
+                key={`${currentWord.id}-${option}`}
                 onClick={() => handleAnswerSelect(option)}
                 variant={isSelected ? 'contained' : 'outlined'}
                 color={isSelected ? 'primary' : 'inherit'}
