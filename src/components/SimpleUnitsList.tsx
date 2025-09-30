@@ -185,6 +185,16 @@ const SimpleUnitsList: React.FC<SimpleUnitsListProps> = ({ onBack, onUnitComplet
           <h1>Sections d'apprentissage</h1>
           <p className="subtitle">Choisissez une unité pour commencer votre apprentissage</p>
         </div>
+        <div className="header-actions">
+          <button
+            type="button"
+            className="back-to-menu-button"
+            onClick={onBack}
+            aria-label="Zréck op d'Haaptmenü – du meeschters dat! (Retour vers le menu principal)"
+          >
+            ← Zréck op d'Haaptmenü – du meeschters dat! (Retour vers le menu principal)
+          </button>
+        </div>
       </div>
 
       <div className="sections-list">
