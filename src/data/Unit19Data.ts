@@ -1,167 +1,168 @@
-// Unit 19: Mobilitéit an Transport - A2 Vie pratique
-// Section 3: Vie pratique (A2)
+import { Exercise, LearningUnit, VocabularyItem } from '../types/LearningTypes'
 
-import { LearningUnit, VocabularyItem, Exercise } from '../types/LearningTypes'
+// Section 3 — Vie pratique et autonomie (A2)
+// S3U3 : Banque et finances
 
 export const unit19Vocabulary: VocabularyItem[] = [
   {
-    id: 'mobiliteit',
-    luxembourgish: 'Mobilitéit',
-    french: 'mobilité',
-    pronunciation: 'mo-bi-li-TÄIT',
-    usage: 'Capacité à se déplacer au Luxembourg entre communes.'
+    id: 's3u3_kont',
+    luxembourgish: 'Kont',
+    french: 'compte',
+    pronunciation: 'KONT',
+    usage: 'Ouvrir un compte bancaire au Luxembourg.'
   },
   {
-    id: 'mobilise',
-    luxembourgish: 'Mobilise',
-    french: 'service public Mobilise',
-    pronunciation: 'MO-bi-li-se',
-    usage: 'Nom du service national pour les transports en commun.'
+    id: 's3u3_spuerkeess',
+    luxembourgish: 'Spuerkeess',
+    french: 'Caisse d’Épargne (banque)',
+    pronunciation: 'SHPOOR-kess',
+    usage: 'Citer l’institution bancaire locale.'
   },
   {
-    id: 'mkaart',
-    luxembourgish: 'mKaart',
-    french: 'carte de transport',
-    pronunciation: 'em-KAART',
-    usage: 'Carte à puce pour utiliser trains et bus gratuitement.'
+    id: 's3u3_virement',
+    luxembourgish: 'Virement',
+    french: 'virement',
+    pronunciation: 'VIR-ra-mong',
+    usage: 'Parler d’un transfert bancaire.'
   },
   {
-    id: 'zuch',
-    luxembourgish: 'Zuch',
-    french: 'train',
-    pronunciation: 'TSOUKH',
-    usage: 'Train CFL reliant les grandes villes du pays.'
+    id: 's3u3_fraisen',
+    luxembourgish: 'Fraise(n)',
+    french: 'frais',
+    pronunciation: 'FRAI-zen',
+    usage: 'Demander le coût des services bancaires.'
   },
   {
-    id: 'busarrêt',
-    luxembourgish: 'Busarrêt',
-    french: 'arrêt de bus',
-    pronunciation: 'BUS-a-rè',
-    usage: 'Point d\'arrêt pour monter dans un bus communal.'
+    id: 's3u3_rib',
+    luxembourgish: 'RIB',
+    french: 'relevé d’identité bancaire',
+    pronunciation: 'RIB',
+    usage: 'Fournir ses coordonnées bancaires.'
   },
   {
-    id: 'veloh',
-    luxembourgish: 'Véloh!',
-    french: 'vélo en libre-service',
-    pronunciation: 'VÉ-lo',
-    usage: 'Système de vélos partagés de la Ville de Luxembourg.'
+    id: 's3u3_disponibel',
+    luxembourgish: 'Disponibel',
+    french: 'disponible',
+    pronunciation: 'dis-po-NI-bel',
+    usage: 'Vérifier le solde accessible.'
   },
   {
-    id: 'carsharing',
-    luxembourgish: 'Carsharing',
-    french: 'voiture partagée',
-    pronunciation: 'KAAR-sha-ring',
-    usage: 'Service d\'autopartage pour compléter les transports.'
+    id: 's3u3_spuerbuch',
+    luxembourgish: 'Spuerbuch',
+    french: 'livret d’épargne',
+    pronunciation: 'SHPOOR-bouh',
+    usage: 'Épargner pour des projets futurs.'
   },
   {
-    id: 'statioun',
-    luxembourgish: 'Statioun',
-    french: 'station',
-    pronunciation: 'shta-tsi-OUN',
-    usage: 'Station de tram ou de bus centrale.'
+    id: 's3u3_daueroptrag',
+    luxembourgish: 'Daueroptrag',
+    french: 'ordre permanent',
+    pronunciation: 'DAU-er-opp-trak',
+    usage: 'Mettre en place un paiement automatique.'
   },
   {
-    id: 'tramschinn',
-    luxembourgish: 'Tramschinn',
-    french: 'tramway',
-    pronunciation: 'TRAM-shinn',
-    usage: 'Ligne de tram moderne entre Luxembourg-Ville et Kirchberg.'
+    id: 's3u3_bankkaart',
+    luxembourgish: 'Bankkaart',
+    french: 'carte bancaire',
+    pronunciation: 'BANK-kaart',
+    usage: 'Recevoir et utiliser sa carte.'
   },
   {
-    id: 'fahrplang',
-    luxembourgish: 'Fahrplang',
-    french: 'horaire',
-    pronunciation: 'FAR-plang',
-    usage: 'Horaire officiel des transports en commun.'
+    id: 's3u3_pin',
+    luxembourgish: 'PIN',
+    french: 'code PIN',
+    pronunciation: 'PIN',
+    usage: 'Sécuriser ses opérations.'
   }
 ]
 
 export const generateUnit19Exercises = (): Exercise[] => [
   {
-    id: 'u19_translation_mobiliteit',
-    type: 'translation',
+    id: 's3u3_reactivation_presentation',
+    type: 'dialogue_completion',
     vocabularyItem: unit19Vocabulary[0],
-    question: 'Comment dit-on « mobilité » en luxembourgeois ?',
-    options: ['Mobilitéit', 'Fahrplang', 'Tramschinn'],
-    correctAnswer: 'Mobilitéit',
-    context: 'Démarrez par un mot clé pour vous déplacer avec aisance.'
+    question: 'Complétez : « Ech wëll en ___ bei der Spuerkeess opmaachen. »',
+    options: ['Kont', 'PIN', 'Spuerbuch'],
+    correctAnswer: 'Kont',
+    context: 'Réactiver les formules de demande polie.'
   },
   {
-    id: 'u19_dialogue_mobilise',
-    type: 'dialogue_completion',
-    vocabularyItem: unit19Vocabulary[1],
-    question: 'On vous indique le site national pour planifier un trajet. Vous répondez :',
-    options: ['Mobilise', 'Carsharing', 'Véloh!'],
-    correctAnswer: 'Mobilise',
-    context: 'Identifier le service officiel aide à préparer vos trajets.'
-  },
-  {
-    id: 'u19_sentence_mkaart',
-    type: 'sentence_construction',
-    vocabularyItem: unit19Vocabulary[2],
-    question: 'Assemblez une phrase pour dire que vous avez la carte de transport.',
-    wordBank: ['Ech', 'hu', 'meng', 'mKaart'],
-    correctAnswer: 'Ech hu meng mKaart',
-    expectedSentence: 'Ech hu meng mKaart',
-    hint: 'Sujet + verbe avoir + déterminant + carte.',
-    context: 'Exprimer que vous êtes prêt·e à voyager renforce votre autonomie.'
-  },
-  {
-    id: 'u19_audio_zuch',
-    type: 'audio_recognition',
-    vocabularyItem: unit19Vocabulary[3],
-    question: 'Vous entendez l\'annonce d\'un moyen de transport. De quoi s\'agit-il ?',
-    options: ['Zuch', 'Busarrêt', 'Tramschinn'],
-    correctAnswer: 'Zuch',
-    context: 'Reconnaître les annonces sonores rassure pour vos déplacements.'
-  },
-  {
-    id: 'u19_dialogue_bus',
-    type: 'dialogue_completion',
-    vocabularyItem: unit19Vocabulary[4],
-    question: 'Un ami demande où se trouve le prochain arrêt. Vous dites :',
-    options: ['De Busarrêt ass hei.', 'Ech hu meng mKaart.', 'Mobilitéit ass wichteg.'],
-    correctAnswer: 'De Busarrêt ass hei.',
-    context: 'Donner une information concrète fait avancer la conversation.'
-  },
-  {
-    id: 'u19_translation_veloh',
+    id: 's3u3_institution',
     type: 'translation',
-    vocabularyItem: unit19Vocabulary[5],
-    question: 'Comment nomme-t-on les vélos partagés à Luxembourg-Ville ?',
-    options: ['Véloh!', 'Carsharing', 'Mobilise'],
-    correctAnswer: 'Véloh!',
-    context: 'Diversifier vos moyens de transport augmente votre liberté.'
+    vocabularyItem: unit19Vocabulary[1],
+    question: 'Quel mot cite la banque luxembourgeoise historique ?',
+    options: ['Spuerkeess', 'Virement', 'Bankkaart'],
+    correctAnswer: 'Spuerkeess',
+    context: 'Se repérer dans les démarches administratives.'
   },
   {
-    id: 'u19_word_order_fahrplang',
-    type: 'word_ordering',
+    id: 's3u3_virement',
+    type: 'pattern_recognition',
+    vocabularyItem: unit19Vocabulary[2],
+    question: 'Quelle phrase décrit un virement ?',
+    options: [
+      'Ech maachen e Virement op mäi Spuerbuch.',
+      'Ech reservéieren en Ticket.',
+      'Ech kafen e Reemantel.'
+    ],
+    correctAnswer: 'Ech maachen e Virement op mäi Spuerbuch.',
+    context: 'Simuler l’ouverture d’un compte courant.'
+  },
+  {
+    id: 's3u3_frais',
+    type: 'dialogue_completion',
+    vocabularyItem: unit19Vocabulary[3],
+    question: 'Choisissez la question pour connaître les frais :',
+    options: [
+      'Wéi héich sinn d’Fraise fir dëse Kont?',
+      'Wou ass meng Bankkaart?',
+      'Wéini kréien ech mäi PIN?'
+    ],
+    correctAnswer: 'Wéi héich sinn d’Fraise fir dëse Kont?',
+    context: 'Clarifier les coûts lors de l’entretien bancaire.'
+  },
+  {
+    id: 's3u3_documents',
+    type: 'phrase_completion',
+    vocabularyItem: unit19Vocabulary[4],
+    question: 'Complétez : « Ech schécken de ___ un d’Gemeng. »',
+    options: ['RIB', 'PIN', 'Spuerkeess'],
+    correctAnswer: 'RIB',
+    context: 'Transmettre les coordonnées bancaires pour un salaire.'
+  },
+  {
+    id: 's3u3_ordre',
+    type: 'dialogue_completion',
+    vocabularyItem: unit19Vocabulary[7],
+    question: 'Quelle phrase met en place un ordre permanent ?',
+    options: [
+      'Ech riichten en Daueroptrag fir d’Locatioun an.',
+      'Ech froen no der Gesondheetskaart.',
+      'Ech huelen d’Antibiotikum all Moien.'
+    ],
+    correctAnswer: 'Ech riichten en Daueroptrag fir d’Locatioun an.',
+    context: 'Automatiser le paiement du loyer mensuel.'
+  },
+  {
+    id: 's3u3_securite',
+    type: 'sentence_construction',
     vocabularyItem: unit19Vocabulary[9],
-    question: 'Remettez les mots en ordre pour parler des horaires.',
-    wordBank: ['De', 'Fahrplang', 'ass', 'online'],
-    correctAnswer: 'De Fahrplang ass online',
-    expectedSentence: 'De Fahrplang ass online',
-    hint: 'Commencez par l\'article défini.',
-    context: 'Partager un conseil numérique motive votre partenaire de trajet.'
-  },
-  {
-    id: 'u19_cultural_tram',
-    type: 'cultural_context',
-    vocabularyItem: unit19Vocabulary[8],
-    question: 'Où le tram luxembourgeois est-il particulièrement pratique ?',
-    options: ['Um Kirchberg', 'Am Süden', 'Op der Musel'],
-    correctAnswer: 'Um Kirchberg',
-    context: 'Situer les lignes clés vous rend confiant·e pour rejoindre les institutions.'
+    question: 'Assemblez la recommandation de sécurité.',
+    wordBank: ['Gëff', 'däi', 'PIN', 'net', 'wéider.'],
+    correctAnswer: 'Gëff däi PIN net weider.',
+    expectedSentence: 'Gëff däi PIN net weider.',
+    context: 'Sensibiliser aux bonnes pratiques bancaires.'
   }
 ]
 
 export const learningUnit19: LearningUnit = {
-  id: 'unit_19',
-  title: 'Mobilitéit an Transport',
-  description: 'Déplacez-vous sereinement grâce au réseau gratuit luxembourgeois.',
+  id: 'S3U3',
+  title: 'Banque et finances',
+  description:
+    'Je peux ouvrir un compte, clarifier les frais bancaires et mettre en place des virements sécurisés.',
   level: 'A2',
   vocabulary: unit19Vocabulary,
   exercises: generateUnit19Exercises(),
-  targetScore: 80,
-  estimatedTime: 8
+  targetScore: 88,
+  estimatedTime: 10
 }
