@@ -179,13 +179,26 @@ function App() {
       {
         key: 'sections' as const,
         title: 'Sections d\'apprentissage',
-        description: 'Progressez de débutant à intermédiaire avec 2 sections complètes.',
+        description:
+          'Découverte guidée des 3 sections : des premiers échanges jusqu\'à l\'autonomie au quotidien.',
         icon: <SchoolRoundedIcon fontSize="medium" />,
         accent: 'primary',
         metadata: [
-          { icon: <MenuBookRoundedIcon fontSize="small" />, text: '2 sections progressives' },
-          { icon: <QueryStatsRoundedIcon fontSize="small" />, text: 'A1 → A1+ → A2' },
-          { icon: <EmojiEventsRoundedIcon fontSize="small" />, text: 'Unités 1-16 débloquées' }
+          {
+            icon: <MenuBookRoundedIcon fontSize="small" />,
+            text:
+              'Sektioun 1 – Éischt Schrëtt am Alldag (Unitë 1-8) · Section 1 – Premiers pas au quotidien (unités 1-8)'
+          },
+          {
+            icon: <QueryStatsRoundedIcon fontSize="small" />,
+            text:
+              'Sektioun 2 – Kommunikatioun am Alldag (Unitë 9-16) · Section 2 – Communication quotidienne (unités 9-16)'
+          },
+          {
+            icon: <EmojiEventsRoundedIcon fontSize="small" />,
+            text:
+              'Sektioun 3 – Praktescht Liewen & Autonomie (Unitë 17-24) · Section 3 – Vie pratique et autonomie (unités 17-24)'
+          }
         ],
         actionLabel: 'Explorer les sections',
         actionIcon: <ArrowForwardRoundedIcon />,
