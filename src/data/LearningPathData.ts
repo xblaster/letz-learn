@@ -26,7 +26,7 @@ const createLearningPathSections = (): PathSection[] => {
         id: nodeId,
         unit,
         position,
-        isUnlocked: nodeId === 'node_1',
+        isUnlocked: true, // Toutes les unités sont accessibles
         isCompleted: false,
         sectionId: section.id
       }
@@ -96,13 +96,8 @@ export const updateNodeUnlockStatus = (sections: PathSection[], completedNodes: 
   return sections.map(section => ({
     ...section,
     nodes: section.nodes.map(node => {
-      if (node.id === 'node_1') {
-        // Premier nœud toujours débloqué
-        return { ...node, isUnlocked: true }
-      }
-
-      const previousNodeId = getPreviousNodeId(node.id)
-      const isUnlocked = previousNodeId ? completedNodes.includes(previousNodeId) : false
+      // Toutes les unités sont toujours débloquées - pas de progression séquentielle requise
+      const isUnlocked = true
       const isCompleted = completedNodes.includes(node.id)
 
       return {
