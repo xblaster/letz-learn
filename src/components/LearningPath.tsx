@@ -21,10 +21,9 @@ const LearningPath: React.FC<LearningPathProps> = ({ onBack, onUnitComplete }) =
   }, [completedNodes])
 
   const handleNodeClick = (node: PathNode) => {
-    if (node.isUnlocked) {
-      setSelectedNode(node)
-      setIsUnitActive(true)
-    }
+    // Toutes les unités sont accessibles sans restriction
+    setSelectedNode(node)
+    setIsUnitActive(true)
   }
 
   const handleUnitComplete = (progress: UnitProgress) => {
