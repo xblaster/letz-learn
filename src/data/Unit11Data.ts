@@ -1,315 +1,130 @@
-// Unit 11: Au restaurant - Stratégie Duolingo A1+ gastronomie Luxembourg
-// Section 2: Communication quotidienne (A1+)
+import { Exercise, LearningUnit, VocabularyItem } from '../types/LearningTypes'
 
-import { LearningUnit, VocabularyItem, Exercise } from '../types/LearningTypes'
+// Section 2 — Communication quotidienne (A1+)
+// S2U3 : Café et restaurant
 
-// Vocabulaire Unit 11 - Restaurant Luxembourg authentique
 export const unit11Vocabulary: VocabularyItem[] = [
-  // TIER 1: Quick wins - mots universels/familiers
   {
-    id: 'restaurant',
-    luxembourgish: 'Restaurant',
-    french: 'Restaurant',
-    pronunciation: 'res-to-RANG',
-    usage: 'Identique au français, universellement compris'
+    id: 's2u3_desch',
+    luxembourgish: 'Dësch',
+    french: 'table',
+    pronunciation: 'DESH',
+    usage: 'Demander une table avec courtoisie.'
   },
   {
-    id: 'menu',
-    luxembourgish: 'Menu',
-    french: 'Menu',
-    pronunciation: 'me-NÜ',
-    usage: 'Carte des plats, mot international'
+    id: 's2u3_reservatioun',
+    luxembourgish: 'Reservatioun',
+    french: 'réservation',
+    pronunciation: 're-zehr-va-TION',
+    usage: 'Vérifier que votre réservation est bien enregistrée.'
   },
   {
-    id: 'waasser',
-    luxembourgish: 'Waasser',
-    french: 'eau',
-    pronunciation: 'VAH-ser',
-    usage: 'Boisson essentielle, demande fréquente'
-  },
-
-  // TIER 2: Cultural hooks - plats luxembourgeois typiques
-  {
-    id: 'judd_mat_gaardebounen',
-    luxembourgish: 'Judd mat Gaardebounen',
-    french: 'Porc fumé aux haricots',
-    pronunciation: 'YUDD mat GAR-de-boo-nen',
-    usage: 'Plat national luxembourgeois incontournable'
+    id: 's2u3_menu',
+    luxembourgish: 'Menü',
+    french: 'menu',
+    pronunciation: 'me-NU',
+    usage: 'Parcourir la carte avant de commander.'
   },
   {
-    id: 'bouneschlupp',
-    luxembourgish: 'Bouneschlupp',
-    french: 'Soupe aux haricots verts',
-    pronunciation: 'BOO-ne-shlup',
-    usage: 'Soupe traditionnelle luxembourgeoise'
-  },
-  {
-    id: 'riesling',
-    luxembourgish: 'Riesling',
-    french: 'Riesling',
-    pronunciation: 'REES-ling',
-    usage: 'Vin blanc luxembourgeois de la Moselle'
-  },
-
-  // TIER 3: Vocabulaire restaurant essentiel
-  {
-    id: 'bestellen',
-    luxembourgish: 'bestellen',
-    french: 'commander',
-    pronunciation: 'be-SHTELL-en',
-    usage: 'Action de passer commande'
-  },
-  {
-    id: 'rechnung',
-    luxembourgish: 'Rechnung',
+    id: 's2u3_rechnong',
+    luxembourgish: 'Rechnong',
     french: 'addition',
-    pronunciation: 'REKH-nung',
-    usage: 'Demande de facture en fin de repas'
+    pronunciation: 'RECH-nong',
+    usage: 'Demander l’addition de manière polie.'
   },
   {
-    id: 'lécker',
-    luxembourgish: 'Lécker',
-    french: 'délicieux',
-    pronunciation: 'LEK-er',
-    usage: 'Compliment culinaire typiquement luxembourgeois'
-  },
-
-  // TIER 4: Expressions restauration pratiques
-  {
-    id: 'ech_hätt_gär',
-    luxembourgish: 'Ech hätt gär',
-    french: 'J\'aimerais bien',
-    pronunciation: 'ekh HÄTT gär',
-    usage: 'Formule polie pour commander'
+    id: 's2u3_portmonni',
+    luxembourgish: 'Portmonni',
+    french: 'portefeuille',
+    pronunciation: 'port-mo-NEE',
+    usage: 'Garder le lexique financier sous contrôle.'
   },
   {
-    id: 'dat_räicht',
-    luxembourgish: 'Dat räicht',
-    french: 'Ça suffit / C\'est tout',
-    pronunciation: 'dat RYKHT',
-    usage: 'Phrase pour indiquer que c\'est suffisant'
+    id: 's2u3_bezuelen',
+    luxembourgish: 'bezuelen',
+    french: 'payer',
+    pronunciation: 'be-TSEU-len',
+    usage: 'Exprimer l’action de payer avec le conditionnel de politesse.'
+  },
+  {
+    id: 's2u3_tipp',
+    luxembourgish: 'Tipp',
+    french: 'pourboire',
+    pronunciation: 'TIP',
+    usage: 'Mentionner le pourboire dans le respect de l’étiquette locale.'
   }
 ]
 
-// Générateur d'exercices - Restaurant avec progression culturelle
-export const generateUnit11Exercises = (): Exercise[] => {
-  const exercises: Exercise[] = []
-
-  // =============================================================================
-  // PHASE 1: QUICK WINS - Confiance avec universels (20%)
-  // =============================================================================
-
-  // 1.1 Reconnaissance mots universels
-  exercises.push({
-    id: 'quick_win_restaurant',
-    type: 'audio_recognition',
-    vocabularyItem: unit11Vocabulary[0], // Restaurant
-    question: 'Vous entendez parler d\'un lieu pour manger. De quoi s\'agit-il ?',
-    options: ['Restaurant', 'Magasin', 'Bureau'].sort(() => Math.random() - 0.5),
-    correctAnswer: 'Restaurant',
-    context: 'Quick win: mot universel'
-  })
-
-  // 1.2 Menu familier
-  exercises.push({
-    id: 'quick_win_menu',
+export const generateUnit11Exercises = (): Exercise[] => [
+  {
+    id: 's2u3_reactivation_salutation',
+    type: 'dialogue_completion',
+    vocabularyItem: unit11Vocabulary[0],
+    question: 'Complétez : « Moien, mir hunn eng ___ fir zwee Persounen. »',
+    options: ['Reservatioun', 'Rechnong', 'Tipp'],
+    correctAnswer: 'Reservatioun',
+    context: 'Réactivation : saluer et confirmer la réservation en arrivant.'
+  },
+  {
+    id: 's2u3_demander_table',
     type: 'translation',
-    vocabularyItem: unit11Vocabulary[1],
-    question: 'Comment dit-on "menu" en luxembourgeois ?',
-    options: ['Menu', 'Rechnung', 'Waasser'].sort(() => Math.random() - 0.5),
-    correctAnswer: 'Menu',
-    context: 'Quick win: mot international'
-  })
-
-  // =============================================================================
-  // PHASE 2: CULTURAL HOOKS - Gastronomie Luxembourg authentique (25%)
-  // =============================================================================
-
-  // 2.1 Plat national incontournable
-  exercises.push({
-    id: 'cultural_national_dish',
+    vocabularyItem: unit11Vocabulary[0],
+    question: 'Comment dire « table » lorsque vous cherchez une place ?',
+    options: ['Dësch', 'Menü', 'Portmonni'],
+    correctAnswer: 'Dësch',
+    context: 'Formuler une demande claire auprès du personnel.'
+  },
+  {
+    id: 's2u3_commander_poliment',
     type: 'dialogue_completion',
+    vocabularyItem: unit11Vocabulary[2],
+    question: 'Choisissez la phrase polie : « Ech hätt gär den ___, w.e.g. »',
+    options: ['Menü', 'Tipp', 'Portmonni'],
+    correctAnswer: 'Menü',
+    context: 'Utiliser « Ech hätt gär… » pour demander le menu.'
+  },
+  {
+    id: 's2u3_demander_addition',
+    type: 'phrase_completion',
     vocabularyItem: unit11Vocabulary[3],
-    question: 'Restaurant traditionnel à Luxembourg-Ville. Le serveur recommande le plat national :',
-    options: ['Judd mat Gaardebounen', 'Bouneschlupp', 'Riesling'].sort(() => Math.random() - 0.5),
-    correctAnswer: 'Judd mat Gaardebounen',
-    context: 'Cultural hook: plat national emblématique'
-  })
-
-  // 2.2 Spécialité soupe traditionnelle
-  exercises.push({
-    id: 'cultural_traditional_soup',
-    type: 'dialogue_completion',
-    vocabularyItem: unit11Vocabulary[4],
-    question: 'Menu du jour dans une brasserie luxembourgeoise. Entrée traditionnelle :',
-    options: ['Bouneschlupp', 'Waasser', 'Menu'].sort(() => Math.random() - 0.5),
-    correctAnswer: 'Bouneschlupp',
-    context: 'Cultural hook: soupe traditionnelle'
-  })
-
-  // 2.3 Vin de la Moselle luxembourgeoise
-  exercises.push({
-    id: 'cultural_local_wine',
-    type: 'dialogue_completion',
+    question: 'Complétez : « Kënnt Dir mir d’___ bréngen, w.e.g.? »',
+    options: ['Rechnong', 'Reservatioun', 'Tipp'],
+    correctAnswer: 'Rechnong',
+    context: 'Préparer la clôture de repas dans la tâche finale.'
+  },
+  {
+    id: 's2u3_payer_conditionnel',
+    type: 'pattern_recognition',
     vocabularyItem: unit11Vocabulary[5],
-    question: 'Dégustation à Remich (Route des Vins). Vin blanc local recommandé :',
-    options: ['Riesling', 'Waasser', 'Lécker'].sort(() => Math.random() - 0.5),
-    correctAnswer: 'Riesling',
-    context: 'Cultural hook: viticulture luxembourgeoise'
-  })
-
-  // =============================================================================
-  // PHASE 3: SPACED REPETITION - Politesse + restaurant (20%)
-  // =============================================================================
-
-  // 3.1 Réintégration politesse (Units 9-10) + commande
-  exercises.push({
-    id: 'spaced_polite_ordering',
+    question: 'Quelle phrase exprime poliment l’intention de payer ?',
+    options: [
+      'Ech géif gären bezuelen, w.e.g.',
+      'Ech sinn midd, w.e.g.',
+      'Ech hunn de Portmonni doheem.'
+    ],
+    correctAnswer: 'Ech géif gären bezuelen, w.e.g.',
+    context: 'Mettre en pratique le conditionnel de politesse.'
+  },
+  {
+    id: 's2u3_pourboire',
     type: 'sentence_construction',
-    vocabularyItem: unit11Vocabulary[9],
-    question: 'Assemblez une commande polie en utilisant la formule de politesse',
-    wordBank: ['Ech', 'hätt', 'gär', 'Waasser'].sort(() => Math.random() - 0.5),
-    correctAnswer: 'Ech hätt gär Waasser',
-    expectedSentence: 'Ech hätt gär Waasser',
-    hint: 'Structure polie: Je + aimerais + bien + boisson',
-    context: 'Spaced repetition: politesse + commande'
-  })
-
-  // 3.2 Pattern commande avec élément connu
-  exercises.push({
-    id: 'spaced_ordering_pattern',
-    type: 'progressive_building',
     vocabularyItem: unit11Vocabulary[6],
-    question: 'Construisez l\'action de commander au restaurant',
-    wordBank: ['Ech', 'wëll', 'bestellen'],
-    correctAnswer: 'Ech wëll bestellen',
-    expectedSentence: 'Ech wëll bestellen',
-    hint: 'Je + vouloir + commander (réutilisation "wëll" Unit 10)',
-    context: 'Pattern familier: volonté + action'
-  })
-
-  // =============================================================================
-  // PHASE 4: CONTEXT VARIATION - Types restaurants différents (25%)
-  // =============================================================================
-
-  // 4.1 Contexte formel (restaurant gastronomique)
-  exercises.push({
-    id: 'context_fine_dining',
-    type: 'dialogue_completion',
-    vocabularyItem: unit11Vocabulary[9],
-    question: 'Restaurant gastronomique Clairefontaine (Luxembourg). Commande formelle :',
-    options: ['Ech hätt gär', 'Bestellen', 'Dat räicht'].sort(() => Math.random() - 0.5),
-    correctAnswer: 'Ech hätt gär',
-    context: 'Context variation: restaurant haut de gamme'
-  })
-
-  // 4.2 Contexte informel (brasserie locale)
-  exercises.push({
-    id: 'context_local_brasserie',
-    type: 'dialogue_completion',
-    vocabularyItem: unit11Vocabulary[6],
-    question: 'Brasserie de quartier à Esch. Commande décontractée :',
-    options: ['Bestellen', 'Ech hätt gär', 'Rechnung'].sort(() => Math.random() - 0.5),
-    correctAnswer: 'Bestellen',
-    context: 'Context variation: établissement décontracté'
-  })
-
-  // 4.3 Fin de repas (demande addition)
-  exercises.push({
-    id: 'context_bill_request',
-    type: 'dialogue_completion',
-    vocabularyItem: unit11Vocabulary[7],
-    question: 'Fin de repas. Vous demandez à payer :',
-    options: ['Rechnung', 'Menu', 'Bestellen'].sort(() => Math.random() - 0.5),
-    correctAnswer: 'Rechnung',
-    context: 'Context variation: fin de service'
-  })
-
-  // 4.4 Compliment culinaire
-  exercises.push({
-    id: 'context_food_compliment',
-    type: 'dialogue_completion',
-    vocabularyItem: unit11Vocabulary[8],
-    question: 'Après avoir goûté le Judd mat Gaardebounen, vous complimentez :',
-    options: ['Lécker', 'Dat räicht', 'Waasser'].sort(() => Math.random() - 0.5),
-    correctAnswer: 'Lécker',
-    context: 'Context variation: appréciation culinaire'
-  })
-
-  // =============================================================================
-  // PHASE 5: PRODUCTION ORALE - Confiance restaurant (10%)
-  // =============================================================================
-
-  // 5.1 Commande complète orale
-  exercises.push({
-    id: 'speech_complete_order',
-    type: 'speech_recognition',
-    vocabularyItem: unit11Vocabulary[9],
-    question: 'Prononcez votre commande polie pour le plat national',
-    correctAnswer: 'Ech hätt gär Judd mat Gaardebounen',
-    expectedSentence: 'Ech hätt gär Judd mat Gaardebounen',
-    hint: 'ekh HÄTT gär YUDD mat GAR-de-boo-nen',
-    context: 'Production orale: commande authentique'
-  })
-
-  return exercises
-}
-
-// Métriques d'engagement Unit 11 spécifiques
-export function getUnit11EngagementMetrics() {
-  const exercises = generateUnit11Exercises()
-
-  const typeDistribution = exercises.reduce((acc, ex) => {
-    acc[ex.type] = (acc[ex.type] || 0) + 1
-    return acc
-  }, {} as Record<string, number>)
-
-  return {
-    totalExercises: exercises.length,
-    typeDistribution,
-    engagementStrategy: {
-      quickWins: 20, // Mots universels (restaurant, menu)
-      culturalHooks: 25, // Gastronomie luxembourgeoise authentique
-      spacedRepetition: 20, // Politesse Units précédentes + restaurant
-      contextVariation: 25, // Types restaurants (gastronomique/brasserie)
-      oralProduction: 10 // Confiance commande orale
-    },
-    culturalAuthenticity: {
-      nationalDishes: ['Judd mat Gaardebounen', 'Bouneschlupp'],
-      localWines: ['Riesling (Moselle)'],
-      restaurantTypes: ['Gastronomique', 'Brasserie locale'],
-      locations: ['Luxembourg-Ville', 'Esch', 'Remich']
-    },
-    targetMetrics: {
-      retentionD7: '60%+',
-      timeToCompletion: '6-7min',
-      satisfactionScore: '4.3+/5',
-      culturalAppreciation: '80%+' // Nouveau: appréciation culture culinaire
-    }
+    question: 'Assemblez la phrase qui mentionne le pourboire.',
+    wordBank: ['De', 'Tipp', 'ass', 'inklusive', 'haut.'],
+    correctAnswer: 'De Tipp ass inklusive haut.',
+    expectedSentence: 'De Tipp ass inklusive haut.',
+    context: 'Souligner l’étiquette luxembourgeoise dans l’activité finale.'
   }
-}
+]
 
-// Validation progression Unit 10 → Unit 11
-export function validateUnit11Progression() {
-  return {
-    progressionFrom: 'Unit 10 (Shopping magasins)',
-    progressionTo: 'Unit 11 (Restaurant gastronomie)',
-    scaffolding: 'Transactions commerciales → Expérience culturelle',
-    continuityElements: ['Politesse commande', 'Prix/paiement', 'Contextes formels/informels'],
-    newComplexity: 'Vocabulaire culinaire spécialisé, culture gastronomique',
-    culturalEvolution: 'Commerce pratique → Immersion culturelle Luxembourg',
-    engagementMaintain: 'Quick wins universels + Cultural hooks gastronomiques'
-  }
-}
-
-// Définition Unit 11 - Restaurant Luxembourg gastronomique
 export const learningUnit11: LearningUnit = {
-  id: 'unit_11',
-  title: 'Au restaurant',
-  description: 'Découvrez la gastronomie luxembourgeoise et commandez avec aisance',
+  id: 'S2U3',
+  title: 'Café et restaurant',
+  description:
+    'Je peux commander, vérifier ma réservation et régler l’addition sereinement dans un café luxembourgeois.',
   level: 'A1+',
   vocabulary: unit11Vocabulary,
-  exercises: generateUnit11Exercises().filter(ex => ex.type !== 'progressive_building'),
-  targetScore: 85, // Maintien cohérence section A1+
-  estimatedTime: 6 // Cohérence avec autres unités section 2
+  exercises: generateUnit11Exercises(),
+  targetScore: 84,
+  estimatedTime: 8
 }

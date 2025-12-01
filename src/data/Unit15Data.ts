@@ -1,152 +1,130 @@
-// Unit 15: Rendez-vous - Stratégie Duolingo A1+ organisation sociale
-// Section 2: Communication quotidienne (A1+)
+import { Exercise, LearningUnit, VocabularyItem } from '../types/LearningTypes'
 
-import { LearningUnit, VocabularyItem, Exercise } from '../types/LearningTypes'
+// Section 2 — Communication quotidienne (A1+)
+// S2U7 : Rendez-vous et agenda
 
-// Vocabulaire Unit 15 - Rendez-vous Luxembourg professionnel/social
 export const unit15Vocabulary: VocabularyItem[] = [
-  // TIER 1: Quick wins - concepts universels temps
   {
-    id: 'wéini',
-    luxembourgish: 'Wéini?',
-    french: 'Quand ?',
-    pronunciation: 'VAY-ni',
-    usage: 'Question temporelle essentielle'
+    id: 's2u7_disponibel',
+    luxembourgish: 'disponibel',
+    french: 'disponible',
+    pronunciation: 'dis-po-NI-bel',
+    usage: 'Confirmer sa disponibilité avec précision.'
   },
   {
-    id: 'wou',
-    luxembourgish: 'Wou?',
-    french: 'Où ?',
-    pronunciation: 'VOO',
-    usage: 'Question de lieu, déjà vu transport'
+    id: 's2u7_agenda',
+    luxembourgish: 'Agenda',
+    french: 'agenda',
+    pronunciation: 'a-JEN-da',
+    usage: 'Partager l’outil de planification utilisé.'
   },
   {
-    id: 'firwat',
-    luxembourgish: 'Firwat?',
-    french: 'Pourquoi ?',
-    pronunciation: 'FIR-vat',
-    usage: 'Question de raison/motif'
-  },
-
-  // TIER 2: Cultural hooks - contextes Luxembourg
-  {
-    id: 'rendezvous',
-    luxembourgish: 'Rendezvous',
-    french: 'Rendez-vous',
-    pronunciation: 'ron-day-VOO',
-    usage: 'Mot français adopté, milieu professionnel'
+    id: 's2u7_kalennert',
+    luxembourgish: 'Kalennert',
+    french: 'calendrier',
+    pronunciation: 'ka-LEN-nert',
+    usage: 'Vérifier les disponibilités hebdomadaires.'
   },
   {
-    id: 'meeting',
-    luxembourgish: 'Meeting',
-    french: 'Réunion',
-    pronunciation: 'MEE-ting',
-    usage: 'Anglicisme courant milieu business Luxembourg'
+    id: 's2u7_zaitblock',
+    luxembourgish: 'Zäitblock',
+    french: 'bloc horaire',
+    pronunciation: 'TSAÏT-block',
+    usage: 'Bloquer une plage précise pour le rendez-vous.'
   },
   {
-    id: 'kaffi',
-    luxembourgish: 'Kaffi',
-    french: 'Café',
-    pronunciation: 'KAF-fi',
-    usage: 'Rencontre sociale informelle très populaire'
-  },
-
-  // TIER 3: Expressions organisation temporelle
-  {
-    id: 'haut',
-    luxembourgish: 'Haut',
-    french: 'Aujourd\'hui',
-    pronunciation: 'HOWT',
-    usage: 'Référence temporelle immédiate'
+    id: 's2u7_virdrun',
+    luxembourgish: 'virdrun',
+    french: 'avant',
+    pronunciation: 'FEER-drun',
+    usage: 'Préparer les instructions sur les étapes avant la réunion.'
   },
   {
-    id: 'muer',
-    luxembourgish: 'Muer',
-    french: 'Demain',
-    pronunciation: 'MOO-er',
-    usage: 'Jour suivant, planification proche'
+    id: 's2u7_dono',
+    luxembourgish: 'dono',
+    french: 'après',
+    pronunciation: 'DO-no',
+    usage: 'Organiser le suivi après la rencontre.'
   },
   {
-    id: 'eis_gesinn',
-    luxembourgish: 'Eis gesinn',
-    french: 'Nous voir / Se voir',
-    pronunciation: 'AYS ge-SEEN',
-    usage: 'Action de rendez-vous social'
+    id: 's2u7_dauer',
+    luxembourgish: 'Dauer',
+    french: 'durée',
+    pronunciation: 'DAU-er',
+    usage: 'Indiquer le temps prévu pour l’activité.'
   }
 ]
 
-// Générateur d'exercices - Organisation sociale Luxembourg
-export const generateUnit15Exercises = (): Exercise[] => {
-  const exercises: Exercise[] = []
-
-  // Quick wins questions essentielles
-  exercises.push({
-    id: 'quick_win_when_question',
-    type: 'audio_recognition',
+export const generateUnit15Exercises = (): Exercise[] => [
+  {
+    id: 's2u7_reactivation_dates',
+    type: 'dialogue_completion',
+    vocabularyItem: unit15Vocabulary[1],
+    question: 'Complétez : « Ech aktualiséieren mäin ___ fir d’Sëtzung. »',
+    options: ['Agenda', 'Dauer', 'dono'],
+    correctAnswer: 'Agenda',
+    context: 'Réactiver les dates et outils vus précédemment.'
+  },
+  {
+    id: 's2u7_disponibilite',
+    type: 'translation',
     vocabularyItem: unit15Vocabulary[0],
-    question: 'Question pour organiser un rendez-vous. On demande :',
-    options: ['Wéini?', 'Wou?', 'Firwat?'].sort(() => Math.random() - 0.5),
-    correctAnswer: 'Wéini?',
-    context: 'Quick win: question temporelle universelle'
-  })
-
-  // Cultural hook - contexte business Luxembourg
-  exercises.push({
-    id: 'cultural_business_meeting',
+    question: 'Quel adjectif exprime que vous êtes disponible ?',
+    options: ['disponibel', 'dono', 'virdrun'],
+    correctAnswer: 'disponibel',
+    context: 'Coordonner un agenda partagé entre collègues.'
+  },
+  {
+    id: 's2u7_bloc',
+    type: 'pattern_recognition',
+    vocabularyItem: unit15Vocabulary[3],
+    question: 'Quel terme désigne un bloc horaire ?',
+    options: ['Zäitblock', 'Kalennert', 'Dauer'],
+    correctAnswer: 'Zäitblock',
+    context: 'Inviter les membres du club linguistique à bloquer un créneau.'
+  },
+  {
+    id: 's2u7_sequence',
     type: 'dialogue_completion',
     vocabularyItem: unit15Vocabulary[4],
-    question: 'Bureau Kirchberg, quartier européen. Réunion professionnelle :',
-    options: ['Meeting', 'Kaffi', 'Rendezvous'].sort(() => Math.random() - 0.5),
-    correctAnswer: 'Meeting',
-    context: 'Cultural hook: environnement business Luxembourg'
-  })
-
-  // Spaced repetition - organisation rendez-vous
-  exercises.push({
-    id: 'spaced_meet_planning',
-    type: 'sentence_construction',
-    vocabularyItem: unit15Vocabulary[8],
-    question: 'Assemblez proposition de se voir',
-    wordBank: ['Kënnen', 'mir', 'eis', 'gesinn', '?'].sort(() => Math.random() - 0.5),
-    correctAnswer: 'Kënnen mir eis gesinn?',
-    expectedSentence: 'Kënnen mir eis gesinn?',
-    hint: 'Pouvons + nous + nous + voir + ?',
-    context: 'Spaced repetition: organisation sociale'
-  })
-
-  // Context variation - rencontre informelle
-  exercises.push({
-    id: 'context_informal_coffee',
-    type: 'dialogue_completion',
+    question: 'Choisissez la phrase pour indiquer une étape avant la réunion :',
+    options: [
+      'Mir treffen eis virdrun fir de Raum virzebereeden.',
+      'Mir treffen eis dono fir ze feieren.',
+      'Ech sinn disponibel haut.'
+    ],
+    correctAnswer: 'Mir treffen eis virdrun fir de Raum virzebereeden.',
+    context: 'Organiser un briefing préparatoire.'
+  },
+  {
+    id: 's2u7_suivi',
+    type: 'phrase_completion',
     vocabularyItem: unit15Vocabulary[5],
-    question: 'Rencontre détendue entre amis à Luxembourg-Ville :',
-    options: ['Kaffi', 'Meeting', 'Firwat'].sort(() => Math.random() - 0.5),
-    correctAnswer: 'Kaffi',
-    context: 'Context variation: social informel'
-  })
-
-  // Production orale - question rendez-vous
-  exercises.push({
-    id: 'speech_appointment_question',
-    type: 'speech_recognition',
-    vocabularyItem: unit15Vocabulary[0],
-    question: 'Demandez quand vous pouvez vous voir',
-    correctAnswer: 'Wéini kënnen mir eis gesinn?',
-    expectedSentence: 'Wéini kënnen mir eis gesinn?',
-    hint: 'VAY-ni KEN-nen meer AYS ge-SEEN?',
-    context: 'Production orale: organisation rendez-vous'
-  })
-
-  return exercises
-}
+    question: 'Complétez : « Mir treffen eis ___ fir eng Tasse Kaffi. »',
+    options: ['dono', 'virdrun', 'disponibel'],
+    correctAnswer: 'dono',
+    context: 'Planifier le moment convivial après la rencontre.'
+  },
+  {
+    id: 's2u7_duree',
+    type: 'sentence_construction',
+    vocabularyItem: unit15Vocabulary[6],
+    question: 'Assemblez la phrase qui précise la durée.',
+    wordBank: ['D’Reunioun', 'dauert', '45', 'Minutten.'],
+    correctAnswer: 'D’Reunioun dauert 45 Minutten.',
+    expectedSentence: 'D’Reunioun dauert 45 Minutten.',
+    context: 'Donner une vision claire du temps demandé aux participant·e·s.'
+  }
+]
 
 export const learningUnit15: LearningUnit = {
-  id: 'unit_15',
-  title: 'Rendez-vous',
-  description: 'Organisez vos rencontres professionnelles et sociales',
+  id: 'S2U7',
+  title: 'Rendez-vous et agenda',
+  description:
+    'Je peux coordonner un agenda social ou professionnel, proposer un créneau commun et décrire les étapes avant/après la rencontre.',
   level: 'A1+',
   vocabulary: unit15Vocabulary,
   exercises: generateUnit15Exercises(),
   targetScore: 85,
-  estimatedTime: 6
+  estimatedTime: 8
 }

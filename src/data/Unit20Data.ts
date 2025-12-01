@@ -1,167 +1,168 @@
-// Unit 20: Administrativ Demarchen - A2 Vie pratique
-// Section 3: Vie pratique (A2)
+import { Exercise, LearningUnit, VocabularyItem } from '../types/LearningTypes'
 
-import { LearningUnit, VocabularyItem, Exercise } from '../types/LearningTypes'
+// Section 3 — Vie pratique et autonomie (A2)
+// S3U4 : Travail quotidien
 
 export const unit20Vocabulary: VocabularyItem[] = [
   {
-    id: 'biergercenter',
-    luxembourgish: 'Bierger-Center',
-    french: 'centre citoyen',
-    pronunciation: 'BIE-jer-sen-ter',
-    usage: 'Guichet principal de Luxembourg-Ville pour démarches rapides.'
+    id: 's3u4_kolleg',
+    luxembourgish: 'Kolleg',
+    french: 'collègue',
+    pronunciation: 'ko-LEK',
+    usage: 'Parler de ses collègues au quotidien.'
   },
   {
-    id: 'gemeen',
-    luxembourgish: 'Gemeng',
-    french: 'commune',
-    pronunciation: 'geh-MENG',
-    usage: 'Administration communale qui gère vos dossiers locaux.'
+    id: 's3u4_reunioun',
+    luxembourgish: 'Reunioun',
+    french: 'réunion',
+    pronunciation: 'roy-NEE-oon',
+    usage: 'Organiser ou rappeler une réunion.'
   },
   {
-    id: 'meldungskaart',
-    luxembourgish: 'Meldungskaart',
-    french: 'carte de déclaration',
-    pronunciation: 'MEL-dungs-kaart',
-    usage: 'Document pour s\'enregistrer comme résident·e.'
+    id: 's3u4_deadline',
+    luxembourgish: 'Deadline',
+    french: 'échéance',
+    pronunciation: 'DEAD-lain',
+    usage: 'Clarifier la date limite d’un dossier.'
   },
   {
-    id: 'residenzbestätegung',
-    luxembourgish: 'Residenzbestätegung',
-    french: 'attestation de résidence',
-    pronunciation: 're-zi-DENTS-besh-TÄ-te-gung',
-    usage: 'Attestation officielle demandée par les banques ou écoles.'
-  },
-  {
-    id: 'formulaire',
-    luxembourgish: 'Formulaire',
-    french: 'formulaire',
-    pronunciation: 'for-mu-LAIR',
-    usage: 'Document à remplir pour votre demande administrative.'
-  },
-  {
-    id: 'dossier',
+    id: 's3u4_dossier',
     luxembourgish: 'Dossier',
     french: 'dossier',
-    pronunciation: 'dos-SIÉ',
-    usage: 'Ensemble de documents remis à l\'administration.'
+    pronunciation: 'DOS-see-ay',
+    usage: 'Suivre un dossier administratif ou projet.'
   },
   {
-    id: 'termin huelen',
-    luxembourgish: 'Rendez-vous huelen',
-    french: 'prendre rendez-vous',
-    pronunciation: 'ron-day-VOO HOU-len',
-    usage: 'Action de fixer un rendez-vous administratif.'
+    id: 's3u4_feedback',
+    luxembourgish: 'Feedback',
+    french: 'retour',
+    pronunciation: 'FEED-bek',
+    usage: 'Donner un retour constructif.'
   },
   {
-    id: 'dokumenter',
-    luxembourgish: 'Dokumenter',
-    french: 'documents',
-    pronunciation: 'do-ku-MEN-ter',
-    usage: 'Pièces justificatives nécessaires pour la procédure.'
+    id: 's3u4_prioriteit',
+    luxembourgish: 'Prioritéit',
+    french: 'priorité',
+    pronunciation: 'pryo-ree-TAIT',
+    usage: 'Hiérarchiser les tâches.'
   },
   {
-    id: 'digital',
-    luxembourgish: 'Digital Lëtzebuerg',
-    french: 'administration en ligne',
-    pronunciation: 'DI-gi-tal LET-ze-bourk',
-    usage: 'Portail national pour déposer vos demandes en ligne.'
+    id: 's3u4_notiz',
+    luxembourgish: 'Notiz',
+    french: 'note',
+    pronunciation: 'no-TEETS',
+    usage: 'Prendre des notes lors d’une réunion.'
   },
   {
-    id: 'eidas',
-    luxembourgish: 'luxID / eIDAS',
-    french: 'identité électronique',
-    pronunciation: 'luks-ID',
-    usage: 'Carte d\'identité numérique pour signer vos formulaires.'
+    id: 's3u4_team',
+    luxembourgish: 'Team',
+    french: 'équipe',
+    pronunciation: 'TEEM',
+    usage: 'Valoriser l’esprit d’équipe multilingue.'
+  },
+  {
+    id: 's3u4_projet',
+    luxembourgish: 'Projet',
+    french: 'projet',
+    pronunciation: 'PRO-zhay',
+    usage: 'Décrire l’avancée d’un projet en cours.'
+  },
+  {
+    id: 's3u4_optrag',
+    luxembourgish: 'Optrag',
+    french: 'mission',
+    pronunciation: 'OP-trak',
+    usage: 'Donner ou recevoir une mission précise.'
   }
 ]
 
 export const generateUnit20Exercises = (): Exercise[] => [
   {
-    id: 'u20_translation_biergercenter',
-    type: 'translation',
-    vocabularyItem: unit20Vocabulary[0],
-    question: 'Comment désigne-t-on le centre citoyen de Luxembourg-Ville ?',
-    options: ['Bierger-Center', 'Gemeng', 'Digital Lëtzebuerg'],
-    correctAnswer: 'Bierger-Center',
-    context: 'Identifier le bon guichet vous fait gagner du temps.'
-  },
-  {
-    id: 'u20_dialogue_gemeng',
+    id: 's3u4_reactivation_agenda',
     type: 'dialogue_completion',
     vocabularyItem: unit20Vocabulary[1],
-    question: 'Un courrier officiel vous invite à contacter la commune. Vous dites :',
-    options: ['Ech ginn op d\'Gemeng.', 'Ech huelen d\'mKaart.', 'Ech fueren mam Zuch.'],
-    correctAnswer: 'Ech ginn op d\'Gemeng.',
-    context: 'Affirmer votre action rassure votre interlocuteur administratif.'
+    question: 'Complétez : « D’___ ass muer um 9 Auer am Sall B. »',
+    options: ['Reunioun', 'Optrag', 'Team'],
+    correctAnswer: 'Reunioun',
+    context: 'Réactiver la coordination d’agenda vue en Section 2.'
   },
   {
-    id: 'u20_word_order_meldung',
-    type: 'word_ordering',
-    vocabularyItem: unit20Vocabulary[2],
-    question: 'Ordonnez la phrase pour dire que vous remplissez votre carte.',
-    wordBank: ['Ech', 'fëllen', 'meng', 'Meldungskaart'],
-    correctAnswer: 'Ech fëllen meng Meldungskaart',
-    expectedSentence: 'Ech fëllen meng Meldungskaart',
-    hint: 'Commencez par le sujet, puis le verbe conjugué.',
-    context: 'Affirmer votre autonomie dans les formulaires est motivant.'
-  },
-  {
-    id: 'u20_cultural_residence',
-    type: 'cultural_context',
-    vocabularyItem: unit20Vocabulary[3],
-    question: 'Quel document rassure une banque sur votre résidence ?',
-    options: ['Residenzbestätegung', 'Meldungskaart', 'Formulaire'],
-    correctAnswer: 'Residenzbestätegung',
-    context: 'Relier les documents aux besoins concrets clarifie vos démarches.'
-  },
-  {
-    id: 'u20_translation_formulaire',
+    id: 's3u4_prioriser',
     type: 'translation',
-    vocabularyItem: unit20Vocabulary[4],
-    question: 'Comment dit-on « formulaire » en luxembourgeois ?',
-    options: ['Formulaire', 'Dokument', 'Dossier'],
-    correctAnswer: 'Formulaire',
-    context: 'Les mots transparents donnent confiance avant de signer.'
+    vocabularyItem: unit20Vocabulary[5],
+    question: 'Quel mot permet de parler de priorité ?',
+    options: ['Prioritéit', 'Feedback', 'Notiz'],
+    correctAnswer: 'Prioritéit',
+    context: 'Hiérarchiser les actions lors d’un briefing.'
   },
   {
-    id: 'u20_dialogue_rendezvous',
+    id: 's3u4_deadline',
+    type: 'pattern_recognition',
+    vocabularyItem: unit20Vocabulary[2],
+    question: 'Quelle phrase insiste sur l’échéance ?',
+    options: [
+      'D’Deadline fir de Projet ass en Donneschdeg.',
+      'Ech fueren an de Quartier.',
+      'Ech maachen eng Invitatioun.'
+    ],
+    correctAnswer: 'D’Deadline fir de Projet ass en Donneschdeg.',
+    context: 'Communiquer des informations clés à son équipe.'
+  },
+  {
+    id: 's3u4_feedback',
     type: 'dialogue_completion',
-    vocabularyItem: unit20Vocabulary[6],
-    question: 'Le guichet vous propose une heure. Vous acceptez en disant :',
-    options: ['Ech huelen de Rendez-vous.', 'Ech fueren mam Tram.', 'Ech liesen de Fahrplang.'],
-    correctAnswer: 'Ech huelen de Rendez-vous.',
-    context: 'Confirmer calmement un rendez-vous montre votre préparation.'
+    vocabularyItem: unit20Vocabulary[4],
+    question: 'Choisissez la phrase pour donner un feedback constructif :',
+    options: [
+      'Deng Iddi ass staark, mee mir verbesseren nach de Schluss.',
+      'Ech hunn eng Invitatioun fir de Concert.',
+      'Ech brauch meng Gesondheetskaart.'
+    ],
+    correctAnswer: 'Deng Iddi ass staark, mee mir verbesseren nach de Schluss.',
+    context: 'Encourager tout en guidant l’amélioration.'
   },
   {
-    id: 'u20_sentence_documents',
+    id: 's3u4_notes',
+    type: 'phrase_completion',
+    vocabularyItem: unit20Vocabulary[6],
+    question: 'Complétez : « Schreif eng ___ iwwer déi nächst Schrëtt. »',
+    options: ['Notiz', 'Team', 'Kolleg'],
+    correctAnswer: 'Notiz',
+    context: 'Assurer le suivi des décisions de réunion.'
+  },
+  {
+    id: 's3u4_mission',
+    type: 'dialogue_completion',
+    vocabularyItem: unit20Vocabulary[9],
+    question: 'Quelle phrase confie une mission claire ?',
+    options: [
+      'Du kriss den Optrag fir de Rapport ze finaliséieren.',
+      'Ech huelen eng Invitatioun un.',
+      'Ech kafen en Ticket kombinéiert.'
+    ],
+    correctAnswer: 'Du kriss den Optrag fir de Rapport ze finaliséieren.',
+    context: 'Encadrer les responsabilités de chacun·e.'
+  },
+  {
+    id: 's3u4_team_spirit',
     type: 'sentence_construction',
     vocabularyItem: unit20Vocabulary[7],
-    question: 'Formez une phrase pour dire que vous avez tous les documents.',
-    wordBank: ['Ech', 'hu', 'all', 'meng', 'Dokumenter'],
-    correctAnswer: 'Ech hu all meng Dokumenter',
-    expectedSentence: 'Ech hu all meng Dokumenter',
-    hint: 'Placez le verbe en deuxième position.',
-    context: 'Se féliciter renforce la motivation avant le rendez-vous.'
-  },
-  {
-    id: 'u20_cultural_digital',
-    type: 'cultural_context',
-    vocabularyItem: unit20Vocabulary[8],
-    question: 'Quel portail vous permet de déposer une demande en ligne ?',
-    options: ['Digital Lëtzebuerg', 'Bierger-Center', 'Gemeng'],
-    correctAnswer: 'Digital Lëtzebuerg',
-    context: 'Utiliser le numérique simplifie vos démarches où que vous soyez.'
+    question: 'Assemblez la phrase qui valorise l’équipe.',
+    wordBank: ['Eist', 'Team', 'schafft', 'multilingue', 'zesummen.'],
+    correctAnswer: 'Eist Team schafft multilingue zesummen.',
+    expectedSentence: 'Eist Team schafft multilingue zesummen.',
+    context: 'Promouvoir l’esprit de collaboration luxembourgeois.'
   }
 ]
 
 export const learningUnit20: LearningUnit = {
-  id: 'unit_20',
-  title: 'Administrativ Demarchen',
-  description: 'Préparez vos documents et dialogues pour les démarches courantes.',
+  id: 'S3U4',
+  title: 'Travail quotidien',
+  description:
+    'Je peux coordonner mon équipe, préciser les échéances et donner un feedback motivant dans un environnement multilingue.',
   level: 'A2',
   vocabulary: unit20Vocabulary,
   exercises: generateUnit20Exercises(),
-  targetScore: 80,
-  estimatedTime: 8
+  targetScore: 88,
+  estimatedTime: 10
 }
